@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://www.enkr1.com/</loc>
+    <lastmod>2024-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Portfolio Page -->
+  <url>
+    <loc>https://www.enkr1.com/portfolio</loc>
+    <lastmod>2024-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Resume Page -->
+  <url>
+    <loc>https://www.enkr1.com/resume</loc>
+    <lastmod>2024-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Platforms Page -->
+  <url>
+    <loc>https://www.enkr1.com/platforms</loc>
+    <lastmod>2024-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Interest Page -->
+  <url>
+    <loc>https://www.enkr1.com/interest</loc>
+    <lastmod>2024-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- 404 Error Page -->
+  <url>
+    <loc>https://www.enkr1.com/404</loc>
+    <lastmod>2024-08-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+
+  <!-- Asset Example: Resume PDF -->
+  <url>
+    <loc>https://www.enkr1.com/assets/pdfs/Resume%20-%20Jing%20Hui%20PANG%20-%20Mid%20Sep%202023%20-%20v1.0.1.pdf</loc>
+    <lastmod>2024-08-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>

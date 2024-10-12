@@ -1,0 +1,11 @@
+# Mac's
+# find . -name ".DS_Store" -delete
+/.DS_Store
+
+# NPM Packages
+/node_modules
+
+# wip
+/_assets
+/scripts/main_original.js
+/scripts/o.js

@@ -1,0 +1,72 @@
+{
+  "firstname": "Jing Hui",
+  "lastname": "PANG",
+  "nickname": "ENKR",
+  "bio": "As a software engineer with a passion for solving challenging problems and producing high-quality code, I am eager to make a difference in the industry. With a diploma in Information Technology from <a href=\"https://www.sp.edu.sg/\" target=\"_blank\">Singapore Polytechnic</a>, where I specialized in Solution Development, Data Structure Algorithm, and User Interface Design (UI/UX), I have the necessary skills and knowledge to contribute to the coding world. Currently, I am a lead software engineer at <a href=\"https://pixiumdigital.com/\" target=\"_blank\">Pixium Digital</a>, Singapore, where I work with the <a href=\"https://elixir-lang.org\" target=\"_blank\">Elixir Phoenix</a> team and continuously strive to improve my skills. I am dedicated to delivering innovative and sustainable solutions and look forward to contributing to the growth and success of my future employer.",
+  "list_platforms": [
+    {
+      "name": "GitHub",
+      "className": "github",
+      "link": "https://github.com/enkr1",
+      "fa": "fa-github-square"
+    },
+    {
+      "name": "LinkedIn",
+      "className": "linkedin",
+      "link": "https://www.linkedin.com/in/jinghuipang/",
+      "fa": "fa-linkedin"
+    },
+    {
+      "name": "FaceBook (Meta)",
+      "className": "fb",
+      "link": "https://www.facebook.com/enkrbeatbox",
+      "fa": "fa-facebook-square"
+    },
+    {
+      "name": "Instagram",
+      "className": "ig",
+      "link": "https://www.instagram.com/enkr1/",
+      "fa": "fa-instagram"
+    },
+    {
+      "name": "YouTube",
+      "className": "yt",
+      "link": "https://www.youtube.com/@enkr1",
+      "fa": "fa-youtube"
+    }
+  ],
+  "achievements": [
+    {
+      "title": "list_beatboxing_achievements()",
+      "list": [
+        {
+          "category": "list_solo_titles()",
+          "list": [
+            "Champion of Clementi Community Centre 2018, Singapore.",
+            "Champion of Radiance Beatbox Jam 2019, Singapore.",
+            "Champion of A Cappella Beatbox Championship 2019, Singapore.",
+            "Champion of Cypher Beatbox Battle 2019, Singapore.",
+            "Top 16 Armageddon International Beatbox Battle 2019, Malaysia.",
+            "Top 8 The Capital Beatbox Battle 2019, Malaysia.",
+            "Vice Champion of A Cappella Beatbox Championship 2021, Singapore."
+          ]
+        },
+        {
+          "category": "list_tag_team_titles()",
+          "list": [
+            "Champion of A Cappella Beatbox Battle 2019, Singapore.",
+            "Top 4 Werewolf Beatbox Championship 2019, Indonesia."
+          ]
+        }
+      ]
+    }
+  ],
+  "list_skill_sets": [
+    "Proficient in functional programming languages Elixir (Phoenix framework) and PHP (Yii2 framework).",
+    "Proficient in web development technologies such as HTML, SCSS, CSS, and JavaScript.",
+    "Strong background in data structures and algorithms.",
+    "Proficient in writing SQL queries and experienced with PostgreSQL.",
+    "Competent in the dockerised environment.",
+    "Advanced beginner in DevOps and experienced in AWS services such as S3 bucket, Textract and EC2 instances."
+  ]
+}

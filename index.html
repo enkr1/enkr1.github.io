@@ -1,0 +1,464 @@
+<!--
+    --------------------------------------------------------------------------------------
+    Welcome to the source of ENKR1.github.io!
+
+    I am Pang Jing Hui, also known as ENKR, a Full-Stack Software Engineer and Beatbox Artist.
+    My work spans across innovative web development and rhythmic beatbox performances.
+
+    This website is a canvas where my technical skills and creative passions converge.
+    Developed and designed entirely by myself, it showcases my journey and projects in both
+    the tech world and the beatboxing community.
+
+    Feel free to explore the code and connect with me:
+    - LinkedIn: https://www.linkedin.com/in/jinghuipang/
+    - GitHub: @enkr1
+    - Instagram: @enkr1
+    - YouTube: @enkr1
+
+    Thank you for visiting and happy coding!
+    --------------------------------------------------------------------------------------
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ENKR | PANG Jing Hui | 彭竞辉 - Software Engineer & Beatbox Artist</title>
+
+  <meta name="description"
+    content="Discover the personal portfolio of PANG Jing Hui, a Software Engineer and Beatbox Artist based in Singapore. Showcasing innovative projects, professional experiences, and artistic performances.">
+  <meta name="keywords"
+    content="Pang Jing Hui, 彭竞辉, ENKR, software engineer, full-stack developer, beatboxer, portfolio, Singapore IT professional, coding, web development, UI/UX, beatboxing, tech and music, live performances">
+  <meta name="author" content="ENKR | PANG Jing Hui | 彭竞辉">
+  <meta name="referrer" content="origin">
+  <meta http-equiv="content-language" content="en">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://enkr1.github.io/">
+  <meta property="og:title" content="ENKR | PANG Jing Hui | 彭竞辉 - Software Engineer & Beatbox Artist">
+  <meta property="og:description"
+    content="Explore the personal portfolio of PANG Jing Hui, a tech enthusiast and beatbox performer from Singapore.">
+  <meta property="og:image" content="https://enkr1.github.io/assets/images/3.jpg">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://enkr1.github.io/">
+  <meta property="twitter:title" content="ENKR | PANG Jing Hui | 彭竞辉 - Software Engineer & Beatbox Artist">
+  <meta property="twitter:description"
+    content="Discover the personal portfolio of PANG Jing Hui, showcasing his expertise in software engineering and beatboxing.">
+  <meta property="twitter:image" content="https://enkr1.github.io/assets/images/3.jpg">
+
+  <!-- Canonical Link -->
+  <link rel="canonical" href="https://enkr1.github.io/">
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/images/logo.gif" type="image/gif" sizes="16x16">
+
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Person",
+        "name": "Jing Hui PANG",
+        "jobTitle": "Software Engineer & Beatbox Artist",
+        "url": "https://enkr1.github.io/",
+        "sameAs": [
+            "https://www.linkedin.com/in/jinghuipang/",
+            "https://github.com/enkr1",
+            "https://www.instagram.com/enkr1/",
+            "https://www.youtube.com/@enkr1",
+            "https://www.facebook.com/enkrbeatbox",
+            "https://open.spotify.com/user/212m4ap7bke7h64hn7nfxojxq",
+            "https://enkr1.github.io/blog/",
+            "https://enkr1.github.io/",
+            "https://developers.google.com/profile/u/enkr1",
+            "https://leetcode.com/enkr1/",
+            "https://leetcode.cn/u/enkr1/",
+            "https://stackoverflow.com/users/13677125/jinghui-p",
+            "https://wakatime.com/@enkr1",
+            "https://twitter.com/enkr999",
+            "https://soundcloud.com/enkr1",
+            "https://www.instagram.com/fitnesspang/",
+            "https://v.douyin.com/iY1xupmL/",
+            "https://www.tiktok.com/@enkr1",
+            "https://www.enkr1.com/",
+            "https://www.enkr1.com/blog/",
+            "https://www.enkr1.com/platforms/"
+        ],
+        "worksFor": [
+            {
+                "@type": "Organization",
+                "name": "ByteDance"
+            },
+            {
+                "@type": "Organization",
+                "name": "Pixium Digital"
+            }
+        ],
+        "alumniOf": [
+            {
+                "@type": "CollegeOrUniversity",
+                "name": "Singapore Polytechnic"
+            },
+            {
+                "@type": "EducationalOrganization",
+                "name": "SMK Taman Pelangi Indah"
+            }
+        ]
+    }
+    </script>
+
+  <!-- External Stylesheets -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css?v=3.0.0">
+
+  <meta name="google-site-verification" content="MgiJh5gO1R8YrVWlG5vutVtclBwyBZtqSMyAFS2UebY" />
+
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+</head>
+
+
+
+<body id="index-body" class="hide-all-in-body">
+  <preloader-component></preloader-component>
+
+  <header id="home">
+
+    <div class="toggle-nav-bar">
+      <div class="menu-toggler">
+        <div class="bar half start"></div>
+        <div class="bar half middle"></div>
+        <div class="bar half end"></div>
+      </div>
+    </div>
+
+    <div class="nav-logo-left fade-left">
+      <a href="/">ENKR</a>
+    </div>
+
+    <!-- <nav class="top-nav nav-up"> -->
+    <nav class="top-nav ">
+
+      <ul class="nav-list top-nav-list">
+        <div class="nav-logo">
+          <a href="/">ENKR</a>
+        </div>
+        <div class="nav-link-container">
+          <li><a href="#home" class="nav-link home-nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link about-nav-link">About</a></li>
+          <!-- <li><a href="#specialisation" class="nav-link specialisation-nav-link">Specialisation</a></li> -->
+          <li><a href="#experience" class="nav-link experience-nav-link">Experience</a></li>
+          <!-- <li><a href="#portfolio" class="nav-link portfolio-nav-link">Portfolio</a></li> -->
+          <li><a href="#contact" class="nav-link contact-nav-link">Contact</a></li>
+          <!--
+          NOTE: Change to /platforms after general design
+          -->
+          <li><a href="platforms" target="_blank" id="linktree-nav-link"
+              class="nav-link linktree-nav-link">Platforms</a></li>
+          <!-- <li><a href="interest" class="nav-link">Interest</a></li> -->
+          <!-- <li><a href="#" class="nav-link" id="interest-nav-item">Interest</a></li> -->
+          <li><a href="assets/pdfs/Resume - Jing Hui PANG - Mid Sep 2023 - v1.0.1.pdf" class="nav-link"
+              target="_blank">Resume</a></li>
+          <p class="designedby">Designed and developed by ENKR</p>
+        </div>
+      </ul>
+
+      <div id="_progress"></div>
+    </nav>
+
+    <div class="secondary-desktop-nav-bar"></div>
+
+    <div id="landing-section" class="landing-section">
+      <div class="logo">
+        <img src="assets/images/web-main-logo-enkr.svg" alt="@enkr1 | ENKR | Pang Jing Hui" data-aos="zoom-out" />
+      </div>
+      <!-- <h6 class="main-h6"><span class="span1">&#60;</span>Web Developer<span class="span2">/&#62;</span></h6> -->
+      <h6 class="main-h6">Software Developer, Designer, Beatboxer</h6>
+
+      <nav class="landing-action">
+        <a class="action-btn bg-slide-to-right" target="_blank" href="https://github.com/enkr1">
+          <p class="action-text-1">my github</p>
+        </a>
+
+        <a class="action-btn explore-btn" href="#about">
+          <div class="scroll-down-anim">
+            <p class="action-text-2">explore</p>
+          </div>
+        </a>
+
+        <!-- <a class="action-btn bg-slide-to-left" href="portfolio">
+          <p class="action-text-3">my work</p>
+        </a> -->
+        <!-- <a class="action-btn bg-slide-to-left" href="resume.html" target="_blank">
+          <p class="action-text-3">resume (wip)</p>
+        </a> -->
+        <a class="action-btn bg-slide-to-left" href="#">
+          <p class="action-text-3">coming soon</p>
+        </a>
+
+      </nav>
+    </div>
+
+    <eye-candy-component></eye-candy-component>
+
+  </header>
+
+  <div class="cursor"></div>
+
+  <div id="all-sections">
+    <about-section></about-section>
+    <!-- <specialisation-section></specialisation-section> -->
+    <experience-section></experience-section>
+
+    <!-- <section class="portfolio" id="portfolio">
+      <div class="container">
+        <div class="section-heading">
+          <h1>Portfolio</h1>
+          <h6>My finished works and recent projects</h6>
+          <portfolio-items-component></portfolio-items-component>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- <section class="contact contact-section" data-aos="fade-up" data-aos-delay="300"> -->
+    <section id="contact" class="contact contact-section" data-aos="fade-up" data-aos-delay="300">
+      <div class="container">
+        <!-- <div class="container" id="contact"> -->
+        <div class="section-heading">
+          <h1>Contact</h1>
+          <h6>Let's be friends</h6>
+        </div>
+
+        <!-- <div class="info-anim">
+                  <div class="info-anim-inner">
+                      <h1>Web Design Service</h1>
+                      <p>I do provide web design services!</p>
+                  </div>
+              </div> -->
+
+        <!-- TODO: TO IMPROVE THE TYPING AREA DESIGN, ETC -->
+        <!--
+        <div class="typing-area">
+          <p class="typing"></p>
+        </div> -->
+
+        <form class="contact-form" action="https://formspree.io/f/mqkykldl" method="POST" name="form">
+          <div class="name-section">
+            <input type="text" id="contact-input-name" name="contact-input-name" pattern=".*\S.*"
+              onkeyup="this.setAttribute('value', this.value);" required />
+            <label class="label-name" for="contact-input-name">
+              <span class="content-name">Name</span>
+            </label>
+          </div>
+
+          <div class="email-section">
+            <input type="email" id="contact-input-email" name="contact-input-email"
+              onkeyup="this.setAttribute('value', this.value);" required />
+            <label class="label-email" for="contact-input-email">
+              <span class="content-email">Email</span>
+            </label>
+          </div>
+
+          <div class="message-section">
+            <textarea name="contact-input-message" id="contact-input-message" rows="1" pattern="^\s?(?=\S).*"
+              onkeyup="this.setAttribute('value', this.value);" required></textarea>
+            <label class="label-message" for="contact-input-message">
+              <span class="content-message">Message</span>
+            </label>
+          </div>
+
+          <input class="contact-submit-btn bg-slide-to-top" type="submit" value="Submit" />
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <footer-component></footer-component>
+
+  <!-- Start of External -->
+  <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <!-- End of External -->
+
+  <script type="text/javascript" defer src="scripts/main.js"></script>
+
+  <script>
+    /*
+    // typing effects for about me
+    const landingtexts = [
+      "i design website and mobile applications.",
+      "feel free to contact me for collaboration or",
+      "any website services!",
+    ];
+    let count = 0;
+    let index = 0;
+    let currentText = "";
+    let letter = "";
+    let letterdone = false;
+
+    (function type() {
+      if (count === landingtexts.length) {
+        count = 0;
+      }
+
+      currentText = landingtexts[count];
+      letter = currentText.slice(0, ++index);
+      document.querySelector(".typing").textContent = letter;
+
+      if (letter.length === currentText.length) {
+        count++;
+        index = 0; // reset
+        letterdone = true;
+      }
+
+      // one line check
+      if (letterdone == false) {
+        setTimeout(type, 100);
+      } else {
+        setTimeout(type, 800);
+        letterdone = false;
+      }
+    })();
+
+    setTimeout(function () {
+      // https://www.youtube.com/watch?v=GUEB9FogoP8&t=173s vanilla
+      const text = document.querySelector(".rm-desc");
+      const strText = text.textContent;
+      const splitText = strText.split("");
+      text.textContent = "";
+      text.classList.add("show");
+
+      for (let i = 0; i < splitText.length; i++) {
+        text.innerHTML += "<span>" + splitText[i] + "</span>";
+      }
+
+      let char = 0;
+      let timer = setInterval(onTick, 80);
+
+      function onTick() {
+        const span = text.querySelectorAll("span")[char];
+        span.classList.add("main-h6-anim");
+        char++;
+        if (char === splitText.length) {
+          complete();
+          return;
+        }
+      }
+
+      function complete() {
+        clearInterval(timer);
+        timer = null;
+      }
+    }, 800);
+    */
+    /*
+    // typing effects
+    const landingtexts = [
+      "i design website and mobile applications.",
+      "feel free to contact me for collaboration or",
+      "any website services!",
+    ];
+    let count = 0;
+    let index = 0;
+    let currentText = "";
+    let letter = "";
+    let letterdone = false;
+
+    (function type() {
+      if (count === landingtexts.length) {
+        count = 0;
+      }
+
+      currentText = landingtexts[count];
+      letter = currentText.slice(0, ++index);
+      document.querySelector(".typing").textContent = letter;
+
+      if (letter.length === currentText.length) {
+        count++;
+        index = 0; // reset
+        letterdone = true;
+      }
+
+      // one line check
+      if (letterdone == false) {
+        setTimeout(type, 100);
+      } else {
+        setTimeout(type, 800);
+        letterdone = false;
+      }
+    })();
+
+    setTimeout(function () {
+      // https://www.youtube.com/watch?v=GUEB9FogoP8&t=173s vanilla
+      const text = document.querySelector(".main-h6");
+      const strText = text.textContent;
+      const splitText = strText.split("");
+      text.textContent = "";
+      text.classList.add("show");
+
+      for (let i = 0; i < splitText.length; i++) {
+        text.innerHTML += "<span>" + splitText[i] + "</span>";
+      }
+
+      let char = 0;
+      let timer = setInterval(onTick, 80);
+
+      function onTick() {
+        const span = text.querySelectorAll("span")[char];
+        span.classList.add("main-h6-anim");
+        char++;
+        if (char === splitText.length) {
+          complete();
+          return;
+        }
+      }
+
+      function complete() {
+        clearInterval(timer);
+        timer = null;
+      }
+    }, 800);
+    */
+  </script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCEg-OTrR6XVQCVDun1MeDAHukQFgFZIx8",
+      authDomain: "enkr1-7df78.firebaseapp.com",
+      projectId: "enkr1-7df78",
+      storageBucket: "enkr1-7df78.appspot.com",
+      messagingSenderId: "844155483320",
+      appId: "1:844155483320:web:ac3a181cd61f58b245b04d",
+      measurementId: "G-9WDEW5QPLL"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+
+  <audio controls autoplay loop hidden>
+    <source src="assets/audios/melancholy.wav" type="audio/wav">
+  </audio>
+</body>
+
+</html>
