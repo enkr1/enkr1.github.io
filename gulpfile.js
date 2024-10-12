@@ -3,6 +3,7 @@ const sass = require('gulp-sass')(require('sass'));
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const postcssPresetEnv = require('postcss-preset-env');
+const { exec } = require('child_process');
 
 
 
@@ -16,6 +17,20 @@ gulp.task('styles', () => {
 
 
 
+gulp.task('obfuscate', function (cb) {
+  exec('node ./scripts/o.js', function (err, stdout, stderr) {
+    if (err) {
+      console.log(stderr);
+    } else {
+      console.log(stdout);
+    }
+    cb();
+  });
+});
+
+
+
 gulp.task('watch', () => {
   gulp.watch('scss/**/*.scss', gulp.series('styles')); // Watch for changes
+  gulp.watch('scripts/main_original.js', gulp.series('obfuscate')); // Watch for changes in main_original.js
 });
