@@ -81,6 +81,16 @@ npm install
 **Start Gulp Watcher**:
 ```bash
 gulp watch
+gulp watch &
+```
+
+kill port
+```sh
+ps aux | grep gulp
+```
+
+```sh
+kill -9 <PID>
 ```
 
 ---
@@ -88,3 +98,15 @@ gulp watch
 ### Future Development
 
 - This project is constantly evolving as I continue experimenting with modern, minimal JavaScript to create an engaging and interactive user experience.
+
+
+### TODO
+- [ ] Rework the design!
+- [ ] Lazy-load images and any non-essential assets to improve performance.
+- [ ] Defer and optimize the execution of JavaScript where possible, as you're already doing with the defer attribute.
+- [ ] Replace jQuery with vanilla JavaScript. This will reduce dependency and streamline performance.
+- [ ] Consider whether Swiper and AOS are necessary. If not, we could build custom solutions for carousels and scroll animations with vanilla JS and CSS.
+- [ ] Add dynamic animations or interactivity to elements like the landing section using CSS animations or JavaScript, ensuring responsiveness.
+- [ ] Incorporate progressive web app (PWA) features like offline mode, caching, and push notifications (optional).
+- [ ] Rework the eye-candy-component and the preloader using pure CSS or JavaScript to make the experience smoother and lighter.
+- [ ] Could refine these based on the latest SEO best practices to ensure maximum visibility.

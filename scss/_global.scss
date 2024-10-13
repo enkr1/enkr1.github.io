@@ -90,6 +90,11 @@ textarea {
     font-family: 'K2D', sans-serif;
 }
 
+body {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory; /* Enable scroll snap */
+}
+
 body,
 body.portfolio-body {
     width: 100%;
@@ -100,14 +105,10 @@ body.portfolio-body {
     overflow-y: scroll; */
     // background: url("../images/bg-img-desktop-1.jpg") no-repeat center fixed;
 
-
-    box-shadow: inset 0 0 100vw 100vh #9796f010;
+    // box-shadow: inset 0 0 100vw 100vh #9796f010;
     /* This will be displayed if it is loading for too long */
-    background-color: $theme-dark-color;
-
-    /*  Neumorphism Theme */
-    // background: $theme-background;
-
+    // background-color: $theme-dark-color;
+    background-color: #fff;
     background-size: cover !important;
 
     @media screen and (max-width: $screen_xs) {
@@ -187,7 +188,7 @@ img {
 
 /* width */
 ::-webkit-scrollbar {
-    /* display: none; */
+    display: none;
     width: .3rem;
 }
 
@@ -406,3 +407,28 @@ $nav-logo-left-y: .3em;
 #audio-melancholy {
     display: none;
 }
+
+// NOTE: REUSED
+.list-style-none {
+    list-style: none;
+    width: 100%;
+    height: 100%;
+}
+
+.display-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+// article#all-sections {
+//     height: 100dvh;
+//     overflow-y: scroll;
+//     scroll-snap-type: y mandatory;
+//
+//     section {
+//         height: 100%;
+//         scroll-snap-align: start;
+//     }
+// }

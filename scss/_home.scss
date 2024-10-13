@@ -1,11 +1,11 @@
 .landing-section {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    text-align: center;
-    z-index: 1;
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+    // width: 100%;
+    // text-align: center;
+    // z-index: 1;
 
     $home-landing-logo-width: 100em;
 
@@ -13,10 +13,10 @@
         width: $home-landing-logo-width;
         user-select: none;
         margin: 0;
-        position: absolute;
-        /* top: 30%; */
-        left: 50%;
-        transform: translate(-50%, -55%);
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
+        // transform: translate(-50%, -55%);
 
         @media all and (max-width: $screen_lg) {
             width: $home-landing-logo-width - 10em;
@@ -35,7 +35,7 @@
         }
     }
 
-    h6.main-h6 {
+    h6.desc {
         font-family: monospace;
         transform: translateY(12rem);
         font-size: 2.2rem;
@@ -229,3 +229,4 @@
 //     transition: all .1s ease-in-out !important;
 //     font-weight: 500;
 // }
+

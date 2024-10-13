@@ -114,8 +114,6 @@
     </script>
 
   <!-- External Stylesheets -->
-  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
@@ -128,13 +126,11 @@
 </head>
 
 
-
 <body id="index-body" class="hide-all-in-body">
   <preloader-component></preloader-component>
 
   <header id="home">
-
-    <div class="toggle-nav-bar">
+    <div class="navigation-toggle-container">
       <div class="menu-toggler">
         <div class="bar half start"></div>
         <div class="bar half middle"></div>
@@ -146,14 +142,12 @@
       <a href="/">ENKR</a>
     </div>
 
-    <!-- <nav class="top-nav nav-up"> -->
-    <nav class="top-nav ">
-
-      <ul class="nav-list top-nav-list">
+    <nav class="navigation-container">
+      <ul class="navigation-container-list">
         <div class="nav-logo">
           <a href="/">ENKR</a>
         </div>
-        <div class="nav-link-container">
+        <div class="navigation-items-container list-style-none display-flex-center">
           <li><a href="#home" class="nav-link home-nav-link">Home</a></li>
           <li><a href="#about" class="nav-link about-nav-link">About</a></li>
           <!-- <li><a href="#specialisation" class="nav-link specialisation-nav-link">Specialisation</a></li> -->
@@ -173,19 +167,24 @@
         </div>
       </ul>
 
-      <div id="_progress"></div>
+      <!-- <div id="_progress"></div> -->
     </nav>
+  </header>
 
-    <div class="secondary-desktop-nav-bar"></div>
+  <!-- <eye-candy-component></eye-candy-component> -->
 
-    <div id="landing-section" class="landing-section">
-      <div class="logo">
-        <img src="assets/images/web-main-logo-enkr.svg" alt="@enkr1 | ENKR | Pang Jing Hui" data-aos="zoom-out" />
-      </div>
+  <div class="cursor"></div>
+
+  <article id="all-sections">
+    <section id="landing-section" class="landing-section">
+      <!-- <div class="logo">
+        <img src="assets/images/web-main-logo-enkr.svg" alt="@enkr1 | ENKR | Pang Jing Hui" />
+      </div> -->
+
       <!-- <h6 class="main-h6"><span class="span1">&#60;</span>Web Developer<span class="span2">/&#62;</span></h6> -->
-      <h6 class="main-h6">Software Developer, Designer, Beatboxer</h6>
+      <h6 class="desc">Software Developer, Designer, Beatboxer</h6>
 
-      <nav class="landing-action">
+      <!-- <nav class="landing-action">
         <a class="action-btn bg-slide-to-right" target="_blank" href="https://github.com/enkr1">
           <p class="action-text-1">my github</p>
         </a>
@@ -196,27 +195,29 @@
           </div>
         </a>
 
-        <!-- <a class="action-btn bg-slide-to-left" href="portfolio">
+        <a class="action-btn bg-slide-to-left" href="portfolio">
           <p class="action-text-3">my work</p>
-        </a> -->
-        <!-- <a class="action-btn bg-slide-to-left" href="resume.html" target="_blank">
+        </a>
+
+        <a class="action-btn bg-slide-to-left" href="resume.html" target="_blank">
           <p class="action-text-3">resume (wip)</p>
-        </a> -->
+        </a>
+
         <a class="action-btn bg-slide-to-left" href="#">
           <p class="action-text-3">coming soon</p>
         </a>
+      </nav> -->
 
-      </nav>
-    </div>
+    </section>
 
-    <eye-candy-component></eye-candy-component>
+    <section id="about" class="about about-section">
+      <div class="container">
 
-  </header>
+      </div>
+    </section>
+    <!-- <primary-about-section></primary-about-section> -->
+    <!-- <secondary-about-section></secondary-about-section> -->
 
-  <div class="cursor"></div>
-
-  <div id="all-sections">
-    <about-section></about-section>
     <!-- <specialisation-section></specialisation-section> -->
     <experience-section></experience-section>
 
@@ -230,8 +231,7 @@
       </div>
     </section> -->
 
-    <!-- <section class="contact contact-section" data-aos="fade-up" data-aos-delay="300"> -->
-    <section id="contact" class="contact contact-section" data-aos="fade-up" data-aos-delay="300">
+    <section id="contact" class="contact contact-section">
       <div class="container">
         <!-- <div class="container" id="contact"> -->
         <div class="section-heading">
@@ -257,7 +257,7 @@
             <input type="text" id="contact-input-name" name="contact-input-name" pattern=".*\S.*"
               onkeyup="this.setAttribute('value', this.value);" required />
             <label class="label-name" for="contact-input-name">
-              <span class="content-name">Name</span>
+              <span class="content-name">how do i addres you?</span>
             </label>
           </div>
 
@@ -265,7 +265,7 @@
             <input type="email" id="contact-input-email" name="contact-input-email"
               onkeyup="this.setAttribute('value', this.value);" required />
             <label class="label-email" for="contact-input-email">
-              <span class="content-email">Email</span>
+              <span class="content-email">email please</span>
             </label>
           </div>
 
@@ -273,7 +273,7 @@
             <textarea name="contact-input-message" id="contact-input-message" rows="1" pattern="^\s?(?=\S).*"
               onkeyup="this.setAttribute('value', this.value);" required></textarea>
             <label class="label-message" for="contact-input-message">
-              <span class="content-message">Message</span>
+              <span class="content-message">what do you wanna talk about?</span>
             </label>
           </div>
 
@@ -281,158 +281,13 @@
         </form>
       </div>
     </section>
-  </div>
+  </article>
 
   <footer-component></footer-component>
 
-  <!-- Start of External -->
-  <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <!-- End of External -->
-
-  <script type="text/javascript" defer src="scripts/main.js"></script>
-
-  <script>
-    /*
-    // typing effects for about me
-    const landingtexts = [
-      "i design website and mobile applications.",
-      "feel free to contact me for collaboration or",
-      "any website services!",
-    ];
-    let count = 0;
-    let index = 0;
-    let currentText = "";
-    let letter = "";
-    let letterdone = false;
-
-    (function type() {
-      if (count === landingtexts.length) {
-        count = 0;
-      }
-
-      currentText = landingtexts[count];
-      letter = currentText.slice(0, ++index);
-      document.querySelector(".typing").textContent = letter;
-
-      if (letter.length === currentText.length) {
-        count++;
-        index = 0; // reset
-        letterdone = true;
-      }
-
-      // one line check
-      if (letterdone == false) {
-        setTimeout(type, 100);
-      } else {
-        setTimeout(type, 800);
-        letterdone = false;
-      }
-    })();
-
-    setTimeout(function () {
-      // https://www.youtube.com/watch?v=GUEB9FogoP8&t=173s vanilla
-      const text = document.querySelector(".rm-desc");
-      const strText = text.textContent;
-      const splitText = strText.split("");
-      text.textContent = "";
-      text.classList.add("show");
-
-      for (let i = 0; i < splitText.length; i++) {
-        text.innerHTML += "<span>" + splitText[i] + "</span>";
-      }
-
-      let char = 0;
-      let timer = setInterval(onTick, 80);
-
-      function onTick() {
-        const span = text.querySelectorAll("span")[char];
-        span.classList.add("main-h6-anim");
-        char++;
-        if (char === splitText.length) {
-          complete();
-          return;
-        }
-      }
-
-      function complete() {
-        clearInterval(timer);
-        timer = null;
-      }
-    }, 800);
-    */
-    /*
-    // typing effects
-    const landingtexts = [
-      "i design website and mobile applications.",
-      "feel free to contact me for collaboration or",
-      "any website services!",
-    ];
-    let count = 0;
-    let index = 0;
-    let currentText = "";
-    let letter = "";
-    let letterdone = false;
-
-    (function type() {
-      if (count === landingtexts.length) {
-        count = 0;
-      }
-
-      currentText = landingtexts[count];
-      letter = currentText.slice(0, ++index);
-      document.querySelector(".typing").textContent = letter;
-
-      if (letter.length === currentText.length) {
-        count++;
-        index = 0; // reset
-        letterdone = true;
-      }
-
-      // one line check
-      if (letterdone == false) {
-        setTimeout(type, 100);
-      } else {
-        setTimeout(type, 800);
-        letterdone = false;
-      }
-    })();
-
-    setTimeout(function () {
-      // https://www.youtube.com/watch?v=GUEB9FogoP8&t=173s vanilla
-      const text = document.querySelector(".main-h6");
-      const strText = text.textContent;
-      const splitText = strText.split("");
-      text.textContent = "";
-      text.classList.add("show");
-
-      for (let i = 0; i < splitText.length; i++) {
-        text.innerHTML += "<span>" + splitText[i] + "</span>";
-      }
-
-      let char = 0;
-      let timer = setInterval(onTick, 80);
-
-      function onTick() {
-        const span = text.querySelectorAll("span")[char];
-        span.classList.add("main-h6-anim");
-        char++;
-        if (char === splitText.length) {
-          complete();
-          return;
-        }
-      }
-
-      function complete() {
-        clearInterval(timer);
-        timer = null;
-      }
-    }, 800);
-    */
-  </script>
-
-  <script type="module">
+  <script type="module" defer src="scripts/main_original.js"></script>
+  <!-- <script defer src="dist/bundle.obfuscated.js"></script> -->
+  <script defer type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";

@@ -7,5 +7,7 @@
 
 # wip
 /_assets
-/scripts/main_original.js
+
+/dist/bundle.js
 /scripts/o.js
+/scripts/*_original.js

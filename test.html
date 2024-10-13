@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+  <style>
+    .full-section {
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .full-section .content {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+      transition: transform 0.8s ease;
+    }
+
+    .full-section.in-view .content {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <section id="section-1" class="full-section"> <!-- First Frame -->
+    <div class="content">
+      <h1>Welcome to the Experience</h1>
+      <p>Scroll to discover more</p>
+    </div>
+  </section>
+
+  <section id="section-2" class="full-section"> <!-- Second Frame -->
+    <div class="content">
+      <h1>Our Services</h1>
+      <p>We offer amazing things</p>
+    </div>
+  </section>
+
+  <section id="section-3" class="full-section"> <!-- Third Frame -->
+    <div class="content">
+      <h1>Contact Us</h1>
+      <p>Get in touch</p>
+    </div>
+  </section>
+
+  <script>
+    const sections = document.querySelectorAll('.full-section');
+    const options = {
+      threshold: 0.5 // Trigger when 50% of section is in view
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        } else {
+          entry.target.classList.remove('in-view');
+        }
+      });
+    }, options);
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+
+</html>
