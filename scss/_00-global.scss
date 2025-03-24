@@ -1,3 +1,4 @@
+
 /*Start global*/
 /* https://stackoverflow.com/questions/3468154/what-is-webkit-and-how-is-it-related-to-css */
 * {
@@ -18,27 +19,27 @@
 
 $size-cursor: 2rem;
 
-.cursor {
-    width: $size-cursor;
-    height: $size-cursor;
-    // border-radius: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    transform-origin: 66% 60%;
-    pointer-events: none;
-    z-index: 999;
-    transition: all 0.6s ease-in-out;
-    transition-property: background, transform, box-shadow, border-radius;
-    /* transition: all 0.1s ease; */
-    // box-shadow: 0 0 1rem 0 $theme-color;
-    box-shadow: $neumorphism-box-shadow;
-    backdrop-filter: sepia(38%);
-    /* backdrop-filter: invert(30%); */
-
-    @media all and (max-width: $screen_md_2) {
-        display: none;
-    }
-}
+// .cursor {
+//     width: $size-cursor;
+//     height: $size-cursor;
+//     // border-radius: 50%;
+//     position: absolute;
+//     transform: translate(-50%, -50%);
+//     transform-origin: 66% 60%;
+//     pointer-events: none;
+//     z-index: 999;
+//     transition: all 0.6s ease-in-out;
+//     transition-property: background, transform, box-shadow, border-radius;
+//     /* transition: all 0.1s ease; */
+//     // box-shadow: 0 0 1rem 0 $theme-color;
+//     box-shadow: $neumorphism-box-shadow;
+//     backdrop-filter: sepia(38%);
+//     /* backdrop-filter: invert(30%); */
+//
+//     @media all and (max-width: $screen_md_2) {
+//         display: none;
+//     }
+// }
 
 /* apply to js */
 .img-grow {

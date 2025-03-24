@@ -14,6 +14,8 @@ This is my personal website and portfolio, designed and developed entirely by me
 
 ### Step 1: Install Node.js and Gulp CLI
 
+> Make sure sass version is at `npm install sass@1.79`
+
 #### 1. Install Node.js:
 - If you don’t have Node.js installed, download and install it from [Node.js official site](https://nodejs.org/).
 - Verify Node.js is installed by running:
@@ -92,6 +94,15 @@ ps aux | grep gulp
 ```sh
 kill -9 <PID>
 ```
+
+---
+
+### Obfuscator
+
+```sh
+node scripts/o.js
+```
+
 
 ---
 

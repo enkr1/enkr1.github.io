@@ -2,30 +2,28 @@
 GitHub: @enkr1, Instagram: @enkr1
 */
 
-// Variables
+// [00] - Global and reusable variables
 @import "_00-colours";
-@import "_variables";
+@import "_00-variables";
+@import "_00-global";
 
-// Global and reusable
+// [01] - Component
 @import "_animations";
-@import "_global";
 @import "_eye_candies";
-
-// Sections
 @import "_preload";
 @import "_nav_bar";
-@import "_home";
-@import "_about";
+
+// [02] - Section
+@import "_02-home";
+@import "_02-about";
 @import "_specialisation";
 @import "_experience";
 @import "_portfolio";
 @import "_contact";
 @import "_footer";
+
+// [03] - Pages
+@import "_03-platform";
 @import "_interest";
 @import "_bbx-achievements";
 @import "_resume";
-
-// TODO: Refactor to 00, 01, 02.
-@import "_02-platform";
-
-// ...

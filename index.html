@@ -127,7 +127,7 @@
 
 
 <body id="index-body" class="hide-all-in-body">
-  <preloader-component></preloader-component>
+  <!-- <preloader-component></preloader-component> -->
 
   <header id="home">
     <div class="navigation-toggle-container">
@@ -138,7 +138,7 @@
       </div>
     </div>
 
-    <div class="nav-logo-left fade-left">
+    <div class="nav-logo-left">
       <a href="/">ENKR</a>
     </div>
 
@@ -149,26 +149,51 @@
         </div>
         <div class="navigation-items-container list-style-none display-flex-center">
           <li><a href="#home" class="nav-link home-nav-link">Home</a></li>
-          <li><a href="#about" class="nav-link about-nav-link">About</a></li>
-          <!-- <li><a href="#specialisation" class="nav-link specialisation-nav-link">Specialisation</a></li> -->
+
+          <li class="dropdown">
+            <a href="#about" class="nav-link about-nav-link">About <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="#about">My Story</a></li>
+              <li><a href="skills">Skills</a></li>
+              <li><a href="achievements">Achievements</a></li>
+            </ul>
+          </li>
+
           <li><a href="#experience" class="nav-link experience-nav-link">Experience</a></li>
-          <!-- <li><a href="#portfolio" class="nav-link portfolio-nav-link">Portfolio</a></li> -->
+
+          <li class="dropdown">
+            <a href="#" class="nav-link">Projects <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="projects/web">Web Development</a></li>
+              <li><a href="projects/mobile">Mobile Apps</a></li>
+              <li><a href="projects/design">UI/UX Design</a></li>
+            </ul>
+          </li>
+
           <li><a href="#contact" class="nav-link contact-nav-link">Contact</a></li>
-          <!--
-          NOTE: Change to /platforms after general design
-          -->
-          <li><a href="platforms" target="_blank" id="linktree-nav-link"
-              class="nav-link linktree-nav-link">Platforms</a></li>
-          <!-- <li><a href="interest" class="nav-link">Interest</a></li> -->
-          <!-- <li><a href="#" class="nav-link" id="interest-nav-item">Interest</a></li> -->
-          <li><a href="assets/pdfs/Resume - Jing Hui PANG - Mid Sep 2023 - v1.0.1.pdf" class="nav-link"
-              target="_blank">Resume</a></li>
-          <p class="designedby">Designed and developed by ENKR</p>
+
+          <li class="dropdown">
+            <a href="#" class="nav-link">More <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="platforms" target="_blank">Platforms</a></li>
+              <li><a href="blog" target="_blank">Blog</a></li>
+              <li><a href="assets/pdfs/Resume - Jing Hui PANG - Mid Sep 2023 - v1.0.1.pdf" target="_blank">Resume</a>
+              </li>
+            </ul>
+          </li>
         </div>
       </ul>
 
-      <!-- <div id="_progress"></div> -->
+      <div class="theme-toggle">
+        <button aria-label="Toggle dark mode">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
     </nav>
+
+    <div class="progress-container">
+      <div id="_progress" class="progress-bar"></div>
+    </div>
   </header>
 
   <!-- <eye-candy-component></eye-candy-component> -->
@@ -177,42 +202,104 @@
 
   <article id="all-sections">
     <section id="landing-section" class="landing-section">
-      <!-- <div class="logo">
-        <img src="assets/images/web-main-logo-enkr.svg" alt="@enkr1 | ENKR | Pang Jing Hui" />
-      </div> -->
+      <div class="hero-content">
+        <h1 class="gradient-text">
+          <span class="title-line">Code.</span>
+          <span class="title-line">Create.</span>
+          <span class="title-line">Perform.</span>
+        </h1>
 
-      <!-- <h6 class="main-h6"><span class="span1">&#60;</span>Web Developer<span class="span2">/&#62;</span></h6> -->
-      <h6 class="desc">Software Developer, Designer, Beatboxer</h6>
+        <div class="bio-badge">
+          <p>Full-Stack Developer & Beatbox Artist</p>
+          <div class="accent-line"></div>
+        </div>
 
-      <!-- <nav class="landing-action">
-        <a class="action-btn bg-slide-to-right" target="_blank" href="https://github.com/enkr1">
-          <p class="action-text-1">my github</p>
-        </a>
+        <div class="interactive-actions">
+          <a href="#experience" class="action-btn holographic">
+            <span>View Work</span>
+            <div class="btn-glow"></div>
+          </a>
+          <a href="#contact" class="action-btn inverted">
+            <span>Get in Touch</span>
+          </a>
+        </div>
+      </div>
 
-        <a class="action-btn explore-btn" href="#about">
-          <div class="scroll-down-anim">
-            <p class="action-text-2">explore</p>
-          </div>
-        </a>
+      <div class="tech-stack-grid">
+        <div class="tech-icon" data-tooltip="JavaScript">
+          <i class="fab fa-js-square"></i>
+        </div>
+        <div class="tech-icon" data-tooltip="React">
+          <i class="fab fa-react"></i>
+        </div>
+        <div class="tech-icon" data-tooltip="Node.js">
+          <i class="fab fa-node-js"></i>
+        </div>
+        <div class="tech-icon" data-tooltip="HTML5">
+          <i class="fab fa-html5"></i>
+        </div>
+        <div class="tech-icon" data-tooltip="CSS3">
+          <i class="fab fa-css3-alt"></i>
+        </div>
+        <div class="tech-icon" data-tooltip="Python">
+          <i class="fab fa-python"></i>
+        </div>
+        <div class="tech-icon" data-tooltip="Git">
+          <i class="fab fa-git-alt"></i>
+        </div>
+        <div class="tech-icon" data-tooltip="AWS">
+          <i class="fab fa-aws"></i>
+        </div>
+      </div>
 
-        <a class="action-btn bg-slide-to-left" href="portfolio">
-          <p class="action-text-3">my work</p>
-        </a>
-
-        <a class="action-btn bg-slide-to-left" href="resume.html" target="_blank">
-          <p class="action-text-3">resume (wip)</p>
-        </a>
-
-        <a class="action-btn bg-slide-to-left" href="#">
-          <p class="action-text-3">coming soon</p>
-        </a>
-      </nav> -->
-
+      <div class="visual-elements">
+        <div class="animated-shape shape-1"></div>
+        <div class="animated-shape shape-2"></div>
+        <div class="animated-shape shape-3"></div>
+        <div class="particle-container" id="particles-js"></div>
+      </div>
     </section>
 
     <section id="about" class="about about-section">
       <div class="container">
+        <div class="section-heading">
+          <h1>About Me</h1>
+          <h6>The intersection of code and creativity</h6>
+        </div>
 
+        <div class="about-content">
+          <div class="about-image">
+            <img src="assets/images/profile.jpg" alt="PANG Jing Hui - ENKR">
+            <div class="image-backdrop"></div>
+          </div>
+
+          <div class="about-text">
+            <p class="about-intro">Hello! I'm <span class="highlight">Jing Hui</span>, a Full-Stack Developer with a passion for creating elegant solutions and a Beatbox Artist who loves to push creative boundaries.</p>
+
+            <div class="skill-visualization">
+              <div class="skill-bar" data-skill="Frontend" data-level="90">
+                <div class="skill-progress"></div>
+                <span class="skill-label">Frontend</span>
+              </div>
+              <div class="skill-bar" data-skill="Backend" data-level="85">
+                <div class="skill-progress"></div>
+                <span class="skill-label">Backend</span>
+              </div>
+              <div class="skill-bar" data-skill="UI/UX" data-level="80">
+                <div class="skill-progress"></div>
+                <span class="skill-label">UI/UX</span>
+              </div>
+              <div class="skill-bar" data-skill="Beatboxing" data-level="95">
+                <div class="skill-progress"></div>
+                <span class="skill-label">Beatboxing</span>
+              </div>
+            </div>
+
+            <div class="cta-container">
+              <a href="#experience" class="text-link">See my work <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <!-- <primary-about-section></primary-about-section> -->
@@ -311,9 +398,12 @@
     const analytics = getAnalytics(app);
   </script>
 
+  <!--
   <audio controls autoplay loop hidden>
     <source src="assets/audios/melancholy.wav" type="audio/wav">
   </audio>
+  -->
+
 </body>
 
 </html>
