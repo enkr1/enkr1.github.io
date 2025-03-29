@@ -1,0 +1,106 @@
+// Enhanced navigation styles
+header {
+  --float-distance: 0px;
+  --shadow-intensity: 0;
+
+  &.nav-transition-ready {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  &.nav-floating {
+    transform: translateY(var(--float-distance));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, var(--shadow-intensity));
+
+    .navigation-container {
+      // background-color: var(--bg-primary);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      margin: auto;
+      padding: 1rem;
+      border: 1px solid rgba(var(--border-color-rgb, 255, 255, 255), 0.1);
+      border-top: none;
+      width: 90%;
+
+      // Condensed navigation in floating mode
+      .navigation-items-container {
+        .nav-link {
+          padding: 1rem 0.75rem;
+          transition: all 0.3s ease;
+        }
+      }
+
+      .nav-logo {
+        a {
+          transform: scale(0.9);
+          transform-origin: left center;
+          transition: transform 0.3s ease;
+        }
+      }
+
+      // Adjust dropdown positioning in floating mode
+      .dropdown-menu {
+        top: calc(100% - 5px);
+      }
+    }
+
+    // Adjust progress bar in floating mode
+    .progress-container {
+      bottom: -1px;
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+    }
+
+    // Adjust logo on the left
+    .nav-logo-left {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+  }
+
+  // Non-floating state adjustments
+  &:not(.nav-floating) {
+    .navigation-container {
+      transition: background-color 0.3s ease, border-radius 0.3s ease, margin 0.3s ease, padding 0.3s ease, border 0.3s ease;
+    }
+
+    .nav-logo-left {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+  }
+}
+
+// Dark mode adjustments
+body.dark-mode {
+  header.nav-floating .navigation-container {
+    background-color: var(--bg-primary);
+    border-color: rgba(var(--border-color-rgb, 255, 255, 255), 0.05);
+  }
+}
+
+// Media query for smaller screens
+@media (max-width: 768px) {
+  header.nav-floating .navigation-container {
+    border-radius: 0 0 12px 12px;
+    margin: 0 8px;
+
+    // Adjust mobile menu in floating mode
+    &.active {
+      border-radius: 0 0 16px 16px;
+      margin-top: 0;
+    }
+  }
+
+  // Adjust progress bar for mobile
+  header.nav-floating .progress-container {
+    border-radius: 0;
+  }
+}

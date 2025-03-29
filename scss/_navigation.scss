@@ -1,0 +1,39 @@
+// ... existing code ...
+
+.navigation-container {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  background-color: var(--bg-primary); // Use global variable instead of hardcoded color
+  transition: all 0.3s ease;
+
+  // ... other navigation styles ...
+
+  .nav-link {
+    color: var(--text-primary); // Use global variable for text color
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover,
+    &.active {
+      color: var(--accent-color); // Use accent color variable for active/hover state
+    }
+  }
+
+  // ... other styles ...
+}
+// Theme toggle button
+.theme-toggle {
+  button {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+
+    &:hover {
+      background-color: var(--bg-secondary);
+    }
+  }
+}
+
+// ... existing code ...

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Scrollbar Example</title>
+  <style>
+    /* Basic reset and styling */
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #fafafa;
+    }
+
+    /* Container holding the scrollable content */
+    .scroll-container {
+      position: relative;
+      width: 80%;
+      max-width: 600px;
+      height: 400px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      overflow: hidden;
+      /* Hide default scrollbar */
+    }
+
+    /* Scrollable content area */
+    .scroll-content {
+      height: 100%;
+      width: calc(100% - 20px);
+      /* Allow space for the custom scrollbar */
+      overflow-y: scroll;
+      padding-right: 20px;
+      /* Prevent content from hiding behind the scrollbar */
+      box-sizing: content-box;
+    }
+
+    /* Hide native scrollbar for WebKit browsers */
+    .scroll-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Custom scrollbar container */
+    .custom-scrollbar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 10px;
+      height: 100%;
+      background: #f1f1f1;
+    }
+
+    /* Custom scrollbar thumb */
+    .custom-scrollbar .thumb {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background: #888;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="scroll-container">
+    <!-- The scrollable content -->
+    <div class="scroll-content" id="scrollContent">
+      <!-- Sample content to make scrolling necessary -->
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque feugiat odio nec diam tempus, ac suscipit
+        nulla congue. Nulla facilisi. Sed non augue nec nisl pulvinar pellentesque. Mauris et metus a nibh blandit
+        fermentum. Morbi et nunc eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
+        curae; Vestibulum non neque eget sapien lobortis ullamcorper ut in purus. Suspendisse potenti.</p>
+      <p>Vivamus et tellus velit. Quisque ullamcorper, leo a efficitur pretium, neque mauris fringilla risus, nec
+        blandit quam orci in risus. Morbi efficitur consequat ligula, sit amet placerat leo convallis non. Aenean ut
+        laoreet sapien, sed efficitur lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+        cubilia curae; Praesent in finibus dolor, in facilisis arcu. Donec aliquam fermentum nunc vel commodo.</p>
+      <p>Nulla facilisi. Mauris fringilla faucibus dui, vel pulvinar arcu malesuada sed. Phasellus vestibulum libero id
+        ex elementum, a pulvinar mi feugiat. Duis sit amet dolor leo. Duis ut lectus sed nibh dignissim tincidunt ut ac
+        elit. Quisque nec venenatis dui, sed cursus sapien. Praesent eu erat nisi. Proin a nibh vel magna sollicitudin
+        imperdiet.</p>
+      <p>Sed sed lacus ac leo interdum iaculis. Morbi commodo, elit id ultrices lacinia, ligula risus sollicitudin enim,
+        ac lobortis erat sapien nec eros. Nam scelerisque nibh sit amet nibh consequat, ac fringilla lacus semper.
+        Nullam quis ornare arcu. Vestibulum in augue sed eros commodo consectetur in sed lorem.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque feugiat odio nec diam tempus, ac suscipit
+        nulla congue. Nulla facilisi. Sed non augue nec nisl pulvinar pellentesque. Mauris et metus a nibh blandit
+        fermentum. Morbi et nunc eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
+        curae; Vestibulum non neque eget sapien lobortis ullamcorper ut in purus. Suspendisse potenti.</p>
+    </div>
+    <!-- Custom scrollbar element -->
+    <div class="custom-scrollbar" id="customScrollbar">
+      <div class="thumb" id="thumb"></div>
+    </div>
+  </div>
+
+  <script>
+    // Reference elements
+    const scrollContent = document.getElementById('scrollContent');
+    const thumb = document.getElementById('thumb');
+    const scrollbar = document.getElementById('customScrollbar');
+
+    // Update the size of the thumb based on content height
+    function updateThumbSize() {
+      const contentHeight = scrollContent.scrollHeight;
+      const visibleHeight = scrollContent.clientHeight;
+      // Thumb height is proportional to the visible area, with a minimum size
+      const thumbHeight = Math.max((visibleHeight / contentHeight) * visibleHeight, 30);
+      thumb.style.height = thumbHeight + 'px';
+    }
+
+    // Update thumb position relative to scroll
+    function updateThumbPosition() {
+      const scrollTop = scrollContent.scrollTop;
+      const contentHeight = scrollContent.scrollHeight;
+      const visibleHeight = scrollContent.clientHeight;
+      const thumbHeight = thumb.clientHeight;
+      const maxThumbTop = visibleHeight - thumbHeight;
+      // Calculate the new top for the thumb
+      const thumbTop = (scrollTop / (contentHeight - visibleHeight)) * maxThumbTop;
+      thumb.style.top = thumbTop + 'px';
+    }
+
+    // Sync thumb position with content scroll
+    scrollContent.addEventListener('scroll', updateThumbPosition);
+
+    // Variables for dragging functionality
+    let isDragging = false;
+    let startY, startTop;
+
+    // Start dragging when mousedown on thumb
+    thumb.addEventListener('mousedown', function (e) {
+      isDragging = true;
+      startY = e.clientY;
+      startTop = parseInt(window.getComputedStyle(thumb).top, 10);
+      document.body.style.userSelect = 'none'; // Prevent text selection during drag
+    });
+
+    // Calculate new scroll position on mousemove if dragging
+    document.addEventListener('mousemove', function (e) {
+      if (!isDragging) return;
+      const deltaY = e.clientY - startY;
+      let newTop = startTop + deltaY;
+      const visibleHeight = scrollContent.clientHeight;
+      const thumbHeight = thumb.clientHeight;
+      // Ensure the thumb stays within the bounds of the scrollbar
+      newTop = Math.max(0, Math.min(newTop, visibleHeight - thumbHeight));
+      thumb.style.top = newTop + 'px';
+      // Update the content scroll position proportionally
+      const scrollFraction = newTop / (visibleHeight - thumbHeight);
+      scrollContent.scrollTop = scrollFraction * (scrollContent.scrollHeight - visibleHeight);
+    });
+
+    // Stop dragging on mouseup
+    document.addEventListener('mouseup', function () {
+      isDragging = false;
+      document.body.style.userSelect = 'auto';
+    });
+
+    // Initialise thumb size on load and update on window resize
+    window.addEventListener('load', updateThumbSize);
+    window.addEventListener('resize', updateThumbSize);
+  </script>
+</body>
+
+</html>

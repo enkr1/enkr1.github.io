@@ -1,0 +1,77 @@
+header {
+  --float-distance: 0px;
+  --shadow-intensity: 0;
+}
+header.nav-transition-ready {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+header.nav-floating {
+  transform: translateY(var(--float-distance));
+  box-shadow: 0 4px 20px rgba(0, 0, 0, var(--shadow-intensity));
+}
+header.nav-floating .navigation-container {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  margin: auto;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(var(--border-color-rgb, 255, 255, 255), 0.1);
+  border-top: none;
+  width: 90%;
+}
+header.nav-floating .navigation-container .navigation-items-container .nav-link {
+  padding: 1rem 0.75rem;
+  transition: all 0.3s ease;
+}
+header.nav-floating .navigation-container .nav-logo a {
+  transform: scale(0.9);
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+}
+header.nav-floating .navigation-container .dropdown-menu {
+  top: calc(100% - 5px);
+}
+header.nav-floating .progress-container {
+  bottom: -1px;
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+}
+header.nav-floating .nav-logo-left {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+header:not(.nav-floating) .navigation-container {
+  transition: background-color 0.3s ease, border-radius 0.3s ease, margin 0.3s ease, padding 0.3s ease, border 0.3s ease;
+}
+header:not(.nav-floating) .nav-logo-left {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+body.dark-mode header.nav-floating .navigation-container {
+  background-color: var(--bg-primary);
+  border-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(var(--border-color-rgb, 255, 255, 255), 0.05);
+}
+
+@media (max-width: 768px) {
+  header.nav-floating .navigation-container {
+    border-radius: 0 0 12px 12px;
+    margin: 0 8px;
+  }
+  header.nav-floating .navigation-container.active {
+    border-radius: 0 0 16px 16px;
+    margin-top: 0;
+  }
+  header.nav-floating .progress-container {
+    border-radius: 0;
+  }
+}

@@ -1,0 +1,20 @@
+// Emergency styling to ensure content is visible
+body {
+  background-color: $theme-dark-color;
+  color: $theme-font-color;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.hide-all-in-body {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+header,
+section,
+footer {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
