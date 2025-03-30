@@ -21,26 +21,21 @@
     z-index: 999;
     transition: transform 500ms ease-out;
 
-    // @media all and (max-width: $screen_sm) {
-    top: 2rem;
-    right: 2rem;
-    width: 3rem;
-    height: 2rem;
-    // }
+    @media all and (max-width: var(--screen-sm)) {
+      top: 2rem;
+      right: 2rem;
+      width: 3rem;
+      height: 2rem;
+    }
 
     .bar {
-      background: $theme-mobile-bar-color;
+      background: #fff;
       width: 100%;
       height: 3px;
       border-radius: .8rem;
-      // -webkit-box-shadow:
-      //     0px 0px 12px 0px var(--third-color);
-      // -moz-box-shadow:
-      //     0px 0px 12px 0px var(--third-color);
-      box-shadow:
-        0px 0px 12px 0px $theme-dark-color;
+      box-shadow: 0px 0px 12px 0px var(--primary); // Changed from $theme-dark-color to --primary
 
-      @media all and (max-width: $screen_sm) {
+      @media all and (max-width: var(--screen-sm)) {
         height: 2px;
       }
     }
@@ -97,7 +92,7 @@
   // mix-blend-mode: difference;
   height: 100vh;
   right: -100vw;
-  background: $theme-mobile-bar-bg;
+  background: var(--mobile-nav-bg); // Changed from $theme-mobile-bar-bg
   opacity: 0;
   background-size: 200% 200%;
   animation: mobile-bar-bg-mover 4s ease infinite;
@@ -122,14 +117,14 @@
   display: block;
   position: fixed;
   text-align: center;
-  letter-spacing: $logo-text-letter-spacing;
-  font-size: $logo-text-font-size;
+  letter-spacing: var(--logo-letter-spacing); // Changed from $logo-text-letter-spacing
+  font-size: var(--logo-font-size); // Changed from $logo-text-font-size
   margin: 0 1rem;
-  transform: translate(0, $nav-logo-left-y);
+  transform: translate(0, var(--nav-logo-y)); // Changed from $nav-logo-left-y
   transition: all 0.6s ease-in-out;
 
   a:hover {
-    color: $theme-light-color;
+    color: var(--accent); // Changed from $theme-light-color
   }
 }
 
@@ -140,29 +135,12 @@
   width: 1.6em;
   border-radius: .4rem;
   // background: $theme-mobile-bar-bg;
-  background: $desktop-secondary-nav-bar-color-light;
-  box-shadow: $neumorphism-box-shadow;
+  background: var(--desktop-nav-bg); // Changed from $desktop-secondary-nav-bar-color-light
+  box-shadow: var(--nav-shadow); // Changed from $neumorphism-box-shadow
   cursor: pointer;
   transform: translateY(1em);
   transition: transform 1.4s ease-in-out;
 
-  /*
-      // For the animation to go back
-      &::after {
-          position: absolute;
-          transform: translateY(1em);
-          top: .6em;
-          right: 0;
-          color: $theme-font-color;
-          opacity: 0;
-          content: "Menu Toggle";
-          white-space: nowrap;
-          transition: all .4s;
-          user-select: none;
-          font-size: 1px;
-          font-style: italic;
-      }
-      */
 
   &:hover {
     transform: translateY(1em) scale(1.1);
@@ -187,8 +165,8 @@
 .navigation-container-list {
   .nav-logo {
     text-align: center;
-    letter-spacing: $logo-text-letter-spacing;
-    font-size: $logo-text-font-size;
+    letter-spacing: var(--logo-letter-spacing); // Changed from $logo-text-letter-spacing
+    font-size: var(--logo-font-size); // Changed from $logo-text-font-size
     height: 50%;
     padding-bottom: 1rem;
     user-select: none;
@@ -196,7 +174,7 @@
 
     a {
       font-weight: 400;
-      color: $logo-color;
+      color: var(--accent); // Changed from $logo-color
     }
   }
 
@@ -213,18 +191,15 @@
       letter-spacing: .2rem;
       font-size: 1.3rem;
       padding: .6rem 2rem;
-      color: $theme-font-color;
-      color: $theme-color;
+      color: var(--text-primary); // Changed from $theme-font-color and $theme-color
+      color: var(--accent);
       border: 1px solid transparent;
 
-      @media all and (max-width: $screen_lg) {
+      @media all and (max-width: var(--screen-lg)) { // Changed from $screen_lg
         padding: 1.2rem;
       }
 
-      // @media all and (max-width: $screen_md_2) {
-      // }
-
-      @media all and (max-width: $screen_sm) {
+      @media all and (max-width: var(--screen-sm)) { // Changed from $screen_sm
         font-size: 1.2rem;
         padding: 5% 1rem;
       }
@@ -254,24 +229,18 @@
 
     .nav-link:hover,
     .nav-link:focus {
-      color: $theme-color;
+      color: var(--accent);
       transition: all .2s ease-in-out;
     }
   }
 
   p {
-    @media all and (max-width: $screen_sm) {
+    @media all and (max-width: var(--screen-sm)) { // Changed from $screen_sm
       font-size: 1.1rem;
     }
 
     &.designedby {
-      position: absolute;
-      bottom: 0;
-      margin-bottom: 4rem;
-      font-size: 1.5rem;
-      display: none;
-
-      @media all and (max-width: $screen_md_2) {
+      @media all and (max-width: var(--screen-md-2)) { // Changed from $screen_md_2
         font-size: 1.1rem;
         display: block;
       }

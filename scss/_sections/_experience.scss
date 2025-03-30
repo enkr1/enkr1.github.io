@@ -6,7 +6,7 @@
     padding: 3rem 0;
     overflow: hidden;
 
-    @media only screen and (max-width: $screen_md_2) {
+    @media only screen and (max-width: var(--screen-md-2)) {
         padding: 8rem 0;
     }
 
@@ -22,7 +22,7 @@
             height: 100vh;
             min-height: 100vh;
             height: fit-content;
-            // border-left: 3px solid $theme-color;
+            // border-left: 3px solid var(--accent);
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
@@ -44,7 +44,7 @@
                 z-index: 1;
 
                 // 1281
-                @media all and (max-width: $screen_lg) {
+                @media all and (max-width: var(--screen-lg)) {
                     width: 150rem;
                     left: -5rem;
                     top: -4rem;
@@ -52,7 +52,7 @@
 
                 // NOTE: Decided to not show the svg on mobile
                 //                 // 992
-                //                 @media all and (max-width: $screen_md_2) {
+                //                 @media all and (max-width: var(--screen-md-2)) {
                 //                     width: 8rem;
                 //                     left: 3rem;
                 //                     top: -8rem;
@@ -60,28 +60,28 @@
                 //                 }
                 //
                 //                 // 480
-                //                 @media all and (max-width: $screen_xs) {
+                //                 @media all and (max-width: var(--screen-xs)) {
                 //                     // ...
                 //                 }
 
                 path {
                     animation: line-anime 8s ease-in-out forwards .3s;
 
-                    @media all and (max-width: $screen_xs) {
+                    @media all and (max-width: var(--screen-xs)) {
                         animation: line-anime 3s ease-in-out forwards .3s;
                     }
                 }
             }
 
-            @media all and (max-width: $screen_lg) {
+            @media all and (max-width: var(--screen-lg)) {
                 margin: 0 0 0 20vw;
             }
 
-            @media all and (max-width: $screen_md_2) {
+            @media all and (max-width: var(--screen-md-2)) {
                 margin: 0 0 0 10vw;
             }
 
-            @media all and (max-width: $screen_xs) {
+            @media all and (max-width: var(--screen-xs)) {
                 margin: 0 0 0 8vw;
             }
 
@@ -97,7 +97,7 @@
                     width: 2rem;
                     top: 0;
                     left: -1.2rem;
-                    background-color: $theme-color;
+                    background-color: var(--accent);
                     transition: .8s all ease-in-out;
                 }
 
@@ -112,7 +112,7 @@
                     text-align: left;
                     width: 100%;
                     margin: 0 0 .8rem;
-                    // border-bottom: .8px solid $theme-light-color;
+                    // border-bottom: .8px solid var(--accent);
 
                     &::before,
                     &::after {
@@ -129,7 +129,7 @@
                         font-size: 2rem;
                         transform: translate(-30rem, -125%);
 
-                        @media all and (max-width: $screen_md_2) {
+                        @media all and (max-width: var(--screen-md-2)) {
                             font-size: 1.6rem;
                             text-align: left;
                             transform: translate(-15rem, -20%) rotate(-90deg);
@@ -144,13 +144,13 @@
                         margin-bottom: 0.3rem;
                         letter-spacing: .1rem;
 
-                        @media all and (max-width: $screen_md_2) {
+                        @media all and (max-width: var(--screen-md-2)) {
                             font-size: 1.6rem;
                         }
                     }
 
                     p {
-                        @media all and (max-width: $screen_md_2) {
+                        @media all and (max-width: var(--screen-md-2)) {
                             font-size: 1.4rem;
                         }
                     }

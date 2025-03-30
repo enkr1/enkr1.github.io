@@ -4,7 +4,7 @@
   .snow {
     position: fixed;
     display: block;
-    background: $theme-color;
+    background: var(--accent);
     top: -20%;
     margin: 2%;
   }

@@ -36,7 +36,7 @@
                     .portfolio-category {
                         margin: 0;
                         font-size: 1.6rem;
-                        color: $theme-color;
+                        color: var(--accent);
                         transform: translate(0, -0.4rem);
                         display: block;
                     }
@@ -46,15 +46,15 @@
                         margin-top: 1.2rem;
                         font-size: 1.3rem;
                         text-transform: uppercase;
-                        color: $theme-light-color;
+                        color: var(--accent);
 
-                        @media all and (max-width: $screen_sm) {
+                        @media all and (max-width: var(--screen-sm)) {
                             margin-bottom: 2rem;
                         }
 
                         &:hover,
                         &:hover {
-                            color: $theme-color;
+                            color: var(--accent);
                         }
                     }
                 }
@@ -69,7 +69,7 @@
 //     justify-content: center;
 //     margin: 10rem 0;
 
-//     @media all and (max-width: $screen_sm) {
+//     @media all and (max-width: var(--screen-sm)) {
 //         align-items: unset !important;
 //         flex-direction: column !important;
 //     }
@@ -95,7 +95,7 @@
 // .portfolio-description {
 //     flex: 1;
 
-//     @media all and (max-width: $screen_md_2) {
+//     @media all and (max-width: var(--screen-md-2)) {
 
 //         /* this is the second item  */
 //         &.has-margin-right {
@@ -103,13 +103,13 @@
 //         }
 //     }
 
-//     @media all and (max-width: $screen_sm) {
+//     @media all and (max-width: var(--screen-sm)) {
 //         margin: 0;
 //         order: 2;
 //     }
 
 //     p {
-//         @media all and (max-width: $screen_sm) {
+//         @media all and (max-width: var(--screen-sm)) {
 //             text-align: justify;
 //             text-justify: inter-word;
 //         }
@@ -135,16 +135,16 @@
 //     margin-top: 2.5rem;
 //     font-size: 1.5rem;
 //     text-transform: uppercase;
-//     color: $theme-light-color;
+//     color: var(--accent);
 
-//     @media all and (max-width: $screen_sm) {
+//     @media all and (max-width: var(--screen-sm)) {
 //         margin-bottom: 2rem;
 //     }
 // }
 
 // .portfolio-description .cta:hover,
 // .cta:hover {
-//     color: $theme-color;
+//     color: var(--accent);
 // }
 
 // .cta {

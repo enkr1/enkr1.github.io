@@ -87,11 +87,11 @@
       width: 50vw;
       margin: 0 auto 2rem;
 
-      @media screen and (max-width: $screen_sm) {
+      @media screen and (max-width: var(--screen-sm)) {
         width: 80%;
       }
 
-      @media screen and (max-width: $screen_xs) {
+      @media screen and (max-width: var(--screen-xs)) {
         width: 85%;
       }
 
@@ -101,11 +101,11 @@
         width: fit-content;
         margin: auto;
 
-        @media screen and (max-width: $screen_sm) {
+        @media screen and (max-width: var(--screen-sm)) {
           font-size: 1.7rem;
         }
 
-        @media screen and (max-width: $screen_xs) {
+        @media screen and (max-width: var(--screen-xs)) {
           font-size: 1.6rem;
         }
 
@@ -161,11 +161,11 @@
             opacity: .5;
             transform: translate(0, 35%);
 
-            @media screen and (max-width: $screen_sm) {
+            @media screen and (max-width: var(--screen-sm)) {
               font-size: $font-size-al-title-sm;
             }
 
-            @media screen and (max-width: $screen_xs) {
+            @media screen and (max-width: var(--screen-xs)) {
               font-size: $font-size-al-title-xs;
             }
           }
@@ -174,7 +174,7 @@
             width: fit-content;
 
             p.al-title {
-              color: $theme-light-color;
+              color: var(--accent);
               font-size: $font-size-al-p-xl;
 
               span:nth-child(2) {
@@ -185,11 +185,11 @@
                 opacity: .8;
               }
 
-              @media screen and (max-width: $screen_sm) {
+              @media screen and (max-width: var(--screen-sm)) {
                 font-size: $font-size-al-p-sm;
               }
 
-              @media screen and (max-width: $screen_xs) {
+              @media screen and (max-width: var(--screen-xs)) {
                 font-size: $font-size-al-p-xs;
               }
             }
@@ -222,11 +222,11 @@
       padding: .4rem 1.2rem;
       border: 1px solid transparent;
 
-      // @media screen and (max-width: $screen_sm) {
+      // @media screen and (max-width: var(--screen-sm)) {
       //     width: 80vw;
       // }
 
-      @media screen and (max-width: $screen_xs) {
+      @media screen and (max-width: var(--screen-xs)) {
         width: 85vw;
       }
 
@@ -237,7 +237,7 @@
       &:hover {
         transform: scale(.99);
         // background-color: rgba(255, 255, 255, 0.8);
-        border: 1px solid $theme-light-color;
+        border: 1px solid var(--accent);
 
         a span,
         ::before {
@@ -254,7 +254,7 @@
         height: 3.4rem;
         // text-transform: uppercase;
 
-        @media screen and (max-width: $screen_sm) {
+        @media screen and (max-width: var(--screen-sm)) {
           height: 3rem;
           // width: 80vw;
         }
@@ -263,11 +263,11 @@
           font-size: $font-size-platforms-p-xl;
           opacity: 1 !important;
 
-          @media screen and (max-width: $screen_sm) {
+          @media screen and (max-width: var(--screen-sm)) {
             font-size: $font-size-platforms-p-sm;
           }
 
-          @media screen and (max-width: $screen_xs) {
+          @media screen and (max-width: var(--screen-xs)) {
             font-size: $font-size-platforms-p-xs;
           }
         }

@@ -1,7 +1,6 @@
 // Emergency styling to ensure content is visible
 body {
-  background-color: $theme-dark-color;
-  color: $theme-font-color;
+  background-color: var(--primary);
   opacity: 1 !important;
   visibility: visible !important;
 }

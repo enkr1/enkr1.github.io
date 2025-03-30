@@ -118,7 +118,7 @@
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
   <!-- Custom Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=3.0.0">
+  <link rel="stylesheet" href="css/main.css?v=1.0.0">
 
   <meta name="google-site-verification" content="MgiJh5gO1R8YrVWlG5vutVtclBwyBZtqSMyAFS2UebY" />
 
@@ -136,50 +136,7 @@
     <link rel="stylesheet" href="/scss/main.css">
     <script type="module" src="/scripts/main.js"></script>
   </head>
-  <body>
-    <!-- Preloader -->
-    <preloader-component></preloader-component>
 
-    <!-- Header/Navigation -->
-    <header>
-      <div class="navigation-container">
-        <div class="navigation-container-list">
-          <div class="nav-logo">
-            <a href="#home">Your Logo</a>
-          </div>
-          <ul class="navigation-items-container">
-            <!-- Navigation items will be populated by JS -->
-          </ul>
-        </div>
-      </div>
-    </header>
-
-    <!-- Main Content Sections -->
-    <main>
-      <section id="home">
-        <primary-about-component></primary-about-component>
-      </section>
-
-      <section id="experience">
-        <experience-component></experience-component>
-      </section>
-
-      <section id="portfolio">
-        <portfolio-items-component></portfolio-items-component>
-      </section>
-
-      <section id="contact">
-        <!-- Contact form component -->
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer-component></footer-component>
-
-    <!-- Eye Candy Animations -->
-    <eye-candy-component></eye-candy-component>
-  </body>
-  </html>
   <!-- <preloader-component></preloader-component> -->
 
   <header id="home">
@@ -189,10 +146,6 @@
         <div class="bar half middle"></div>
         <div class="bar half end"></div>
       </div>
-    </div>
-
-    <div class="nav-logo-left">
-      <a href="/">ENKR</a>
     </div>
 
     <nav class="navigation-container">
@@ -256,60 +209,45 @@
   <article id="all-sections">
     <section id="landing-section" class="landing-section">
       <div class="hero-content">
-        <h1 class="gradient-text">
-          <span class="title-line">Code.</span>
-          <span class="title-line">Create.</span>
-          <span class="title-line">Perform.</span>
-        </h1>
+        <div class="hero-text-container">
+          <h1 class="thin-typography">
+            <span class="title-line"><span class="red-accent">C</span>ode.</span>
+            <span class="title-line"><span class="red-accent">C</span>reate.</span>
+            <span class="title-line"><span class="red-accent">P</span>erform.</span>
+          </h1>
 
-        <div class="bio-badge">
-          <p>Full-Stack Developer & Beatbox Artist</p>
-          <div class="accent-line"></div>
+          <div class="bio-badge">
+            <p>Full-Stack Developer <span class="divider">|</span> Beatbox Artist</p>
+            <div class="thin-line-animation"></div>
+          </div>
         </div>
 
         <div class="interactive-actions">
-          <a href="#experience" class="action-btn holographic">
+          <a href="#experience" class="action-btn minimal-btn">
             <span>View Work</span>
-            <div class="btn-glow"></div>
+            <div class="line-hover"></div>
           </a>
-          <a href="#contact" class="action-btn inverted">
+          <a href="#contact" class="action-btn outline-btn">
             <span>Get in Touch</span>
           </a>
         </div>
       </div>
 
       <div class="tech-stack-grid">
+        <!-- Tech icons with modern styling -->
         <div class="tech-icon" data-tooltip="JavaScript">
-          <i class="fab fa-js-square"></i>
+          <div class="icon-wrapper">
+            <i class="fab fa-js-square"></i>
+          </div>
         </div>
-        <div class="tech-icon" data-tooltip="React">
-          <i class="fab fa-react"></i>
-        </div>
-        <div class="tech-icon" data-tooltip="Node.js">
-          <i class="fab fa-node-js"></i>
-        </div>
-        <div class="tech-icon" data-tooltip="HTML5">
-          <i class="fab fa-html5"></i>
-        </div>
-        <div class="tech-icon" data-tooltip="CSS3">
-          <i class="fab fa-css3-alt"></i>
-        </div>
-        <div class="tech-icon" data-tooltip="Python">
-          <i class="fab fa-python"></i>
-        </div>
-        <div class="tech-icon" data-tooltip="Git">
-          <i class="fab fa-git-alt"></i>
-        </div>
-        <div class="tech-icon" data-tooltip="AWS">
-          <i class="fab fa-aws"></i>
-        </div>
+        <!-- Repeat for other tech icons -->
       </div>
 
-      <div class="visual-elements">
-        <div class="animated-shape shape-1"></div>
-        <div class="animated-shape shape-2"></div>
-        <div class="animated-shape shape-3"></div>
-        <div class="particle-container" id="particles-js"></div>
+      <!-- Premium decorative elements -->
+      <div class="decorative-elements">
+        <div class="red-line vertical-line line-1"></div>
+        <div class="red-line horizontal-line line-2"></div>
+        <div class="red-dot dot-1"></div>
       </div>
     </section>
 
@@ -355,9 +293,9 @@
         </div>
       </div>
     </section>
+
     <!-- <primary-about-section></primary-about-section> -->
     <!-- <secondary-about-section></secondary-about-section> -->
-
     <!-- <specialisation-section></specialisation-section> -->
     <experience-section></experience-section>
 

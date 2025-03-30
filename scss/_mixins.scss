@@ -15,3 +15,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+@mixin theme-aware($property, $color-var) {
+  #{$property}: var(--#{$color-var});
+}
+
+@mixin on-accent {
+  background-color: var(--accent);
+  color: var(--text-on-accent);
+}

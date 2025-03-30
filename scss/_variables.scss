@@ -1,11 +1,4 @@
 :root {
-  // Color System
-  --primary: #1A1A2E;
-  --secondary: #0F3460;
-  --accent: #E94560;
-  --text-primary: #F5F5F5;
-  --text-secondary: rgba(245, 245, 245, 0.7);
-
   /**
    * GLOBAL DESIGN TOKENS & VARIABLES
    *
@@ -23,7 +16,12 @@
   --font-primary: 'Inter', sans-serif;
   --font-secondary: 'Montserrat', sans-serif;
   --font-size-base: 1rem;
-  
+
+  // ===== TYPOGRAPHY SIZES =====
+  --font-size-default: 1.2rem;
+  --font-size-sm: 1.15rem;
+  --font-size-xs: 1.1rem;
+
   // ===== SPACING SYSTEM =====
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
@@ -35,17 +33,18 @@
   --transition-slow: 0.5s;
 
   // ===== MEDIA BREAKPOINTS =====
-  $screen_xl: 1440px;
-  $screen_lg: 1281px;
-  $screen_md_1: 1024px;
-  $screen_md_2: 992px;
-  $screen_sm: 768px;  // Tablet
-  $screen_xs: 480px;
-  $screen_xxs: 320px;
+  --screen-xl: 1440px;
+  --screen-lg: 1281px;
+  --screen-md-1: 1024px;
+  --screen-md-2: 992px;
+  --screen-sm: 768px;  // Tablet
+  --screen-xs: 480px;
+  --screen-xxs: 320px;
 
   // ===== COMPONENT MEASUREMENTS =====
-  $logo-text-font-size: 2rem;
-  $logo-text-letter-spacing: 0.6rem;
+  --logo-font-size: 2rem;
+  --logo-letter-spacing: 0.6rem;
+  --nav-logo-y: 0; // Adjust this value as needed
 }
 
 $default_global_font_size: 1.2rem;

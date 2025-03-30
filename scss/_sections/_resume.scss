@@ -27,21 +27,21 @@
       // transform: translate(-50%, -50%);
 
       //       // small laptop
-      //       @media all and (max-width: $screen_md_1) {
+      //       @media all and (max-width: var(--screen-md-1)) {
       //           width: 70em;
       //       }
       //
       //       // tablet
-      //       @media all and (max-width: $screen_sm) {
+      //       @media all and (max-width: var(--screen-sm)) {
       //           width: 40em;
       //       }
       //
       //       // mobile
-      //       @media all and (max-width: $screen_xs) {
+      //       @media all and (max-width: var(--screen-xs)) {
       //           width: 30em;
       //       }
       //
-      //       @media all and (max-width: $screen_xxs) {
+      //       @media all and (max-width: var(--screen-xxs)) {
       //           width: 26em;
       //       }
 

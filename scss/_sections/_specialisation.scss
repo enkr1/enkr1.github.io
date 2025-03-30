@@ -2,12 +2,12 @@
 .specialisation {
     // ...
 
-    @media only screen and (max-width: $screen_md_1) {
+    @media only screen and (max-width: var(--screen-md-1)) {
         height: fit-content;
     }
 
     // TODO: WIP THE NEW DESIGN
-    @media only screen and (min-width: $screen_md_2) {
+    @media only screen and (min-width: var(--screen-md-2)) {
         overflow: hidden;
 
         .section-heading {
@@ -17,7 +17,7 @@
 
             h1 {
                 font-size: 28rem;
-                color: $theme-h1-color;
+                color: #000;
                 transform: translate(.6em, -1em);
 
                 &::after {
@@ -38,7 +38,7 @@
     }
 
     // TODO: WIP THE NEW DESIGN
-    @media only screen and (min-width: $screen_md_2) {
+    @media only screen and (min-width: var(--screen-md-2)) {
         .skills-container {
             // ...
             height: 100vh;
@@ -50,24 +50,24 @@
     .icon-container {
         width: 14rem;
         height: 14rem;
-        border: 2px solid $theme-color;
+        border: 2px solid var(--accent);
         margin-bottom: 2rem;
         display: flex;
         transform: rotate(0deg);
         box-shadow:
-            0px 0px 22px 0px $theme-light-color;
+            0px 0px 22px 0px var(--accent);
 
-        @media all and (max-width: $screen_md_2) {
+        @media all and (max-width: var(--screen-md-2)) {
             font-size: 3.5rem;
         }
 
         i {
             position: relative;
-            color: $theme-light-color;
+            color: var(--accent);
             font-size: 5rem;
             margin: auto;
 
-            @media all and (max-width: $screen_sm) {
+            @media all and (max-width: var(--screen-sm)) {
                 font-size: 4.5rem;
             }
         }
@@ -77,11 +77,11 @@
             content: '';
             width: 13.1rem;
             height: 13.1rem;
-            border: 2px solid $theme-color;
+            border: 2px solid var(--accent);
             display: flex;
             transform: rotate(45deg);
             box-shadow:
-                0px 0px 22px 0px $theme-light-color;
+                0px 0px 22px 0px var(--accent);
             opacity: 0.8;
         }
     }
@@ -108,7 +108,7 @@
                 text-transform: uppercase;
                 letter-spacing: 2px;
                 margin: 4rem -2px 2rem 0;
-                color: $theme-light-color;
+                color: var(--accent);
             }
         }
     }

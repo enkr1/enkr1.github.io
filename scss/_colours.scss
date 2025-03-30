@@ -1,36 +1,70 @@
 /**
- * COLOR DESIGN TOKENS
- *
- * This file contains all color-related variables including:
- * - Base colors
- * - Text colors
- * - Gradients
- * - Effects (shadows, glows)
- * - RGB values for JS manipulation
- *
- * Note: Non-color variables belong in _variables.scss
+ * MODERN RED/WHITE COLOR THEME
  */
+
+// ===== EFFECT COLORS =====
+$r: 209; // Red channel for accent
+$g: 0; // Green channel
+$b: 0; // Blue channel
+
+// Modern shadow effects
+$neumorphism-box-shadow: 0 -0.5rem 1rem rgba($r, $g, $b, 0.05),
+  0.5rem 0 1rem rgba($r, $g, $b, 0.05),
+  -0.5rem 0 1rem rgba($r, $g, $b, 0.05),
+  0 0.5rem 1rem rgba($r, $g, $b, 0.1);
+
+// Gradients
+$theme-gradient: linear-gradient(135deg, var(--accent), var(--accent-dark));
+$theme-mobile-bar-bg: linear-gradient(90deg, var(--primary), var(--accent));
+
 
 // ===== BASE COLOR PALETTE =====
 :root {
-  --primary: #1A1A2E; // Deep navy blue
-  --secondary: #0F3460; // Rich indigo
-  --accent: #E94560; // Vibrant coral
-  --text-primary: #F5F5F5; // Off-white text
-  --text-secondary: rgba(245, 245, 245, 0.7); // Semi-transparent text
+  // Primary colors
+  --primary: #FFFFFF; // Pure white background
+  --secondary: #F5F5F5; // Off-white for secondary elements
+  --accent: #D10000; // Vibrant primary red
+  --accent-dark: #A00000; // Darker red for hover states
+
+  // Text colors
+  --text-primary: #1A1A1A; // Dark gray for primary text
+  --text-secondary: #555555; // Medium gray for secondary text
+  --text-on-accent: #FFFFFF; // White text on red elements
+
+  // UI Colors
+  --border-color: #E0E0E0; // Light gray borders
+  --card-bg: #FFFFFF; // White cards
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  // Hover states
+  // Replace color functions with explicit values
+  --accent-hover: #B80000; // Manually defined darker red
+  --text-primary-hover: #4D4D4D; // Manually defined lighter gray
+
+  // Or use opacity for hover effects
+  --accent-hover-opacity: rgba(209, 0, 0, 0.8);
+  --text-primary-hover-opacity: rgba(26, 26, 26, 0.8);
+
+  --mobile-nav-bg: linear-gradient(45deg, var(--primary), var(--accent));
+  --desktop-nav-bg: linear-gradient(45deg, var(--primary), var(--accent));
+  --nav-shadow: 0 -0.8rem 0 rgba(var(--accent-rgb), 0.08),
+    0.8rem 0 0 rgba(var(--accent-rgb), 0.1),
+    -0.8rem 0 0 rgba(var(--accent-rgb), 0.1),
+    0 0.8rem 0 rgba(var(--accent-rgb), 0.3);
+  --accent-rgb: 209, 0, 0; // RGB values for your accent color
+
+  --media-icon-color: #F5F5F5;
 }
 
-// ===== EFFECT COLORS =====
-$r: 233; // Red channel for accent
-$g: 69; // Green channel for accent
-$b: 96; // Blue channel for accent
-
-// ===== SHADOWS & EFFECTS =====
-$neumorphism-box-shadow: 0 -0.8rem 0 rgba($r, $g, $b, 0.08),
-  0.8rem 0 0 rgba($r, $g, $b, 0.1),
-  -0.8rem 0 0 rgba($r, $g, $b, 0.1),
-  0 0.8rem 0 rgba($r, $g, $b, 0.3);
-
-// ===== GRADIENTS =====
-$theme-gradient: linear-gradient(135deg, var(--secondary), var(--primary));
-$theme-mobile-bar-bg: linear-gradient(45deg, var(--primary), var(--secondary));
+// Dark mode (optional inverted scheme)
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #1A1A1A;
+    --secondary: #252525;
+    --text-primary: #F5F5F5;
+    --text-secondary: #CCCCCC;
+    --border-color: #444444;
+    --card-bg: #252525;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}
