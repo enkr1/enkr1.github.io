@@ -26,6 +26,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -37,6 +38,7 @@
     opacity: 0;
     transform: scale(0.8);
   }
+
   100% {
     opacity: 0.5;
     transform: scale(1);
@@ -48,6 +50,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -59,8 +62,62 @@
     width: 0;
     opacity: 0;
   }
+
   100% {
     width: 3rem;
+    opacity: 1;
+  }
+}
+
+@keyframes rotateDashedBorder {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  70% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes rotateDashedBorder {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes navEntranceEffect {
+  0% {
+    transform: translateX(-10px);
+    opacity: 0.8;
+  }
+
+  70% {
+    transform: translateX(5px);
+  }
+
+  100% {
+    transform: translateX(0);
     opacity: 1;
   }
 }

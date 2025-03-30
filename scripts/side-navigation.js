@@ -7,13 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const navClose = document.querySelector('.nav-close');
   const overlay = document.querySelector('.overlay');
   const navLinks = document.querySelectorAll('.side-nav-links .nav-item a');
+  const dropdownToggles = document.querySelectorAll('.side-nav-links .dropdown .dropdown-toggle');
 
   console.log('Nav elements found:', {
     trigger: navTrigger,
     nav: sideNav,
     close: navClose,
     overlay: overlay,
-    links: navLinks.length
+    links: navLinks.length,
+    dropdowns: dropdownToggles.length
   });
 
   // Open navigation
@@ -34,10 +36,30 @@ document.addEventListener('DOMContentLoaded', () => {
   navClose.addEventListener('click', closeNav);
   overlay.addEventListener('click', closeNav);
 
-  // Close navigation when clicking on links (mobile)
+  // Close navigation when clicking on non-dropdown links
   navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      closeNav();
+    if (!link.classList.contains('dropdown-toggle')) {
+      link.addEventListener('click', () => {
+        closeNav();
+      });
+    }
+  });
+
+  // Handle dropdown toggles
+  dropdownToggles.forEach(toggle => {
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      const parent = toggle.parentElement;
+
+      // Close other open dropdowns
+      document.querySelectorAll('.side-nav-links .dropdown.open').forEach(openDropdown => {
+        if (openDropdown !== parent) {
+          openDropdown.classList.remove('open');
+        }
+      });
+
+      // Toggle current dropdown
+      parent.classList.toggle('open');
     });
   });
 

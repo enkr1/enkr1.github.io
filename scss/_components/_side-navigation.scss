@@ -6,13 +6,12 @@ header {
     position: fixed;
     top: 2rem;
     left: 2rem;
-    z-index: 1500; // Increase z-index significantly to ensure it's above everything
+    z-index: 1500;
     cursor: pointer;
-    width: 3rem; // Add explicit width
-    height: 3rem; // Add explicit height
-    display: block !important; // Force display
+    width: 3rem;
+    height: 3rem;
 
-    // Add some debugging styles to make it more visible during development
+    // Remove the always-visible debug outline
     &::after {
       content: '';
       position: absolute;
@@ -20,10 +19,18 @@ header {
       left: -5px;
       right: -5px;
       bottom: -5px;
-      border: 1px dashed red;
+      border: 1px dashed var(--accent);
       border-radius: 50%;
       z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 4s linear;
+      transform: rotate(0deg);
       pointer-events: none;
+    }
+
+    &:hover::after {
+      opacity: 0.7;
+      animation: rotateDashedBorder 4s linear infinite;
     }
 
     .trigger-icon {
@@ -38,7 +45,32 @@ header {
       justify-content: center;
       transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 
-      // Rest of the trigger-icon styles remain the same
+      .trigger-letter {
+        font-family: var(--font-primary);
+        font-size: 1.5rem;
+        color: var(--accent);
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .pulse-ring {
+        position: absolute;
+        top: -8px;
+        left: -8px;
+        right: -8px;
+        bottom: -8px;
+        border: 2px solid var(--accent);
+        border-radius: 50%;
+        opacity: 0;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+
+        .trigger-letter {
+          transform: rotate(360deg);
+        }
+      }
     }
   }
 
@@ -134,6 +166,7 @@ header {
       flex: 1;
       padding: 2rem 0;
       overflow-y: auto;
+      overflow-x: hidden; // Fix when element expand, scrollbar appears
 
       ul {
         list-style: none;
@@ -148,7 +181,7 @@ header {
             align-items: center;
             padding: 1rem 2rem;
             color: var(--text-secondary);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
             position: relative;
 
             &::before {
@@ -169,12 +202,21 @@ header {
               width: 1.5rem;
               text-align: center;
               color: var(--accent);
+              transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
             }
 
             .nav-text {
               font-family: var(--font-tertiary);
               font-size: 1.1rem;
               letter-spacing: 0.05em;
+              flex: 1;
+            }
+
+            .dropdown-icon {
+              margin-left: 0.5rem;
+              font-size: 0.8rem;
+              color: var(--text-secondary);
+              transition: all 0.3s ease;
             }
 
             &:hover,
@@ -183,6 +225,15 @@ header {
 
               &::before {
                 width: 4px;
+                box-shadow: 0 0 10px var(--accent);
+              }
+
+              .nav-icon {
+                transform: scale(1.2);
+              }
+
+              .dropdown-icon {
+                color: var(--accent);
               }
             }
           }
@@ -194,7 +245,60 @@ header {
               width: 4px;
             }
           }
+
+          // Dropdown styles
+          &.dropdown {
+            position: relative;
+
+            .dropdown-toggle {
+              cursor: pointer;
+            }
+
+            .dropdown-menu {
+              max-height: 0;
+              overflow: hidden;
+              padding-left: 3.5rem;
+              transition: max-height 0.3s ease, opacity 0.3s ease;
+              opacity: 0;
+
+              li {
+                margin: 0.5rem 0;
+
+                a {
+                  padding: 0.5rem 1rem;
+                  font-size: 0.95rem;
+                  color: var(--text-secondary);
+
+                  &:hover {
+                    color: var(--accent);
+                    transform: translateX(5px);
+                  }
+                }
+              }
+            }
+
+            &.open {
+              .dropdown-toggle .dropdown-icon {
+                transform: rotate(180deg);
+                color: var(--accent);
+              }
+
+              .dropdown-menu {
+                max-height: 500px;
+                opacity: 1;
+              }
+            }
+          }
         }
+      }
+
+      .nav-footer-text {
+        padding: 2rem;
+        text-align: center;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-style: italic;
+        opacity: 0.7;
       }
     }
 
@@ -255,12 +359,12 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(3px);
-    z-index: 1499; // Just below the navigation but above everything else
+    background: rgba(0, 0, 0, 0.7); // Darker overlay for better focus
+    backdrop-filter: blur(8px); // Increased blur for more emphasis
+    z-index: 1499;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); // Smoother transition
 
     &.active {
       opacity: 1;
@@ -268,20 +372,67 @@ header {
     }
   }
 
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-      opacity: 0.5;
+  .side-navigation {
+    position: fixed;
+    top: 0;
+    left: -30rem;
+    width: 30rem;
+    max-width: 80vw;
+    height: 100vh;
+    background: var(--primary);
+    z-index: 1500;
+    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2); // Enhanced shadow
+    transition: left 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    display: flex;
+    flex-direction: column;
+
+    // Add subtle pattern to the background
+    background-image:
+      linear-gradient(to right, rgba(var(--accent-rgb), 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(var(--accent-rgb), 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+
+    &.active {
+      left: 0;
+      animation: navEntranceEffect 0.8s ease-out; // Add entrance animation
     }
 
-    70% {
-      transform: scale(1.2);
-      opacity: 0;
+    // Add a subtle accent border on the right
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+      opacity: 0.3;
     }
 
-    100% {
-      transform: scale(1);
-      opacity: 0;
+    .side-nav-links {
+      ul .nav-item a {
+        // Enhanced hover effect for nav items
+        &:hover, &:focus {
+          color: var(--text-primary);
+          transform: translateX(5px); // Slight movement on hover
+
+          .nav-icon {
+            transform: scale(1.2); // Icon grows slightly
+          }
+
+          &::before {
+            width: 4px;
+            box-shadow: 0 0 10px var(--accent); // Glowing effect
+          }
+        }
+
+        // Smooth transitions for all properties
+        transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+
+        .nav-icon {
+          transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+      }
     }
   }
 
