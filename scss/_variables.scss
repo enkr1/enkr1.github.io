@@ -1,0 +1,53 @@
+:root {
+  // Color System
+  --primary: #1A1A2E;
+  --secondary: #0F3460;
+  --accent: #E94560;
+  --text-primary: #F5F5F5;
+  --text-secondary: rgba(245, 245, 245, 0.7);
+
+  /**
+   * GLOBAL DESIGN TOKENS & VARIABLES
+   *
+   * This file contains all non-color design tokens including:
+   * - Typography
+   * - Spacing
+   * - Breakpoints
+   * - Transitions
+   * - Layout measurements
+   *
+   * Note: Color variables belong in _colours.scss
+   */
+
+  // ===== TYPOGRAPHY =====
+  --font-primary: 'Inter', sans-serif;
+  --font-secondary: 'Montserrat', sans-serif;
+  --font-size-base: 1rem;
+  
+  // ===== SPACING SYSTEM =====
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+
+  // ===== TRANSITIONS =====
+  --transition-fast: 0.15s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+
+  // ===== MEDIA BREAKPOINTS =====
+  $screen_xl: 1440px;
+  $screen_lg: 1281px;
+  $screen_md_1: 1024px;
+  $screen_md_2: 992px;
+  $screen_sm: 768px;  // Tablet
+  $screen_xs: 480px;
+  $screen_xxs: 320px;
+
+  // ===== COMPONENT MEASUREMENTS =====
+  $logo-text-font-size: 2rem;
+  $logo-text-letter-spacing: 0.6rem;
+}
+
+$default_global_font_size: 1.2rem;
+$sm_global_font_size: 1.15rem;
+$xs_global_font_size: 1.1rem;

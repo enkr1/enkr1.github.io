@@ -127,6 +127,59 @@
 
 
 <body id="index-body" class="hide-all-in-body">
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Portfolio</title>
+    <link rel="stylesheet" href="/scss/main.css">
+    <script type="module" src="/scripts/main.js"></script>
+  </head>
+  <body>
+    <!-- Preloader -->
+    <preloader-component></preloader-component>
+
+    <!-- Header/Navigation -->
+    <header>
+      <div class="navigation-container">
+        <div class="navigation-container-list">
+          <div class="nav-logo">
+            <a href="#home">Your Logo</a>
+          </div>
+          <ul class="navigation-items-container">
+            <!-- Navigation items will be populated by JS -->
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Sections -->
+    <main>
+      <section id="home">
+        <primary-about-component></primary-about-component>
+      </section>
+
+      <section id="experience">
+        <experience-component></experience-component>
+      </section>
+
+      <section id="portfolio">
+        <portfolio-items-component></portfolio-items-component>
+      </section>
+
+      <section id="contact">
+        <!-- Contact form component -->
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer-component></footer-component>
+
+    <!-- Eye Candy Animations -->
+    <eye-candy-component></eye-candy-component>
+  </body>
+  </html>
   <!-- <preloader-component></preloader-component> -->
 
   <header id="home">
@@ -269,7 +322,7 @@
 
         <div class="about-content">
           <div class="about-image">
-            <img src="assets/images/profile.jpg" alt="PANG Jing Hui - ENKR">
+            <img src="assets/images/profile.jpg" alt="PANG Jing Hui - ENKR" loading="lazy">
             <div class="image-backdrop"></div>
           </div>
 

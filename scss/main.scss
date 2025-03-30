@@ -1,2 +1,33 @@
-// Add this import with your other imports
-@import 'nav-enhancement';
+// Main SCSS import file
+// Import order matters - variables/mixins first, components last
+
+// Core utilities
+@use 'variables';
+@use 'mixins';
+@use 'reset';
+@use 'typography';
+@use 'animations';
+@use 'colours';
+@use 'base';
+@use 'global';
+
+// Components
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/nav_bar';
+@use 'components/preload';
+@use 'components/eye_candies';
+@use 'components/loading';
+
+// Sections
+@use 'sections/header';
+@use 'sections/hero';
+@use 'sections/home';
+@use 'sections/about';
+@use 'sections/portfolio';
+@use 'sections/specialisation';
+@use 'sections/bbx_achievements';
+@use 'sections/interest';
+@use 'sections/platform';
+@use 'sections/resume';
+@use 'sections/emergency';

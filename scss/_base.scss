@@ -6,13 +6,18 @@ html {
 
 body {
   font-family: var(--font-primary);
-  background-color: var(--bg-primary);
+  background-color: var(--primary);
   color: var(--text-primary);
-  line-height: 1.6;
-  margin: 0;
-  padding: 0;
-  transition: background-color var(--transition-normal), color var(--transition-normal);
-  overflow-x: hidden;
+  transition: background-color var(--transition-normal);
+}
+
+.btn {
+  background: var(--accent);
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background: var(--accent-hover);
+  }
 }
 
 // Modern container with responsive padding

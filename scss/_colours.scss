@@ -1,0 +1,36 @@
+/**
+ * COLOR DESIGN TOKENS
+ *
+ * This file contains all color-related variables including:
+ * - Base colors
+ * - Text colors
+ * - Gradients
+ * - Effects (shadows, glows)
+ * - RGB values for JS manipulation
+ *
+ * Note: Non-color variables belong in _variables.scss
+ */
+
+// ===== BASE COLOR PALETTE =====
+:root {
+  --primary: #1A1A2E; // Deep navy blue
+  --secondary: #0F3460; // Rich indigo
+  --accent: #E94560; // Vibrant coral
+  --text-primary: #F5F5F5; // Off-white text
+  --text-secondary: rgba(245, 245, 245, 0.7); // Semi-transparent text
+}
+
+// ===== EFFECT COLORS =====
+$r: 233; // Red channel for accent
+$g: 69; // Green channel for accent
+$b: 96; // Blue channel for accent
+
+// ===== SHADOWS & EFFECTS =====
+$neumorphism-box-shadow: 0 -0.8rem 0 rgba($r, $g, $b, 0.08),
+  0.8rem 0 0 rgba($r, $g, $b, 0.1),
+  -0.8rem 0 0 rgba($r, $g, $b, 0.1),
+  0 0.8rem 0 rgba($r, $g, $b, 0.3);
+
+// ===== GRADIENTS =====
+$theme-gradient: linear-gradient(135deg, var(--secondary), var(--primary));
+$theme-mobile-bar-bg: linear-gradient(45deg, var(--primary), var(--secondary));
