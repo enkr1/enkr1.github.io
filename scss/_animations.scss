@@ -1,0 +1,66 @@
+// Animations
+@keyframes subtleGridPulse {
+  0% {
+    opacity: 0.7;
+    background-size: 50px 50px;
+  }
+
+  100% {
+    opacity: 0.9;
+    background-size: 55px 55px;
+  }
+}
+
+@keyframes framePulse {
+  0% {
+    border-color: rgba(var(--accent-rgb), 0.03);
+  }
+
+  100% {
+    border-color: rgba(var(--accent-rgb), 0.08);
+  }
+}
+
+@keyframes fadeUpIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+}
+
+@keyframes descriptorFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lineDrawIn {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: 3rem;
+    opacity: 1;
+  }
+}

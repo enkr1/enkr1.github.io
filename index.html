@@ -117,6 +117,17 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
+  <!--
+  QUESTION: is it better to leave them here in <link> or in scss imports? which is more benefitial to make the preload component work better? as preload component needs to check the network time?
+  -->
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500&family=Noto+Sans:wght@100;200;300;400;500&display=swap"
+    rel="stylesheet">
+
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/main.css?v=1.0.0">
 
@@ -129,6 +140,7 @@
 <body id="index-body" class="hide-all-in-body">
   <!DOCTYPE html>
   <html lang="en">
+
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -208,46 +220,45 @@
 
   <article id="all-sections">
     <section id="landing-section" class="landing-section">
+      <canvas id="interactive-canvas" class="interactive-canvas"></canvas>
+
       <div class="hero-content">
         <div class="hero-text-container">
-          <h1 class="thin-typography">
-            <span class="title-line"><span class="red-accent">C</span>ode.</span>
-            <span class="title-line"><span class="red-accent">C</span>reate.</span>
-            <span class="title-line"><span class="red-accent">P</span>erform.</span>
+          <h1>
+            <span class="name-line">
+              <span class="chinese-name">彭競辉</span>
+              <span class="divider">|</span>
+              <span class="english-name">Jing Hui PANG</span>
+            </span>
           </h1>
 
+          <div class="descriptors">
+            <span class="descriptor">creative</span>
+            <span class="descriptor">precise</span>
+            <span class="descriptor">innovative</span>
+          </div>
+
           <div class="bio-badge">
-            <p>Full-Stack Developer <span class="divider">|</span> Beatbox Artist</p>
+            <p>Frontend Developer <span class="divider">|</span> UI/UX Designer</p>
             <div class="thin-line-animation"></div>
           </div>
         </div>
 
         <div class="interactive-actions">
-          <a href="#experience" class="action-btn minimal-btn">
-            <span>View Work</span>
-            <div class="line-hover"></div>
-          </a>
           <a href="#contact" class="action-btn outline-btn">
             <span>Get in Touch</span>
           </a>
         </div>
       </div>
 
-      <div class="tech-stack-grid">
-        <!-- Tech icons with modern styling -->
-        <div class="tech-icon" data-tooltip="JavaScript">
-          <div class="icon-wrapper">
-            <i class="fab fa-js-square"></i>
-          </div>
-        </div>
-        <!-- Repeat for other tech icons -->
-      </div>
-
-      <!-- Premium decorative elements -->
       <div class="decorative-elements">
         <div class="red-line vertical-line line-1"></div>
         <div class="red-line horizontal-line line-2"></div>
+        <div class="red-line vertical-line line-3"></div>
+        <div class="red-line horizontal-line line-4"></div>
         <div class="red-dot dot-1"></div>
+        <div class="red-dot dot-2"></div>
+        <div class="red-dot dot-3"></div>
       </div>
     </section>
 
@@ -258,6 +269,32 @@
           <h6>The intersection of code and creativity</h6>
         </div>
 
+
+        <div class="skill-showcase">
+          <div class="skill-title">Technical Expertise</div>
+          <div class="skill-icons">
+            <div class="skill-icon" data-name="JavaScript">
+              <i class="fab fa-js-square"></i>
+            </div>
+            <div class="skill-icon" data-name="HTML5">
+              <i class="fab fa-html5"></i>
+            </div>
+            <div class="skill-icon" data-name="CSS3">
+              <i class="fab fa-css3-alt"></i>
+            </div>
+            <div class="skill-icon" data-name="React">
+              <i class="fab fa-react"></i>
+            </div>
+            <div class="skill-icon" data-name="Sass">
+              <i class="fab fa-sass"></i>
+            </div>
+            <div class="skill-icon" data-name="Git">
+              <i class="fab fa-git-alt"></i>
+            </div>
+          </div>
+        </div>
+
+
         <div class="about-content">
           <div class="about-image">
             <img src="assets/images/profile.jpg" alt="PANG Jing Hui - ENKR" loading="lazy">
@@ -265,7 +302,8 @@
           </div>
 
           <div class="about-text">
-            <p class="about-intro">Hello! I'm <span class="highlight">Jing Hui</span>, a Full-Stack Developer with a passion for creating elegant solutions and a Beatbox Artist who loves to push creative boundaries.</p>
+            <p class="about-intro">Hello! I'm <span class="highlight">Jing Hui</span>, a Full-Stack Developer with a
+              passion for creating elegant solutions and a Beatbox Artist who loves to push creative boundaries.</p>
 
             <div class="skill-visualization">
               <div class="skill-bar" data-skill="Frontend" data-level="90">
@@ -292,9 +330,10 @@
           </div>
         </div>
       </div>
+
+
     </section>
 
-    <!-- <primary-about-section></primary-about-section> -->
     <!-- <secondary-about-section></secondary-about-section> -->
     <!-- <specialisation-section></specialisation-section> -->
     <experience-section></experience-section>
