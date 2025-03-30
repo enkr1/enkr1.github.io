@@ -26,20 +26,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>ENKR | PANG Jing Hui | 彭竞辉 - Software Engineer & Beatbox Artist</title>
+  <title>ENKR | PANG Jing Hui | 彭競辉 - Software Engineer & Beatbox Artist</title>
 
   <meta name="description"
     content="Discover the personal portfolio of PANG Jing Hui, a Software Engineer and Beatbox Artist based in Singapore. Showcasing innovative projects, professional experiences, and artistic performances.">
   <meta name="keywords"
-    content="Pang Jing Hui, 彭竞辉, ENKR, software engineer, full-stack developer, beatboxer, portfolio, Singapore IT professional, coding, web development, UI/UX, beatboxing, tech and music, live performances">
-  <meta name="author" content="ENKR | PANG Jing Hui | 彭竞辉">
+    content="Pang Jing Hui, 彭競辉, ENKR, software engineer, full-stack developer, beatboxer, portfolio, Singapore IT professional, coding, web development, UI/UX, beatboxing, tech and music, live performances">
+  <meta name="author" content="ENKR | PANG Jing Hui | 彭競辉">
   <meta name="referrer" content="origin">
   <meta http-equiv="content-language" content="en">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://enkr1.github.io/">
-  <meta property="og:title" content="ENKR | PANG Jing Hui | 彭竞辉 - Software Engineer & Beatbox Artist">
+  <meta property="og:title" content="ENKR | PANG Jing Hui | 彭競辉 - Software Engineer & Beatbox Artist">
   <meta property="og:description"
     content="Explore the personal portfolio of PANG Jing Hui, a tech enthusiast and beatbox performer from Singapore.">
   <meta property="og:image" content="https://enkr1.github.io/assets/images/3.jpg">
@@ -48,7 +48,7 @@
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://enkr1.github.io/">
-  <meta property="twitter:title" content="ENKR | PANG Jing Hui | 彭竞辉 - Software Engineer & Beatbox Artist">
+  <meta property="twitter:title" content="ENKR | PANG Jing Hui | 彭競辉 - Software Engineer & Beatbox Artist">
   <meta property="twitter:description"
     content="Discover the personal portfolio of PANG Jing Hui, showcasing his expertise in software engineering and beatboxing.">
   <meta property="twitter:image" content="https://enkr1.github.io/assets/images/3.jpg">
@@ -124,9 +124,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap" rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500&family=Noto+Sans:wght@100;200;300;400;500&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500&family=Noto+Sans:wght@100;200;300;400;500&display=swap" rel="stylesheet">
 
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/main.css?v=1.0.0">
@@ -136,111 +137,128 @@
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
 </head>
 
-
 <body id="index-body" class="hide-all-in-body">
-  <!DOCTYPE html>
-  <html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Portfolio</title>
-    <link rel="stylesheet" href="/scss/main.css">
-    <script type="module" src="/scripts/main.js"></script>
-  </head>
-
   <!-- <preloader-component></preloader-component> -->
+  <!-- <eye-candy-component></eye-candy-component> -->
+  <div class="cursor"></div>
+
+
 
   <header id="home">
-    <div class="navigation-toggle-container">
-      <div class="menu-toggler">
-        <div class="bar half start"></div>
-        <div class="bar half middle"></div>
-        <div class="bar half end"></div>
+    <div class="side-nav-trigger">
+      <div class="trigger-icon">
+        <span class="trigger-letter">E</span>
+        <div class="pulse-ring"></div>
       </div>
     </div>
 
-    <nav class="navigation-container">
-      <ul class="navigation-container-list">
-        <div class="nav-logo">
-          <a href="/">ENKR</a>
+    <div class="side-navigation">
+      <div class="side-nav-header">
+        <div class="nav-close">
+          <span class="close-icon">×</span>
         </div>
-        <div class="navigation-items-container list-style-none display-flex-center">
-          <li><a href="#home" class="nav-link home-nav-link">Home</a></li>
-
-          <li class="dropdown">
-            <a href="#about" class="nav-link about-nav-link">About <i class="fas fa-chevron-down"></i></a>
-            <ul class="dropdown-menu">
-              <li><a href="#about">My Story</a></li>
-              <li><a href="skills">Skills</a></li>
-              <li><a href="achievements">Achievements</a></li>
-            </ul>
-          </li>
-
-          <li><a href="#experience" class="nav-link experience-nav-link">Experience</a></li>
-
-          <li class="dropdown">
-            <a href="#" class="nav-link">Projects <i class="fas fa-chevron-down"></i></a>
-            <ul class="dropdown-menu">
-              <li><a href="projects/web">Web Development</a></li>
-              <li><a href="projects/mobile">Mobile Apps</a></li>
-              <li><a href="projects/design">UI/UX Design</a></li>
-            </ul>
-          </li>
-
-          <li><a href="#contact" class="nav-link contact-nav-link">Contact</a></li>
-
-          <li class="dropdown">
-            <a href="#" class="nav-link">More <i class="fas fa-chevron-down"></i></a>
-            <ul class="dropdown-menu">
-              <li><a href="platforms" target="_blank">Platforms</a></li>
-              <li><a href="blog" target="_blank">Blog</a></li>
-              <li><a href="assets/pdfs/Resume - Jing Hui PANG - Mid Sep 2023 - v1.0.1.pdf" target="_blank">Resume</a>
-              </li>
-            </ul>
-          </li>
+        <div class="nav-profile">
+          <div class="profile-image">
+            <img src="assets/images/profile.jpg" alt="PANG Jing Hui">
+          </div>
+          <h3 class="profile-name">Jing Hui PANG</h3>
+          <p class="profile-title">Developer & Designer</p>
         </div>
-      </ul>
-
-      <div class="theme-toggle">
-        <button aria-label="Toggle dark mode">
-          <i class="fas fa-moon"></i>
-        </button>
       </div>
-    </nav>
+
+      <nav class="side-nav-links">
+        <ul>
+          <li class="nav-item active">
+            <a href="#home">
+              <span class="nav-icon"><i class="fas fa-home"></i></span>
+              <span class="nav-text">Home</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#about">
+              <span class="nav-icon"><i class="fas fa-user"></i></span>
+              <span class="nav-text">About</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#experience">
+              <span class="nav-icon"><i class="fas fa-briefcase"></i></span>
+              <span class="nav-text">Experience</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#projects">
+              <span class="nav-icon"><i class="fas fa-code"></i></span>
+              <span class="nav-text">Projects</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#contact">
+              <span class="nav-icon"><i class="fas fa-envelope"></i></span>
+              <span class="nav-text">Contact</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="side-nav-footer">
+        <div class="social-links">
+          <a href="https://github.com/enkr1" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/jinghuipang/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.instagram.com/enkr1/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/@enkr1" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="theme-toggle">
+          <button aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay"></div>
 
     <div class="progress-container">
       <div id="_progress" class="progress-bar"></div>
     </div>
   </header>
 
-  <!-- <eye-candy-component></eye-candy-component> -->
 
-  <div class="cursor"></div>
 
-  <article id="all-sections">
+  <main id="all-sections">
     <section id="landing-section" class="landing-section">
-      <canvas id="interactive-canvas" class="interactive-canvas"></canvas>
+      <canvas id="interactive-canvas" class="interactive-canvas" aria-hidden="true"></canvas>
 
       <div class="hero-content">
         <div class="hero-text-container">
           <h1>
-            <span class="name-line">
-              <span class="chinese-name">彭競辉</span>
-              <span class="divider">|</span>
-              <span class="english-name">Jing Hui PANG</span>
-            </span>
+            <div class="name-container">
+              <div class="chinese-name-container">
+                <span class="chinese-name" lang="zh-Hans">彭競辉</span>
+              </div>
+              <div class="name-divider" aria-hidden="true">
+                <span class="divider-line"></span>
+              </div>
+              <div class="english-name-container">
+                <span class="english-name-first">Jing Hui</span>
+                <span class="english-name-last">PANG</span>
+              </div>
+            </div>
           </h1>
 
-          <div class="descriptors">
+          <div class="descriptors" aria-label="Personal qualities">
             <span class="descriptor">creative</span>
             <span class="descriptor">precise</span>
             <span class="descriptor">innovative</span>
           </div>
 
           <div class="bio-badge">
-            <p>Frontend Developer <span class="divider">|</span> UI/UX Designer</p>
-            <div class="thin-line-animation"></div>
+            <p>
+              <span class="role">Frontend Developer</span>
+              <span class="divider" aria-hidden="true">|</span>
+              <span class="role">UI/UX Designer</span>
+            </p>
+            <div class="thin-line-animation" aria-hidden="true"></div>
           </div>
         </div>
 
@@ -251,7 +269,7 @@
         </div>
       </div>
 
-      <div class="decorative-elements">
+      <div class="decorative-elements" aria-hidden="true">
         <div class="red-line vertical-line line-1"></div>
         <div class="red-line horizontal-line line-2"></div>
         <div class="red-line vertical-line line-3"></div>
@@ -398,7 +416,7 @@
         </form>
       </div>
     </section>
-  </article>
+  </main>
 
   <footer-component></footer-component>
 
@@ -434,6 +452,6 @@
   </audio>
   -->
 
+  <script defer src="scripts/side-navigation.js"></script>
 </body>
-
 </html>

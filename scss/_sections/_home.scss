@@ -7,6 +7,7 @@
   justify-content: center;
   overflow: hidden;
   padding: 0 5%;
+  z-index: 1; // Add explicit z-index that's lower than navigation
 
   // Creative background with animated gradient
   &::before {
@@ -23,24 +24,14 @@
     z-index: 0;
     opacity: 0.8;
     animation: subtleGridPulse 15s infinite alternate;
-  }
-
-  // Animated corner frame
-  &::after {
-    content: '';
-    position: absolute;
-    top: 3rem;
-    left: 3rem;
-    right: 3rem;
-    bottom: 3rem;
-    border: 1px solid rgba(var(--accent-rgb), 0.05);
-    z-index: 1;
-    pointer-events: none;
-    animation: framePulse 8s infinite alternate;
+    pointer-events: none; // This allows clicks to pass through
   }
 
   .hero-content {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 2;
     display: flex;
     flex-direction: column;
@@ -48,25 +39,15 @@
     justify-content: center;
     max-width: 800px;
     width: 100%;
-    margin: 0 auto; /* Add this to center horizontally */
-    text-align: center; /* Ensure text is centered */
+    text-align: center;
+    padding: 0 2rem;
   }
 
   .hero-text-container {
     text-align: center;
     position: relative;
     width: 100%;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: -3rem;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 1px;
-      height: 2rem;
-      background: rgba(var(--accent-rgb), 0.3);
-    }
+    margin: 0 auto;
 
     h1 {
       font-family: var(--font-primary);
@@ -76,17 +57,17 @@
       line-height: 1;
       margin-bottom: 1.5rem;
       position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
 
-      .name-line {
+      .name-container {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        position: relative;
-        overflow: hidden;
-        padding: 0.15em 0;
+        gap: 0.5rem;
+      }
+
+      .chinese-name-container {
+        margin-bottom: 0.5rem;
       }
 
       .chinese-name {
@@ -100,35 +81,52 @@
         opacity: 0;
         transform: translateY(20px);
         animation: fadeUpIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.3s;
+        font-size: clamp(2rem, 5vw, 4rem);
+      }
 
-        &:hover {
-          color: var(--accent);
+      .name-divider {
+        width: 100%;
+        max-width: 400px;
+        margin: 0.5rem 0;
+
+        .divider-line {
+          display: block;
+          width: 100%;
+          height: 1px;
+          background-color: var(--accent);
+          opacity: 0.3;
+          transform: scaleX(0);
+          animation: lineDrawIn 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.6s;
         }
       }
 
-      .divider {
-        display: inline-block;
-        margin: 0 0.8rem;
-        color: rgba(var(--accent-rgb), 0.7);
-        font-weight: 200;
-        opacity: 0;
-        transform: scale(0.8);
-        animation: fadeIn 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.6s;
+      .english-name-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0.5rem;
       }
 
-      .english-name {
-        font-family: 'Noto Sans', sans-serif;
-        font-weight: 200;
+      .english-name-first,
+      .english-name-last {
+        font-family: var(--font-secondary);
         letter-spacing: 0.05em;
         transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         display: inline-block;
         opacity: 0;
         transform: translateY(20px);
-        animation: fadeUpIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.5s;
+      }
 
-        &:hover {
-          color: var(--accent);
-        }
+      .english-name-first {
+        font-size: clamp(2rem, 5vw, 4rem);
+        animation: fadeUpIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.7s;
+        font-weight: 400;
+      }
+
+      .english-name-last {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        font-weight: 500;
+        animation: fadeUpIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.9s;
       }
     }
   }
@@ -140,7 +138,8 @@
     margin: 1.5rem 0;
     position: relative;
 
-    &::before, &::after {
+    &::before,
+    &::after {
       content: '';
       position: absolute;
       top: 50%;
@@ -382,6 +381,7 @@
       opacity: 0.7;
       background-size: 50px 50px;
     }
+
     100% {
       opacity: 0.9;
       background-size: 55px 55px;
@@ -392,6 +392,7 @@
     0% {
       border-color: rgba(var(--accent-rgb), 0.03);
     }
+
     100% {
       border-color: rgba(var(--accent-rgb), 0.08);
     }
@@ -408,7 +409,8 @@
     .descriptors {
       gap: 1rem;
 
-      &::before, &::after {
+      &::before,
+      &::after {
         width: 1.5rem;
       }
 

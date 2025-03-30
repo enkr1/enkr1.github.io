@@ -11,8 +11,9 @@
    *
    * Note: Color variables belong in _colours.scss
    */
-  --font-primary: "Inter", sans-serif;
-  --font-secondary: "Montserrat", sans-serif;
+  --font-primary: "Playfair Display", serif;
+  --font-secondary: "Cormorant Garamond", serif;
+  --font-tertiary: "Poppins", sans-serif;
   --font-size-base: 1rem;
   --font-size-default: 1.2rem;
   --font-size-sm: 1.15rem;
@@ -160,7 +161,7 @@ html {
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Playfair Display", serif;
   font-family: var(--font-primary);
   background-color: #FFFFFF;
   background-color: var(--primary);
@@ -210,7 +211,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Cormorant Garamond", serif;
   font-family: var(--font-secondary);
   font-weight: 700;
   line-height: 1.2;
@@ -357,6 +358,295 @@ a:hover {
 
 .mt-5 {
   margin-top: var(--spacing-xl);
+}
+
+header {
+  z-index: 9999999;
+}
+header .side-nav-trigger {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  z-index: 1500;
+  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+  display: block !important;
+}
+header .side-nav-trigger::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 1px dashed red;
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+header .side-nav-trigger .trigger-icon {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: #FFFFFF;
+  background: var(--primary);
+  border: 2px solid #D10000;
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+header .side-navigation {
+  position: fixed;
+  top: 0;
+  left: -30rem;
+  width: 30rem;
+  max-width: 80vw;
+  height: 100vh;
+  background: #FFFFFF;
+  background: var(--primary);
+  z-index: 1500;
+  box-shadow: 5px 0 30px rgba(0, 0, 0, 0.1);
+  transition: left 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  display: flex;
+  flex-direction: column;
+}
+header .side-navigation.active {
+  left: 0;
+}
+header .side-navigation .side-nav-header {
+  padding: 2rem;
+  border-bottom: 1px solid rgba(209, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.1);
+  position: relative;
+}
+header .side-navigation .side-nav-header .nav-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgba(209, 0, 0, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+header .side-navigation .side-nav-header .nav-close .close-icon {
+  font-size: 1.5rem;
+  color: #D10000;
+  color: var(--accent);
+}
+header .side-navigation .side-nav-header .nav-close:hover {
+  background: #D10000;
+  background: var(--accent);
+}
+header .side-navigation .side-nav-header .nav-close:hover .close-icon {
+  color: #FFFFFF;
+  color: var(--primary);
+}
+header .side-navigation .side-nav-header .nav-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+header .side-navigation .side-nav-header .nav-profile .profile-image {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 2px solid #D10000;
+  border: 2px solid var(--accent);
+}
+header .side-navigation .side-nav-header .nav-profile .profile-image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+header .side-navigation .side-nav-header .nav-profile .profile-name {
+  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-secondary);
+  font-size: 1.5rem;
+  color: #1A1A1A;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+header .side-navigation .side-nav-header .nav-profile .profile-title {
+  font-family: "Poppins", sans-serif;
+  font-family: var(--font-tertiary);
+  font-size: 0.9rem;
+  color: #555555;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+header .side-navigation .side-nav-links {
+  flex: 1;
+  padding: 2rem 0;
+  overflow-y: auto;
+}
+header .side-navigation .side-nav-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+header .side-navigation .side-nav-links ul .nav-item {
+  margin-bottom: 0.5rem;
+}
+header .side-navigation .side-nav-links ul .nav-item a {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: #555555;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+  position: relative;
+}
+header .side-navigation .side-nav-links ul .nav-item a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: #D10000;
+  background: var(--accent);
+  opacity: 0.1;
+  transition: width 0.3s ease;
+}
+header .side-navigation .side-nav-links ul .nav-item a .nav-icon {
+  margin-right: 1rem;
+  font-size: 1.2rem;
+  width: 1.5rem;
+  text-align: center;
+  color: #D10000;
+  color: var(--accent);
+}
+header .side-navigation .side-nav-links ul .nav-item a .nav-text {
+  font-family: "Poppins", sans-serif;
+  font-family: var(--font-tertiary);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+header .side-navigation .side-nav-links ul .nav-item a:hover, header .side-navigation .side-nav-links ul .nav-item a:focus {
+  color: #1A1A1A;
+  color: var(--text-primary);
+}
+header .side-navigation .side-nav-links ul .nav-item a:hover::before, header .side-navigation .side-nav-links ul .nav-item a:focus::before {
+  width: 4px;
+}
+header .side-navigation .side-nav-links ul .nav-item.active a {
+  color: #1A1A1A;
+  color: var(--text-primary);
+}
+header .side-navigation .side-nav-links ul .nav-item.active a::before {
+  width: 4px;
+}
+header .side-navigation .side-nav-footer {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(209, 0, 0, 0.1);
+  border-top: 1px solid rgba(var(--accent-rgb), 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .side-navigation .side-nav-footer .social-links {
+  display: flex;
+  gap: 1rem;
+}
+header .side-navigation .side-nav-footer .social-links a {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: rgba(209, 0, 0, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555555;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+header .side-navigation .side-nav-footer .social-links a:hover {
+  background: #D10000;
+  background: var(--accent);
+  color: #FFFFFF;
+  color: var(--primary);
+  transform: translateY(-3px);
+}
+header .side-navigation .side-nav-footer .theme-toggle button {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: rgba(209, 0, 0, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555555;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+header .side-navigation .side-nav-footer .theme-toggle button:hover {
+  background: #D10000;
+  background: var(--accent);
+  color: #FFFFFF;
+  color: var(--primary);
+}
+header .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
+  z-index: 1499;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+header .overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+@media (max-width: 768px) {
+  header .side-nav-trigger {
+    top: 1.5rem;
+    left: 1.5rem;
+  }
+  header .side-nav-trigger .trigger-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  header .side-nav-trigger .trigger-icon .trigger-letter {
+    font-size: 1.2rem;
+  }
 }
 
 .nav-logo-left {
@@ -809,6 +1099,7 @@ header.nav-floating {
   justify-content: center;
   overflow: hidden;
   padding: 0 5%;
+  z-index: 1;
 }
 .landing-section::before {
   content: "";
@@ -823,22 +1114,13 @@ header.nav-floating {
   z-index: 0;
   opacity: 0.8;
   animation: subtleGridPulse 15s infinite alternate;
-}
-.landing-section::after {
-  content: "";
-  position: absolute;
-  top: 3rem;
-  left: 3rem;
-  right: 3rem;
-  bottom: 3rem;
-  border: 1px solid rgba(209, 0, 0, 0.05);
-  border: 1px solid rgba(var(--accent-rgb), 0.05);
-  z-index: 1;
   pointer-events: none;
-  animation: framePulse 8s infinite alternate;
 }
 .landing-section .hero-content {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -846,27 +1128,17 @@ header.nav-floating {
   justify-content: center;
   max-width: 800px;
   width: 100%;
-  margin: 0 auto; /* Add this to center horizontally */
-  text-align: center; /* Ensure text is centered */
+  text-align: center;
+  padding: 0 2rem;
 }
 .landing-section .hero-text-container {
   text-align: center;
   position: relative;
   width: 100%;
-}
-.landing-section .hero-text-container::before {
-  content: "";
-  position: absolute;
-  top: -3rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 2rem;
-  background: rgba(209, 0, 0, 0.3);
-  background: rgba(var(--accent-rgb), 0.3);
+  margin: 0 auto;
 }
 .landing-section .hero-text-container h1 {
-  font-family: "Inter", sans-serif;
+  font-family: "Playfair Display", serif;
   font-family: var(--font-primary);
   font-weight: 100;
   font-size: max(2.5rem, min(6vw, 5.5rem));
@@ -874,17 +1146,16 @@ header.nav-floating {
   line-height: 1;
   margin-bottom: 1.5rem;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-.landing-section .hero-text-container h1 .name-line {
+.landing-section .hero-text-container h1 .name-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
-  padding: 0.15em 0;
+  gap: 0.5rem;
+}
+.landing-section .hero-text-container h1 .chinese-name-container {
+  margin-bottom: 0.5rem;
 }
 .landing-section .hero-text-container h1 .chinese-name {
   font-family: "Noto Serif SC", serif;
@@ -897,34 +1168,48 @@ header.nav-floating {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeUpIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.3s;
+  font-size: max(2rem, min(5vw, 4rem));
 }
-.landing-section .hero-text-container h1 .chinese-name:hover {
-  color: #D10000;
-  color: var(--accent);
+.landing-section .hero-text-container h1 .name-divider {
+  width: 100%;
+  max-width: 400px;
+  margin: 0.5rem 0;
 }
-.landing-section .hero-text-container h1 .divider {
-  display: inline-block;
-  margin: 0 0.8rem;
-  color: rgba(209, 0, 0, 0.7);
-  color: rgba(var(--accent-rgb), 0.7);
-  font-weight: 200;
-  opacity: 0;
-  transform: scale(0.8);
-  animation: fadeIn 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.6s;
+.landing-section .hero-text-container h1 .name-divider .divider-line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #D10000;
+  background-color: var(--accent);
+  opacity: 0.3;
+  transform: scaleX(0);
+  animation: lineDrawIn 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.6s;
 }
-.landing-section .hero-text-container h1 .english-name {
-  font-family: "Noto Sans", sans-serif;
-  font-weight: 200;
+.landing-section .hero-text-container h1 .english-name-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+.landing-section .hero-text-container h1 .english-name-first,
+.landing-section .hero-text-container h1 .english-name-last {
+  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-secondary);
   letter-spacing: 0.05em;
   transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   display: inline-block;
   opacity: 0;
   transform: translateY(20px);
-  animation: fadeUpIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.5s;
 }
-.landing-section .hero-text-container h1 .english-name:hover {
-  color: #D10000;
-  color: var(--accent);
+.landing-section .hero-text-container h1 .english-name-first {
+  font-size: max(2rem, min(5vw, 4rem));
+  animation: fadeUpIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.7s;
+  font-weight: 400;
+}
+.landing-section .hero-text-container h1 .english-name-last {
+  font-size: max(2.5rem, min(6vw, 5rem));
+  font-weight: 500;
+  animation: fadeUpIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.9s;
 }
 .landing-section .descriptors {
   display: flex;
