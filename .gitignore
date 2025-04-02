@@ -9,5 +9,6 @@
 /_assets
 
 /dist/bundle.js
+/dist/bundle.obfuscated.js
 /scripts/o.js
 /scripts/*_original.js
