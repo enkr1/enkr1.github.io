@@ -1390,6 +1390,222 @@ header.nav-floating {
   font-size: 1.8rem;
 }
 
+.journey-section {
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+}
+.journey-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to right, rgba(209, 0, 0, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(209, 0, 0, 0.02) 1px, transparent 1px);
+  background-image: linear-gradient(to right, rgba(var(--accent-rgb), 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(var(--accent-rgb), 0.02) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: -1;
+  opacity: 0.5;
+  animation: subtleGridPulse 10s ease-in-out infinite alternate;
+}
+.journey-section .section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.journey-section .section-header .section-title {
+  font-family: "Playfair Display", serif;
+  font-family: var(--font-primary);
+  font-size: 2.5rem;
+  color: #1A1A1A;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+.journey-section .section-header .accent-line {
+  width: 3rem;
+  height: 2px;
+  background: #D10000;
+  background: var(--accent);
+  margin: 0 auto 1.5rem;
+}
+.journey-section .section-header .section-subtitle {
+  font-family: "Playfair Display", serif;
+  font-family: var(--font-primary);
+  font-size: 1.2rem;
+  color: #555555;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+.journey-section .timeline-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
+  display: flex;
+}
+.journey-section .timeline-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background: rgba(209, 0, 0, 0.2);
+  background: rgba(var(--accent-rgb), 0.2);
+  transform: translateX(-50%);
+}
+.journey-section .timeline-line .timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: #D10000;
+  background: var(--accent);
+  transition: height 0.3s ease;
+}
+.journey-section .timeline-entries {
+  width: 100%;
+  position: relative;
+}
+.journey-section .timeline-entry {
+  position: relative;
+  margin-bottom: 8rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.journey-section .timeline-entry.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.journey-section .timeline-entry:nth-child(odd) .entry-content {
+  margin-left: auto;
+  padding-left: 3rem;
+}
+.journey-section .timeline-entry:nth-child(odd) .entry-content .entry-marker {
+  left: -10px;
+}
+.journey-section .timeline-entry:nth-child(odd) .entry-date {
+  right: auto;
+  left: calc(50% + 2rem);
+  text-align: left;
+}
+.journey-section .timeline-entry:nth-child(even) .entry-content {
+  margin-right: auto;
+  padding-right: 3rem;
+}
+.journey-section .timeline-entry:nth-child(even) .entry-content .entry-marker {
+  right: -10px;
+}
+.journey-section .timeline-entry:nth-child(even) .entry-date {
+  left: auto;
+  right: calc(50% + 2rem);
+  text-align: right;
+}
+.journey-section .entry-date {
+  position: absolute;
+  top: 0;
+  width: 120px;
+}
+.journey-section .entry-date .year {
+  display: block;
+  font-family: "Playfair Display", serif;
+  font-family: var(--font-primary);
+  font-size: 1.8rem;
+  color: #D10000;
+  color: var(--accent);
+  font-weight: 600;
+}
+.journey-section .entry-date .month {
+  display: block;
+  font-family: "Playfair Display", serif;
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  color: #555555;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+.journey-section .entry-content {
+  position: relative;
+  width: 45%;
+  background: #FFFFFF;
+  background: var(--primary);
+  border: 1px solid rgba(209, 0, 0, 0.1);
+  border: 1px solid rgba(var(--accent-rgb), 0.1);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.journey-section .entry-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.journey-section .entry-content .entry-marker {
+  position: absolute;
+  top: 20px;
+  width: 20px;
+  height: 20px;
+  background: #FFFFFF;
+  background: var(--primary);
+  border: 3px solid #D10000;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  z-index: 2;
+}
+.journey-section .entry-content .entry-title {
+  font-family: "Playfair Display", serif;
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  color: #1A1A1A;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+.journey-section .entry-content .entry-description {
+  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-tertiary);
+  font-size: 1rem;
+  color: #555555;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+.journey-section .entry-content .entry-image {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.journey-section .entry-content .entry-image img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+}
+.journey-section .entry-content .entry-image img:hover {
+  transform: scale(1.05);
+}
+@media (max-width: 992px) {
+  .journey-section .timeline-line {
+    left: 30px;
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-content, .journey-section .timeline-entry:nth-child(even) .entry-content {
+    width: calc(100% - 80px);
+    margin-left: 80px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-content .entry-marker, .journey-section .timeline-entry:nth-child(even) .entry-content .entry-marker {
+    left: -10px;
+    right: auto;
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-date, .journey-section .timeline-entry:nth-child(even) .entry-date {
+    left: 0;
+    right: auto;
+    text-align: left;
+    top: -40px;
+    width: auto;
+  }
+}
+
 .landing-section {
   position: relative;
   min-height: 100vh;
