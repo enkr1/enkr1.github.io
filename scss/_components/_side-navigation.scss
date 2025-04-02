@@ -77,19 +77,88 @@ header {
   .side-navigation {
     position: fixed;
     top: 0;
-    left: -30rem;
+    left: -50vw; // Start off-screen
     width: 30rem;
     max-width: 80vw;
     height: 100vh;
     background: var(--primary);
     z-index: 1500; // Increase to match trigger
-    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.1);
-    transition: left 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2);
+    // Add subtle pattern to the background
+    background-image:
+      linear-gradient(to right, rgba(var(--accent-rgb), 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(var(--accent-rgb), 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
     display: flex;
     flex-direction: column;
+    // transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0s;
+    // transform: translateX(0);
+    transform: translateX(-100%);
 
     &.active {
-      left: 0;
+      animation: navSlideIn 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+
+      // Animate the accent line when active
+      &::after {
+        transform: scaleY(1);
+        opacity: 0.3;
+        animation: accentLineReveal 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        animation-delay: 0.3s;
+      }
+
+      .side-nav-header {
+        .nav-profile {
+          .profile-image {
+            // animation: profileReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation-delay: 0.4s;
+          }
+
+          .profile-name {
+            animation: fadeUpIn 0.6s ease forwards;
+            animation-delay: 0.6s;
+            opacity: 0;
+          }
+
+          .profile-title {
+            animation: fadeUpIn 0.6s ease forwards;
+            animation-delay: 0.7s;
+            opacity: 0;
+          }
+        }
+
+        .nav-close {
+          animation: fadeIn 0.5s ease-in-out forwards;
+          opacity: 0;
+
+          &:hover {
+            animation:
+              fadeIn 0.5s ease-in-out forwards,
+              pulseGlow 2s infinite cubic-bezier(0.66, 0, 0, 1);
+          }
+        }
+      }
+
+    }
+
+    &:not(.active) {
+      animation: navSlideOut 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+    }
+
+    // Add a subtle accent border on the right with animation
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+      opacity: 0;
+      transform: scaleY(0.3);
+      transform-origin: center;
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.5s ease;
     }
 
     .side-nav-header {
@@ -153,7 +222,6 @@ header {
         }
 
         .profile-title {
-          font-family: var(--font-tertiary);
           font-size: 0.9rem;
           color: var(--text-secondary);
           letter-spacing: 0.1em;
@@ -175,6 +243,16 @@ header {
 
         .nav-item {
           margin-bottom: 0.5rem;
+          opacity: 0;
+
+          &.active {
+            opacity: 1;
+          }
+
+          .side-navigation.active & {
+            animation: itemReveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation-delay: calc(var(--item-index, 0) * 0.08s + 0.5s);
+          }
 
           a {
             display: flex;
@@ -206,7 +284,6 @@ header {
             }
 
             .nav-text {
-              font-family: var(--font-tertiary);
               font-size: 1.1rem;
               letter-spacing: 0.05em;
               flex: 1;
@@ -222,6 +299,10 @@ header {
             &:hover,
             &:focus {
               color: var(--text-primary);
+              transform: translateX(5px); // Slight movement on hover
+              // Smooth transitions for all properties
+              transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+
 
               &::before {
                 width: 4px;
@@ -230,6 +311,7 @@ header {
 
               .nav-icon {
                 transform: scale(1.2);
+                transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
               }
 
               .dropdown-icon {
@@ -298,7 +380,13 @@ header {
         font-size: 0.8rem;
         color: var(--text-secondary);
         font-style: italic;
-        opacity: 0.7;
+        opacity: 0;
+
+        .side-navigation.active & {
+          animation: fadeUpIn 0.6s ease forwards;
+          animation-delay: 1s;
+        }
+
       }
     }
 
@@ -308,6 +396,12 @@ header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      opacity: 0;
+
+      .side-navigation.active & {
+        animation: fadeUpIn 0.6s ease forwards;
+        animation-delay: 0.9s;
+      }
 
       .social-links {
         display: flex;
@@ -364,75 +458,13 @@ header {
     z-index: 1499;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); // Smoother transition
+    // transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); // Smoother transition
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 
     &.active {
       opacity: 1;
       visibility: visible;
-    }
-  }
-
-  .side-navigation {
-    position: fixed;
-    top: 0;
-    left: -30rem;
-    width: 30rem;
-    max-width: 80vw;
-    height: 100vh;
-    background: var(--primary);
-    z-index: 1500;
-    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2); // Enhanced shadow
-    transition: left 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    display: flex;
-    flex-direction: column;
-
-    // Add subtle pattern to the background
-    background-image:
-      linear-gradient(to right, rgba(var(--accent-rgb), 0.02) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(var(--accent-rgb), 0.02) 1px, transparent 1px);
-    background-size: 20px 20px;
-
-    &.active {
-      left: 0;
-      animation: navEntranceEffect 0.8s ease-out; // Add entrance animation
-    }
-
-    // Add a subtle accent border on the right
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 2px;
-      height: 100%;
-      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
-      opacity: 0.3;
-    }
-
-    .side-nav-links {
-      ul .nav-item a {
-        // Enhanced hover effect for nav items
-        &:hover, &:focus {
-          color: var(--text-primary);
-          transform: translateX(5px); // Slight movement on hover
-
-          .nav-icon {
-            transform: scale(1.2); // Icon grows slightly
-          }
-
-          &::before {
-            width: 4px;
-            box-shadow: 0 0 10px var(--accent); // Glowing effect
-          }
-        }
-
-        // Smooth transitions for all properties
-        transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-
-        .nav-icon {
-          transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-      }
+      animation: blurIn 0.7s ease forwards;
     }
   }
 
@@ -453,4 +485,18 @@ header {
     }
   }
 
+}
+
+// Add a new reveal animation for nav items
+.side-nav-links ul .nav-item {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition-delay: calc(var(--item-index, 0) * 0.05s);
+
+  // When nav is active, animate items in sequence
+  .side-navigation.active & {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

@@ -18,19 +18,39 @@ document.addEventListener('DOMContentLoaded', () => {
     dropdowns: dropdownToggles.length
   });
 
-  // Open navigation
+  // Open navigation with enhanced animation
   navTrigger.addEventListener('click', () => {
     console.log('Nav trigger clicked');
+
+    // Reset any ongoing animations
+    sideNav.style.animation = 'none';
+    sideNav.offsetHeight; // Force reflow
+    sideNav.style.animation = '';
+
+    // Set delay index for each nav item to create sequence
+    const navItems = document.querySelectorAll('.side-nav-links .nav-item');
+    navItems.forEach((item, index) => {
+      item.style.setProperty('--item-index', index);
+    });
+
+    // Add active class after setting indices
     sideNav.classList.add('active');
     overlay.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Prevent scrolling when nav is open
+    document.body.style.overflow = 'hidden';
   });
 
-  // Close navigation functions
+  // Close navigation with animation
   const closeNav = () => {
-    sideNav.classList.remove('active');
+    // Allow the exit animation to play before removing the active class
+    sideNav.addEventListener('animationend', function handler() {
+      if (!sideNav.classList.contains('active')) {
+        document.body.style.overflow = '';
+        sideNav.removeEventListener('animationend', handler);
+      }
+    });
+
     overlay.classList.remove('active');
-    document.body.style.overflow = ''; // Re-enable scrolling
+    sideNav.classList.remove('active');
   };
 
   navClose.addEventListener('click', closeNav);
@@ -51,14 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const parent = toggle.parentElement;
 
-      // Close other open dropdowns
-      document.querySelectorAll('.side-nav-links .dropdown.open').forEach(openDropdown => {
-        if (openDropdown !== parent) {
-          openDropdown.classList.remove('open');
-        }
-      });
-
-      // Toggle current dropdown
+      // Toggle current dropdown without closing others
       parent.classList.toggle('open');
     });
   });

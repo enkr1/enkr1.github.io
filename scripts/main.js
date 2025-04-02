@@ -12,7 +12,7 @@ import {
   SectionSpecialisation
 } from './sections_original.js';
 import { docReady, helloWorld, isInViewport, readFile } from './utils_original.js';
-import { setupEnhancedNavigation } from "./nav-enhancement.js";
+import { setupEnhancedNavigation } from "./nav_enhancement.js";
 
 // Register custom elements
 customElements.define('basic-meta-component', BasicMeta);
