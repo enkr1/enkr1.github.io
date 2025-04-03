@@ -255,6 +255,119 @@ body {
             backdrop-filter: blur(8px);
   }
 }
+@keyframes timelineGlow {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+@keyframes gradientFlow {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 0 100%;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+@keyframes dotTrail {
+  0% {
+    width: 14px;
+    height: 14px;
+    opacity: 0.5;
+  }
+  100% {
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+  }
+}
+@keyframes entryPulse {
+  0% {
+    transform: scale(0.98);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes connectingLine {
+  0% {
+    width: 0;
+    opacity: 0.5;
+  }
+  100% {
+    width: 30px;
+    opacity: 1;
+  }
+}
+@keyframes yearGlow {
+  0% {
+    text-shadow: 0 0 5px rgba(209, 0, 0, 0.2);
+    text-shadow: 0 0 5px rgba(var(--accent-rgb), 0.2);
+  }
+  100% {
+    text-shadow: 0 0 15px rgba(209, 0, 0, 0.6);
+    text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.6);
+  }
+}
+@keyframes milestoneActivate {
+  0% {
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 0 0 rgba(209, 0, 0, 0);
+    box-shadow: 0 0 0 rgba(var(--accent-rgb), 0);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.8);
+    box-shadow: 0 0 15px rgba(209, 0, 0, 0.8);
+    box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.8);
+  }
+  100% {
+    transform: translateX(-50%) scale(1.5);
+    box-shadow: 0 0 10px rgba(209, 0, 0, 0.6);
+    box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.6);
+  }
+}
+@keyframes floatParticle {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+@keyframes slideInTimeline {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes timelineProgress {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
 /**
  * MODERN RED/WHITE COLOR THEME
  */
@@ -1456,12 +1569,36 @@ header.nav-floating {
 }
 .journey-section .timeline-line {
   position: absolute;
+  top: 0;
   left: 50%;
   height: 100%;
-  width: 1px;
-  background: rgba(209, 0, 0, 0.2);
-  background: rgba(var(--accent-rgb), 0.2);
+  width: 2px;
   transform: translateX(-50%);
+  overflow: visible;
+  animation: slideInTimeline 1s ease-out forwards;
+}
+.journey-section .timeline-line::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(209, 0, 0, 0.2) 10%, rgba(209, 0, 0, 0.2) 90%, transparent 100%);
+  background: linear-gradient(to bottom, transparent 0%, rgba(var(--accent-rgb), 0.2) 10%, rgba(var(--accent-rgb), 0.2) 90%, transparent 100%);
+}
+.journey-section .timeline-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -4px;
+  width: 10px;
+  height: 100%;
+  background-image: radial-gradient(circle at center, rgba(209, 0, 0, 0.1) 0%, transparent 70%);
+  background-image: radial-gradient(circle at center, rgba(var(--accent-rgb), 0.1) 0%, transparent 70%);
+  background-size: 10px 50px;
+  background-repeat: repeat-y;
+  animation: timelineGlow 3s ease-in-out infinite alternate;
 }
 .journey-section .timeline-line .timeline-progress {
   position: absolute;
@@ -1471,31 +1608,95 @@ header.nav-floating {
   height: 0;
   background: #D10000;
   background: var(--accent);
-  transition: height 0.3s ease;
+  transition: height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   background-image: linear-gradient(to bottom, #D10000, rgba(209, 0, 0, 0.7), #D10000);
   background-image: linear-gradient(to bottom, var(--accent), rgba(var(--accent-rgb), 0.7), var(--accent));
   background-size: 100% 200%;
   animation: gradientFlow 3s ease infinite;
 }
+.journey-section .timeline-line .timeline-milestone {
+  position: absolute;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: #FFFFFF;
+  background: var(--primary);
+  border: 2px solid #D10000;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+.journey-section .timeline-line .timeline-milestone.active {
+  transform: translateX(-50%) scale(1.5);
+  box-shadow: 0 0 15px rgba(209, 0, 0, 0.6);
+  box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.6);
+  animation: milestoneActivate 0.5s ease-out forwards;
+}
+.journey-section .timeline-line .timeline-milestone::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: transparent;
+  border: 1px solid rgba(209, 0, 0, 0.3);
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.journey-section .timeline-line .timeline-milestone.active::after {
+  opacity: 1;
+  width: 24px;
+  height: 24px;
+}
+.journey-section .timeline-line .timeline-milestone .milestone-year {
+  position: absolute;
+  font-size: 0.8rem;
+  color: #555555;
+  color: var(--text-secondary);
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.journey-section .timeline-line .timeline-milestone .milestone-year.left {
+  right: 20px;
+  transform: translateX(-100%);
+}
+.journey-section .timeline-line .timeline-milestone .milestone-year.right {
+  left: 20px;
+}
+.journey-section .timeline-line .timeline-milestone.active .milestone-year {
+  color: #D10000;
+  color: var(--accent);
+  opacity: 1;
+  animation: yearGlow 1s ease-in-out infinite alternate;
+}
 .journey-section .timeline-line .timeline-scroll-dot {
   position: absolute;
   left: 50%;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   background: #D10000;
   background: var(--accent);
   border-radius: 50%;
   transform: translateX(-50%);
   z-index: 5;
-  transition: top 0.2s ease;
+  transition: top 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 10px rgba(209, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.5);
 }
 .journey-section .timeline-line .timeline-scroll-dot::before, .journey-section .timeline-line .timeline-scroll-dot::after {
   content: "";
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   background: #D10000;
   background: var(--accent);
   border-radius: 50%;
@@ -1508,103 +1709,6 @@ header.nav-floating {
 }
 .journey-section .timeline-line .timeline-scroll-dot::after {
   animation: dotTrail 1.5s ease-out 0.5s infinite;
-}
-.journey-section .timeline-line .timeline-scroll-dot.pulse {
-  animation: dotPulse 0.6s ease-out;
-}
-.journey-section .timeline-line .timeline-scroll-dot::after {
-  content: "";
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  background: radial-gradient(circle, rgba(209, 0, 0, 0.4) 0%, transparent 70%);
-  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.4) 0%, transparent 70%);
-  border-radius: 50%;
-  z-index: -1;
-  animation: glowPulse 2s infinite;
-}
-.journey-section .timeline-line .timeline-roadmap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-star {
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  background: #D10000;
-  background: var(--accent);
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  opacity: 0.2;
-  animation: starTwinkle 3s infinite alternate;
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-star:nth-child(1) {
-  left: 10%;
-  top: 20%;
-  animation-delay: 0s;
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-star:nth-child(2) {
-  left: 85%;
-  top: 35%;
-  animation-delay: 0.5s;
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-star:nth-child(3) {
-  left: 15%;
-  top: 60%;
-  animation-delay: 1s;
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-star:nth-child(4) {
-  left: 80%;
-  top: 75%;
-  animation-delay: 1.5s;
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-star:nth-child(5) {
-  left: 30%;
-  top: 85%;
-  animation-delay: 2s;
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-checkpoint {
-  position: absolute;
-  left: 50%;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(209, 0, 0, 0.05);
-  background: rgba(var(--accent-rgb), 0.05);
-  transform: translateX(-50%);
-  border: 1px dashed rgba(209, 0, 0, 0.2);
-  border: 1px dashed rgba(var(--accent-rgb), 0.2);
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-checkpoint::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  background: rgba(209, 0, 0, 0.2);
-  background: rgba(var(--accent-rgb), 0.2);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-checkpoint:nth-child(6) {
-  top: 10%;
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-checkpoint:nth-child(7) {
-  top: 30%;
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-checkpoint:nth-child(8) {
-  top: 50%;
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-checkpoint:nth-child(9) {
-  top: 70%;
-}
-.journey-section .timeline-line .timeline-roadmap .roadmap-checkpoint:nth-child(10) {
-  top: 90%;
 }
 .journey-section .timeline-symbol {
   position: absolute;
@@ -1647,17 +1751,23 @@ header.nav-floating {
 .journey-section .timeline-entry {
   position: relative;
   margin-bottom: 8rem;
-  perspective: 1000px;
-  transition: all 0.5s ease;
+  opacity: 0.4;
+  filter: blur(2px);
+  transform: scale(0.95);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .journey-section .timeline-entry.active {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
   z-index: 10;
+  animation: entryPulse 0.5s ease-out;
 }
 .journey-section .timeline-entry.active .entry-content {
-  transform: translateZ(30px) scale(1.05);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
   border-color: rgba(209, 0, 0, 0.3);
   border-color: rgba(var(--accent-rgb), 0.3);
+  transform: translateZ(30px);
 }
 .journey-section .timeline-entry.active .entry-marker {
   transform: scale(1.5);
@@ -1665,9 +1775,11 @@ header.nav-floating {
   box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.8);
 }
 .journey-section .timeline-entry.active .entry-date .year {
-  font-size: 2.2rem;
-  text-shadow: 0 0 15px rgba(209, 0, 0, 0.6);
-  text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.6);
+  color: #D10000;
+  color: var(--accent);
+  text-shadow: 0 0 15px rgba(209, 0, 0, 0.4);
+  text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.4);
+  animation: yearGlow 1.5s ease-in-out infinite alternate;
 }
 .journey-section .timeline-entry.active .entry-title {
   color: #D10000;
@@ -1676,9 +1788,20 @@ header.nav-floating {
 .journey-section .timeline-entry.active .entry-title::after {
   width: 50px;
   opacity: 1;
+  animation: connectingLine 0.5s ease-out forwards;
 }
-.journey-section .timeline-entry:nth-child(1) .entry-content::before, .journey-section .timeline-entry:nth-child(2) .entry-content::before, .journey-section .timeline-entry:nth-child(3) .entry-content::before, .journey-section .timeline-entry:nth-child(4) .entry-content::before {
-  transform: none;
+.journey-section .timeline-entry.active .entry-image img {
+  transform: scale(1.05);
+}
+.journey-section .timeline-entry.past {
+  opacity: 0.7;
+  filter: blur(1px);
+  transform: scale(0.98);
+}
+.journey-section .timeline-entry.future {
+  opacity: 0.3;
+  filter: blur(3px);
+  transform: scale(0.9);
 }
 .journey-section .timeline-entry:nth-child(odd) .entry-content {
   margin-left: auto;
@@ -1690,11 +1813,11 @@ header.nav-floating {
   position: absolute;
   top: 20px;
   right: -30px;
-  width: 30px;
+  width: 0;
   height: 2px;
   background: linear-gradient(to right, transparent, #D10000);
   background: linear-gradient(to right, transparent, var(--accent));
-  transition: width 0.3s ease, opacity 0.3s ease;
+  transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
 }
 .journey-section .timeline-entry:nth-child(odd) .entry-content .entry-marker {
   right: -40px;
@@ -1707,13 +1830,12 @@ header.nav-floating {
   top: 10px;
 }
 .journey-section .timeline-entry:nth-child(odd).active .entry-content::before {
-  width: 40px;
-  opacity: 1;
-  height: 3px;
+  width: 30px;
+  animation: connectingLine 0.5s ease-out forwards;
 }
 .journey-section .timeline-entry:nth-child(even) .entry-content {
   margin-right: auto;
-  margin-left: 10%;
+  margin-left: 60px;
   transform-origin: left center;
 }
 .journey-section .timeline-entry:nth-child(even) .entry-content::before {
@@ -1721,10 +1843,11 @@ header.nav-floating {
   position: absolute;
   top: 20px;
   left: -30px;
-  width: 30px;
+  width: 0;
   height: 2px;
   background: linear-gradient(to left, transparent, #D10000);
   background: linear-gradient(to left, transparent, var(--accent));
+  transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
 }
 .journey-section .timeline-entry:nth-child(even) .entry-content .entry-marker {
   left: -40px;
@@ -1732,21 +1855,13 @@ header.nav-floating {
 }
 .journey-section .timeline-entry:nth-child(even) .entry-date {
   right: auto;
-  left: 5%;
+  left: 0;
   text-align: left;
+  top: 10px;
 }
-.journey-section .timeline-entry:hover .entry-content {
-  transform: translateZ(20px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-.journey-section .timeline-entry:hover .entry-marker {
-  transform: scale(1.3);
-  box-shadow: 0 0 15px rgba(209, 0, 0, 0.6);
-  box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.6);
-}
-.journey-section .timeline-entry:hover .entry-date .year {
-  text-shadow: 0 0 10px rgba(209, 0, 0, 0.4);
-  text-shadow: 0 0 10px rgba(var(--accent-rgb), 0.4);
+.journey-section .timeline-entry:nth-child(even).active .entry-content::before {
+  width: 30px;
+  animation: connectingLine 0.5s ease-out forwards;
 }
 .journey-section .entry-date {
   position: absolute;
@@ -2036,20 +2151,89 @@ header.nav-floating {
   animation: floatParticle 15s linear infinite;
 }
 
-@keyframes floatParticle {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0;
+.timeline-navigation-hint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+.timeline-navigation-hint:hover {
+  opacity: 1;
+}
+.timeline-navigation-hint .hint-text {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  color: #555555;
+  color: var(--text-secondary);
+}
+.timeline-navigation-hint .scroll-icon {
+  position: relative;
+  width: 24px;
+  height: 40px;
+  border: 2px solid rgba(209, 0, 0, 0.3);
+  border: 2px solid rgba(var(--accent-rgb), 0.3);
+  border-radius: 12px;
+  margin: 0 auto;
+}
+.timeline-navigation-hint .scroll-icon .scroll-wheel {
+  position: absolute;
+  width: 4px;
+  height: 8px;
+  background: #D10000;
+  background: var(--accent);
+  border-radius: 2px;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scrollWheel 1.5s ease-in-out infinite;
+}
+
+@media (max-width: 992px) {
+  .timeline-line {
+    left: 30px;
   }
-  10% {
-    opacity: 0.3;
+  .timeline-entry:nth-child(odd) .entry-content, .timeline-entry:nth-child(even) .entry-content {
+    margin-left: 60px;
+    margin-right: auto;
+    transform-origin: left center;
   }
-  90% {
-    opacity: 0.3;
+  .timeline-entry:nth-child(odd) .entry-content::before, .timeline-entry:nth-child(even) .entry-content::before {
+    left: -30px;
+    right: auto;
+    background: linear-gradient(to left, transparent, #D10000);
+    background: linear-gradient(to left, transparent, var(--accent));
   }
-  100% {
-    transform: translateY(100vh) rotate(360deg);
-    opacity: 0;
+  .timeline-entry:nth-child(odd) .entry-content .entry-marker, .timeline-entry:nth-child(even) .entry-content .entry-marker {
+    left: -40px;
+    right: auto;
+  }
+  .timeline-entry:nth-child(odd) .entry-date, .timeline-entry:nth-child(even) .entry-date {
+    left: 0;
+    right: auto;
+    text-align: left;
+    top: -30px;
+  }
+  .timeline-milestone .milestone-year {
+    left: 20px !important;
+    right: auto !important;
+    transform: none !important;
+  }
+}
+@media (max-width: 576px) {
+  .timeline-entry {
+    margin-bottom: 5rem;
+  }
+  .timeline-entry .entry-content {
+    padding: 15px;
+  }
+  .timeline-entry .entry-title {
+    font-size: 1.2rem;
+  }
+  .timeline-entry .entry-description {
+    font-size: 0.9rem;
   }
 }
 .landing-section {
