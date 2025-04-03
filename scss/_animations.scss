@@ -176,8 +176,9 @@
 // Side navigation exit animation
 @keyframes navSlideOut {
   0% {
-    left: 0;
-    transform: translateX(0);
+    // BUG: Once added this line, when screen online the nav will be showing first
+    // left: 0;
+    // transform: translateX(0);
     opacity: 1;
   }
 
