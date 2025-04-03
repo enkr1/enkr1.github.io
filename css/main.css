@@ -368,6 +368,69 @@ body {
     height: 100%;
   }
 }
+@keyframes followPath {
+  0% {
+    transform: translateX(calc(-50% + 0px));
+    transform: translateX(calc(-50% + var(--path-offset, 0px)));
+  }
+  100% {
+    transform: translateX(calc(-50% + 0px));
+    transform: translateX(calc(-50% + var(--path-offset, 0px)));
+  }
+}
+@keyframes starTwinkle {
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+}
+@keyframes floatSymbol {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+@keyframes scrollWheel {
+  0% {
+    opacity: 0.5;
+    top: 8px;
+  }
+  50% {
+    opacity: 1;
+    top: 20px;
+  }
+  100% {
+    opacity: 0.5;
+    top: 8px;
+  }
+}
+@keyframes glowPulse {
+  0% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
 /**
  * MODERN RED/WHITE COLOR THEME
  */
@@ -1512,8 +1575,8 @@ header.nav-floating {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle at 20% 30%, rgba(209, 0, 0, 0.03) 0%, transparent 8%), radial-gradient(circle at 80% 60%, rgba(209, 0, 0, 0.03) 0%, transparent 8%);
-  background-image: radial-gradient(circle at 20% 30%, rgba(var(--accent-rgb), 0.03) 0%, transparent 8%), radial-gradient(circle at 80% 60%, rgba(var(--accent-rgb), 0.03) 0%, transparent 8%);
+  background-image: radial-gradient(circle at 20% 30%, rgba(209, 0, 0, 0.05) 0%, transparent 8%), radial-gradient(circle at 80% 60%, rgba(209, 0, 0, 0.05) 0%, transparent 8%);
+  background-image: radial-gradient(circle at 20% 30%, rgba(var(--accent-rgb), 0.05) 0%, transparent 8%), radial-gradient(circle at 80% 60%, rgba(var(--accent-rgb), 0.05) 0%, transparent 8%);
   background-size: 50px 50px;
   z-index: -1;
   opacity: 0.8;
@@ -1566,16 +1629,18 @@ header.nav-floating {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 0;
+  perspective: 1000px;
 }
 .journey-section .timeline-line {
   position: absolute;
   top: 0;
   left: 50%;
   height: 100%;
-  width: 2px;
+  width: 1px;
   transform: translateX(-50%);
   overflow: visible;
-  animation: slideInTimeline 1s ease-out forwards;
+  background-color: rgba(209, 0, 0, 0.5);
+  background-color: rgba(var(--accent-rgb), 0.5);
 }
 .journey-section .timeline-line::before {
   content: "";
@@ -1584,8 +1649,8 @@ header.nav-floating {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, transparent 0%, rgba(209, 0, 0, 0.2) 10%, rgba(209, 0, 0, 0.2) 90%, transparent 100%);
-  background: linear-gradient(to bottom, transparent 0%, rgba(var(--accent-rgb), 0.2) 10%, rgba(var(--accent-rgb), 0.2) 90%, transparent 100%);
+  background: rgba(209, 0, 0, 0.2);
+  background: rgba(var(--accent-rgb), 0.2);
 }
 .journey-section .timeline-line::after {
   content: "";
@@ -1627,6 +1692,9 @@ header.nav-floating {
   transform: translateX(-50%);
   z-index: 2;
   transition: all 0.3s ease;
+}
+.journey-section .timeline-line .timeline-milestone:nth-child(1), .journey-section .timeline-line .timeline-milestone:nth-child(2), .journey-section .timeline-line .timeline-milestone:nth-child(3), .journey-section .timeline-line .timeline-milestone:nth-child(4), .journey-section .timeline-line .timeline-milestone:nth-child(5) {
+  left: 50%;
 }
 .journey-section .timeline-line .timeline-milestone.active {
   transform: translateX(-50%) scale(1.5);
@@ -1710,39 +1778,54 @@ header.nav-floating {
 .journey-section .timeline-line .timeline-scroll-dot::after {
   animation: dotTrail 1.5s ease-out 0.5s infinite;
 }
-.journey-section .timeline-symbol {
+.journey-section .timeline-stars {
   position: absolute;
-  width: 40px;
-  height: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  opacity: 0.7;
-  transition: all 0.3s ease;
-}
-.journey-section .timeline-symbol svg {
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  fill: #D10000;
-  fill: var(--accent);
-  filter: drop-shadow(0 0 5px rgba(209, 0, 0, 0.3));
-  filter: drop-shadow(0 0 5px rgba(var(--accent-rgb), 0.3));
+  z-index: 1;
+  pointer-events: none;
 }
-.journey-section .timeline-symbol:nth-child(1) {
-  top: 20%;
-  animation: floatSymbol 4s ease-in-out infinite;
+.journey-section .timeline-stars .star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #D10000;
+  background: var(--accent);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: starTwinkle 3s ease-in-out infinite;
 }
-.journey-section .timeline-symbol:nth-child(2) {
-  top: 45%;
-  animation: floatSymbol 4s ease-in-out 1s infinite;
+.journey-section .timeline-stars .star:nth-child(1) {
+  top: 10%;
+  left: 45%;
+  animation-delay: 0s;
 }
-.journey-section .timeline-symbol:nth-child(3) {
+.journey-section .timeline-stars .star:nth-child(2) {
+  top: 25%;
+  left: 52%;
+  animation-delay: 0.5s;
+}
+.journey-section .timeline-stars .star:nth-child(3) {
+  top: 40%;
+  left: 48%;
+  animation-delay: 1s;
+}
+.journey-section .timeline-stars .star:nth-child(4) {
+  top: 55%;
+  left: 53%;
+  animation-delay: 1.5s;
+}
+.journey-section .timeline-stars .star:nth-child(5) {
   top: 70%;
-  animation: floatSymbol 4s ease-in-out 2s infinite;
+  left: 47%;
+  animation-delay: 2s;
 }
-.journey-section .timeline-symbol:hover {
-  opacity: 1;
-  transform: translateX(-50%) scale(1.2);
+.journey-section .timeline-stars .star:nth-child(6) {
+  top: 85%;
+  left: 51%;
+  animation-delay: 2.5s;
 }
 .journey-section .timeline-entries {
   width: 100%;
@@ -1753,13 +1836,14 @@ header.nav-floating {
   margin-bottom: 8rem;
   opacity: 0.4;
   filter: blur(2px);
-  transform: scale(0.95);
+  transform: scale(0.95) translateY(20px);
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  perspective: 1000px;
 }
 .journey-section .timeline-entry.active {
   opacity: 1;
   filter: blur(0);
-  transform: scale(1);
+  transform: scale(1) translateY(0);
   z-index: 10;
   animation: entryPulse 0.5s ease-out;
 }
@@ -1767,7 +1851,9 @@ header.nav-floating {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
   border-color: rgba(209, 0, 0, 0.3);
   border-color: rgba(var(--accent-rgb), 0.3);
-  transform: translateZ(30px);
+  transform: translateZ(30px) rotateX(2deg);
+  -webkit-backdrop-filter: blur(0);
+          backdrop-filter: blur(0);
 }
 .journey-section .timeline-entry.active .entry-marker {
   transform: scale(1.5);
@@ -1780,6 +1866,7 @@ header.nav-floating {
   text-shadow: 0 0 15px rgba(209, 0, 0, 0.4);
   text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.4);
   animation: yearGlow 1.5s ease-in-out infinite alternate;
+  transform: scale(1.1);
 }
 .journey-section .timeline-entry.active .entry-title {
   color: #D10000;
@@ -1796,17 +1883,26 @@ header.nav-floating {
 .journey-section .timeline-entry.past {
   opacity: 0.7;
   filter: blur(1px);
-  transform: scale(0.98);
+  transform: scale(0.98) translateY(0);
 }
 .journey-section .timeline-entry.future {
   opacity: 0.3;
   filter: blur(3px);
-  transform: scale(0.9);
+  transform: scale(0.9) translateY(20px);
 }
 .journey-section .timeline-entry:nth-child(odd) .entry-content {
   margin-left: auto;
   margin-right: 60px;
   transform-origin: right center;
+}
+.journey-section .timeline-entry:nth-child(odd) .entry-content:nth-child(1) {
+  margin-right: 70px;
+}
+.journey-section .timeline-entry:nth-child(odd) .entry-content:nth-child(3) {
+  margin-right: 70px;
+}
+.journey-section .timeline-entry:nth-child(odd) .entry-content:nth-child(5) {
+  margin-right: 70px;
 }
 .journey-section .timeline-entry:nth-child(odd) .entry-content::before {
   content: "";
@@ -1838,6 +1934,12 @@ header.nav-floating {
   margin-left: 60px;
   transform-origin: left center;
 }
+.journey-section .timeline-entry:nth-child(even) .entry-content:nth-child(2) {
+  margin-left: 70px;
+}
+.journey-section .timeline-entry:nth-child(even) .entry-content:nth-child(4) {
+  margin-left: 70px;
+}
 .journey-section .timeline-entry:nth-child(even) .entry-content::before {
   content: "";
   position: absolute;
@@ -1867,16 +1969,17 @@ header.nav-floating {
   position: absolute;
   top: 0;
   width: 120px;
+  transition: all 0.3s ease;
 }
 .journey-section .entry-date .year {
   display: block;
   font-family: "Playfair Display", serif;
   font-family: var(--font-primary);
   font-size: 2rem;
-  color: #D10000;
-  color: var(--accent);
+  color: #555555;
+  color: var(--text-secondary);
   font-weight: 600;
-  transition: text-shadow 0.3s ease;
+  transition: all 0.3s ease;
 }
 .journey-section .entry-date .month {
   display: block;
@@ -1886,18 +1989,31 @@ header.nav-floating {
   color: #555555;
   color: var(--text-secondary);
   font-style: italic;
+  transition: all 0.3s ease;
 }
 .journey-section .entry-content {
   position: relative;
   width: 40%;
-  background: #FFFFFF;
-  background: var(--primary);
+  background: rgba(var(--primary-rgb), 0.8);
   border: 1px solid rgba(209, 0, 0, 0.1);
   border: 1px solid rgba(var(--accent-rgb), 0.1);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
   transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  overflow: hidden;
+}
+.journey-section .entry-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
+  z-index: -1;
 }
 .journey-section .entry-content::after {
   content: "";
@@ -1910,7 +2026,7 @@ header.nav-floating {
   background-image: linear-gradient(45deg, rgba(var(--accent-rgb), 0.02) 25%, transparent 25%), linear-gradient(-45deg, rgba(var(--accent-rgb), 0.02) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgba(var(--accent-rgb), 0.02) 75%), linear-gradient(-45deg, transparent 75%, rgba(var(--accent-rgb), 0.02) 75%);
   background-size: 20px 20px;
   background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-  border-radius: 8px;
+  border-radius: 12px;
   z-index: -1;
   opacity: 0.5;
 }
@@ -1948,6 +2064,7 @@ header.nav-floating {
   color: var(--text-primary);
   margin-bottom: 1rem;
   position: relative;
+  transition: all 0.3s ease;
 }
 .journey-section .entry-content .entry-title::after {
   content: "";
@@ -1959,6 +2076,7 @@ header.nav-floating {
   background: #D10000;
   background: var(--accent);
   opacity: 0.5;
+  transition: all 0.3s ease;
 }
 .journey-section .entry-content .entry-description {
   font-family: "Montserrat", sans-serif;
@@ -1971,9 +2089,10 @@ header.nav-floating {
 }
 .journey-section .entry-content .entry-image {
   width: 100%;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 .journey-section .entry-content .entry-image::before {
   content: "";
@@ -1999,140 +2118,7 @@ header.nav-floating {
 .journey-section .entry-content .entry-image:hover img {
   transform: scale(1.05);
 }
-@media (max-width: 992px) {
-  .journey-section .timeline-line {
-    left: 20px;
-  }
-  .journey-section .timeline-entry:nth-child(odd) .entry-content, .journey-section .timeline-entry:nth-child(even) .entry-content {
-    width: calc(100% - 60px);
-    margin-left: 60px;
-    margin-right: 0;
-  }
-  .journey-section .timeline-entry:nth-child(odd) .entry-content::before, .journey-section .timeline-entry:nth-child(even) .entry-content::before {
-    left: -40px;
-    right: auto;
-    width: 40px;
-    background: linear-gradient(to left, transparent, #D10000);
-    background: linear-gradient(to left, transparent, var(--accent));
-  }
-  .journey-section .timeline-entry:nth-child(odd) .entry-content .entry-marker, .journey-section .timeline-entry:nth-child(even) .entry-content .entry-marker {
-    left: -50px;
-    right: auto;
-  }
-  .journey-section .timeline-entry:nth-child(odd) .entry-date, .journey-section .timeline-entry:nth-child(even) .entry-date {
-    left: 20px;
-    right: auto;
-    text-align: left;
-    top: -40px;
-    width: auto;
-  }
-}
-
-@keyframes titleUnderline {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 60%;
-  }
-}
-@keyframes gradientFlow {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 0 100%;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
-@keyframes dotTrail {
-  0% {
-    width: 12px;
-    height: 12px;
-    opacity: 0.5;
-  }
-  100% {
-    width: 50px;
-    height: 50px;
-    opacity: 0;
-  }
-}
-@keyframes markerPulse {
-  0% {
-    transform: translate(-50%, -50%) scale(0.5);
-    opacity: 0.7;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(2);
-    opacity: 0;
-  }
-}
-@keyframes timelineGlow {
-  0% {
-    opacity: 0.3;
-  }
-  100% {
-    opacity: 0.8;
-  }
-}
-@keyframes dotPulse {
-  0% {
-    transform: translateX(-5px) scale(1);
-    box-shadow: 0 0 0 0 rgba(209, 0, 0, 0.7);
-    box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.7);
-  }
-  70% {
-    transform: translateX(-5px) scale(1.5);
-    box-shadow: 0 0 0 10px rgba(209, 0, 0, 0);
-    box-shadow: 0 0 0 10px rgba(var(--accent-rgb), 0);
-  }
-  100% {
-    transform: translateX(-5px) scale(1);
-    box-shadow: 0 0 0 0 rgba(209, 0, 0, 0);
-    box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0);
-  }
-}
-@keyframes glowPulse {
-  0% {
-    opacity: 0.3;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: translate(-50%, -50%) scale(1.5);
-  }
-  100% {
-    opacity: 0.3;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-@keyframes followPath {
-  0% {
-    transform: translateX(calc(-50% + 0px));
-    transform: translateX(calc(-50% + var(--path-offset, 0px)));
-  }
-  100% {
-    transform: translateX(calc(-50% + 0px));
-    transform: translateX(calc(-50% + var(--path-offset, 0px)));
-  }
-}
-@keyframes starTwinkle {
-  0% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.2);
-  }
-  100% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-}
-.timeline-particles {
+.journey-section .timeline-particles {
   position: absolute;
   top: 0;
   left: 0;
@@ -2141,7 +2127,7 @@ header.nav-floating {
   overflow: hidden;
   z-index: -1;
 }
-.timeline-particles .timeline-particle {
+.journey-section .timeline-particles .timeline-particle {
   position: absolute;
   background: #D10000;
   background: var(--accent);
@@ -2150,8 +2136,7 @@ header.nav-floating {
   top: -10px;
   animation: floatParticle 15s linear infinite;
 }
-
-.timeline-navigation-hint {
+.journey-section .timeline-navigation-hint {
   position: absolute;
   bottom: 20px;
   left: 50%;
@@ -2160,16 +2145,16 @@ header.nav-floating {
   opacity: 0.7;
   transition: opacity 0.3s ease;
 }
-.timeline-navigation-hint:hover {
+.journey-section .timeline-navigation-hint:hover {
   opacity: 1;
 }
-.timeline-navigation-hint .hint-text {
+.journey-section .timeline-navigation-hint .hint-text {
   font-size: 0.9rem;
   margin-bottom: 10px;
   color: #555555;
   color: var(--text-secondary);
 }
-.timeline-navigation-hint .scroll-icon {
+.journey-section .timeline-navigation-hint .scroll-icon {
   position: relative;
   width: 24px;
   height: 40px;
@@ -2178,7 +2163,7 @@ header.nav-floating {
   border-radius: 12px;
   margin: 0 auto;
 }
-.timeline-navigation-hint .scroll-icon .scroll-wheel {
+.journey-section .timeline-navigation-hint .scroll-icon .scroll-wheel {
   position: absolute;
   width: 4px;
   height: 8px;
@@ -2190,52 +2175,59 @@ header.nav-floating {
   transform: translateX(-50%);
   animation: scrollWheel 1.5s ease-in-out infinite;
 }
-
 @media (max-width: 992px) {
-  .timeline-line {
+  .journey-section .timeline-line {
     left: 30px;
   }
-  .timeline-entry:nth-child(odd) .entry-content, .timeline-entry:nth-child(even) .entry-content {
+  .journey-section .timeline-line::before, .journey-section .timeline-line::after,
+  .journey-section .timeline-line .timeline-progress {
+    clip-path: none;
+  }
+  .journey-section .timeline-line .timeline-milestone {
+    left: 50% !important;
+  }
+  .journey-section .timeline-line .timeline-scroll-dot {
+    left: 50%;
+    --path-offset: 0px;
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-content, .journey-section .timeline-entry:nth-child(even) .entry-content {
     margin-left: 60px;
     margin-right: auto;
     transform-origin: left center;
   }
-  .timeline-entry:nth-child(odd) .entry-content::before, .timeline-entry:nth-child(even) .entry-content::before {
+  .journey-section .timeline-entry:nth-child(odd) .entry-content::before, .journey-section .timeline-entry:nth-child(even) .entry-content::before {
     left: -30px;
     right: auto;
     background: linear-gradient(to left, transparent, #D10000);
     background: linear-gradient(to left, transparent, var(--accent));
   }
-  .timeline-entry:nth-child(odd) .entry-content .entry-marker, .timeline-entry:nth-child(even) .entry-content .entry-marker {
+  .journey-section .timeline-entry:nth-child(odd) .entry-content .entry-marker, .journey-section .timeline-entry:nth-child(even) .entry-content .entry-marker {
     left: -40px;
     right: auto;
   }
-  .timeline-entry:nth-child(odd) .entry-date, .timeline-entry:nth-child(even) .entry-date {
+  .journey-section .timeline-entry:nth-child(odd) .entry-date, .journey-section .timeline-entry:nth-child(even) .entry-date {
     left: 0;
     right: auto;
     text-align: left;
     top: -30px;
   }
-  .timeline-milestone .milestone-year {
-    left: 20px !important;
-    right: auto !important;
-    transform: none !important;
-  }
 }
 @media (max-width: 576px) {
-  .timeline-entry {
+  .journey-section .timeline-entry {
     margin-bottom: 5rem;
   }
-  .timeline-entry .entry-content {
-    padding: 15px;
+  .journey-section .timeline-entry .entry-content {
+    width: calc(100% - 60px);
+    padding: 1.5rem;
   }
-  .timeline-entry .entry-title {
+  .journey-section .timeline-entry .entry-title {
     font-size: 1.2rem;
   }
-  .timeline-entry .entry-description {
+  .journey-section .timeline-entry .entry-description {
     font-size: 0.9rem;
   }
 }
+
 .landing-section {
   position: relative;
   min-height: 100vh;
@@ -2627,6 +2619,10 @@ header.nav-floating {
   }
 }
 
+.about {
+  border: 1px solid red;
+  height: 100vh;
+}
 .about .container .skill-showcase {
   margin: 5rem 0;
   display: flex;
