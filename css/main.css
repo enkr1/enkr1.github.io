@@ -1564,6 +1564,11 @@ header.nav-floating {
 }
 
 .journey-section {
+  --timeline-container-gap: -10%;
+  --timeline-container-width: 55%;
+  --timeline-line-width: 2px;
+  --timeline-transition-speed: 0.8s;
+  --timeline-dot-size: 10px;
   padding: 6rem 0;
   position: relative;
   overflow: hidden;
@@ -1636,34 +1641,11 @@ header.nav-floating {
   top: 0;
   left: 50%;
   height: 100%;
-  width: 1px;
+  width: var(--timeline-line-width);
   transform: translateX(-50%);
   overflow: visible;
-  background-color: rgba(209, 0, 0, 0.5);
-  background-color: rgba(var(--accent-rgb), 0.5);
-}
-.journey-section .timeline-line::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(209, 0, 0, 0.2);
-  background: rgba(var(--accent-rgb), 0.2);
-}
-.journey-section .timeline-line::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -4px;
-  width: 10px;
-  height: 100%;
-  background-image: radial-gradient(circle at center, rgba(209, 0, 0, 0.1) 0%, transparent 70%);
-  background-image: radial-gradient(circle at center, rgba(var(--accent-rgb), 0.1) 0%, transparent 70%);
-  background-size: 10px 50px;
-  background-repeat: repeat-y;
-  animation: timelineGlow 3s ease-in-out infinite alternate;
+  background-color: rgba(209, 0, 0, 0.2);
+  background-color: rgba(var(--accent-rgb), 0.2);
 }
 .journey-section .timeline-line .timeline-progress {
   position: absolute;
@@ -1673,17 +1655,17 @@ header.nav-floating {
   height: 0;
   background: #D10000;
   background: var(--accent);
-  transition: height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  background-image: linear-gradient(to bottom, #D10000, rgba(209, 0, 0, 0.7), #D10000);
-  background-image: linear-gradient(to bottom, var(--accent), rgba(var(--accent-rgb), 0.7), var(--accent));
+  transition: height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  background-image: linear-gradient(to bottom, #D10000, rgba(209, 0, 0, 0.9), #D10000);
+  background-image: linear-gradient(to bottom, var(--accent), rgba(var(--accent-rgb), 0.9), var(--accent));
   background-size: 100% 200%;
-  animation: gradientFlow 3s ease infinite;
+  animation: gradientFlow 4s ease infinite;
 }
 .journey-section .timeline-line .timeline-milestone {
   position: absolute;
   left: 50%;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   background: #FFFFFF;
   background: var(--primary);
   border: 2px solid #D10000;
@@ -1691,36 +1673,13 @@ header.nav-floating {
   border-radius: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  transition: all 0.3s ease;
-}
-.journey-section .timeline-line .timeline-milestone:nth-child(1), .journey-section .timeline-line .timeline-milestone:nth-child(2), .journey-section .timeline-line .timeline-milestone:nth-child(3), .journey-section .timeline-line .timeline-milestone:nth-child(4), .journey-section .timeline-line .timeline-milestone:nth-child(5) {
-  left: 50%;
+  transition: all 0.5s ease;
 }
 .journey-section .timeline-line .timeline-milestone.active {
   transform: translateX(-50%) scale(1.5);
   box-shadow: 0 0 15px rgba(209, 0, 0, 0.6);
   box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.6);
-  animation: milestoneActivate 0.5s ease-out forwards;
-}
-.journey-section .timeline-line .timeline-milestone::after {
-  content: "";
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background: transparent;
-  border: 1px solid rgba(209, 0, 0, 0.3);
-  border: 1px solid rgba(var(--accent-rgb), 0.3);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-.journey-section .timeline-line .timeline-milestone.active::after {
-  opacity: 1;
-  width: 24px;
-  height: 24px;
+  animation: milestoneActivate 0.8s ease-out forwards;
 }
 .journey-section .timeline-line .timeline-milestone .milestone-year {
   position: absolute;
@@ -1743,40 +1702,6 @@ header.nav-floating {
   color: var(--accent);
   opacity: 1;
   animation: yearGlow 1s ease-in-out infinite alternate;
-}
-.journey-section .timeline-line .timeline-scroll-dot {
-  position: absolute;
-  left: 50%;
-  width: 14px;
-  height: 14px;
-  background: #D10000;
-  background: var(--accent);
-  border-radius: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
-  transition: top 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 0 10px rgba(209, 0, 0, 0.5);
-  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.5);
-}
-.journey-section .timeline-line .timeline-scroll-dot::before, .journey-section .timeline-line .timeline-scroll-dot::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 14px;
-  height: 14px;
-  background: #D10000;
-  background: var(--accent);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.5;
-  z-index: -1;
-}
-.journey-section .timeline-line .timeline-scroll-dot::before {
-  animation: dotTrail 1.5s ease-out infinite;
-}
-.journey-section .timeline-line .timeline-scroll-dot::after {
-  animation: dotTrail 1.5s ease-out 0.5s infinite;
 }
 .journey-section .timeline-stars {
   position: absolute;
@@ -1837,7 +1762,7 @@ header.nav-floating {
   opacity: 0.4;
   filter: blur(2px);
   transform: scale(0.95) translateY(20px);
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
   perspective: 1000px;
 }
 .journey-section .timeline-entry.active {
@@ -1845,7 +1770,7 @@ header.nav-floating {
   filter: blur(0);
   transform: scale(1) translateY(0);
   z-index: 10;
-  animation: entryPulse 0.5s ease-out;
+  animation: entryPulse 0.8s ease-out;
 }
 .journey-section .timeline-entry.active .entry-content {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
@@ -1854,11 +1779,6 @@ header.nav-floating {
   transform: translateZ(30px) rotateX(2deg);
   -webkit-backdrop-filter: blur(0);
           backdrop-filter: blur(0);
-}
-.journey-section .timeline-entry.active .entry-marker {
-  transform: scale(1.5);
-  box-shadow: 0 0 20px rgba(209, 0, 0, 0.8);
-  box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.8);
 }
 .journey-section .timeline-entry.active .entry-date .year {
   color: #D10000;
@@ -1892,84 +1812,97 @@ header.nav-floating {
 }
 .journey-section .timeline-entry:nth-child(odd) .entry-content {
   margin-left: auto;
-  margin-right: 60px;
+  margin-right: var(--timeline-container-gap);
   transform-origin: right center;
-}
-.journey-section .timeline-entry:nth-child(odd) .entry-content:nth-child(1) {
-  margin-right: 70px;
-}
-.journey-section .timeline-entry:nth-child(odd) .entry-content:nth-child(3) {
-  margin-right: 70px;
-}
-.journey-section .timeline-entry:nth-child(odd) .entry-content:nth-child(5) {
-  margin-right: 70px;
 }
 .journey-section .timeline-entry:nth-child(odd) .entry-content::before {
   content: "";
   position: absolute;
   top: 20px;
-  right: -30px;
+  right: calc(-1 * var(--timeline-container-gap) / 2);
   width: 0;
   height: 2px;
   background: linear-gradient(to right, transparent, #D10000);
   background: linear-gradient(to right, transparent, var(--accent));
-  transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
-}
-.journey-section .timeline-entry:nth-child(odd) .entry-content .entry-marker {
-  right: auto;
-  left: -10rem;
+  transition: width var(--timeline-transition-speed) cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
 }
 .journey-section .timeline-entry:nth-child(odd) .entry-date {
   position: absolute;
-  right: 0;
-  transform: translateX(-100%);
-  border: none;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+  text-align: center;
+  z-index: 10;
 }
 .journey-section .timeline-entry:nth-child(odd).active .entry-content::before {
   width: 30px;
-  animation: connectingLine 0.5s ease-out forwards;
+  animation: connectingLine 0.8s ease-out forwards;
 }
 .journey-section .timeline-entry:nth-child(even) .entry-content {
   margin-right: auto;
+  margin-left: var(--timeline-container-gap);
   transform-origin: left center;
-}
-.journey-section .timeline-entry:nth-child(even) .entry-content:nth-child(2) {
-  margin-left: 70px;
-}
-.journey-section .timeline-entry:nth-child(even) .entry-content:nth-child(4) {
-  margin-left: 70px;
 }
 .journey-section .timeline-entry:nth-child(even) .entry-content::before {
   content: "";
   position: absolute;
   top: 20px;
-  left: -30px;
+  left: calc(-1 * var(--timeline-container-gap) / 2);
   width: 0;
   height: 2px;
   background: linear-gradient(to left, transparent, #D10000);
   background: linear-gradient(to left, transparent, var(--accent));
-  transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
-}
-.journey-section .timeline-entry:nth-child(even) .entry-content .entry-marker {
-  left: auto;
-  right: -10rem;
+  transition: width var(--timeline-transition-speed) cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
 }
 .journey-section .timeline-entry:nth-child(even) .entry-date {
   position: absolute;
-  right: auto;
-  left: -120px;
-  text-align: right;
-  top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+  text-align: center;
+  z-index: 10;
 }
 .journey-section .timeline-entry:nth-child(even).active .entry-content::before {
   width: 30px;
-  animation: connectingLine 0.5s ease-out forwards;
+  animation: connectingLine 0.8s ease-out forwards;
+}
+@media (max-width: 992px) {
+  .journey-section .timeline-line {
+    left: 30px;
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-content, .journey-section .timeline-entry:nth-child(even) .entry-content {
+    margin-left: 60px;
+    margin-right: auto;
+    transform-origin: left center;
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-content::before, .journey-section .timeline-entry:nth-child(even) .entry-content::before {
+    left: -30px;
+    right: auto;
+    background: linear-gradient(to left, transparent, #D10000);
+    background: linear-gradient(to left, transparent, var(--accent));
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-date, .journey-section .timeline-entry:nth-child(even) .entry-date {
+    left: 30px;
+    transform: translateX(-50%);
+    top: -40px;
+  }
 }
 .journey-section .entry-date {
-  width: 100px;
+  transition: all 0.5s ease;
+  padding: 0 0.3rem;
+}
+.journey-section .entry-date::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1rem;
+  height: 5rem;
+  background: #FFFFFF;
+  background: var(--primary);
   transition: all 0.3s ease;
-  z-index: 3;
+  z-index: -1;
 }
 .journey-section .entry-date .year {
   display: block;
@@ -1979,8 +1912,12 @@ header.nav-floating {
   color: #555555;
   color: var(--text-secondary);
   font-weight: 600;
-  transition: all 0.3s ease;
-  margin-bottom: 0.2rem;
+  transition: all 0.5s ease;
+  margin: auto;
+  padding: 0;
+  border-radius: 4px;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 .journey-section .entry-date .month {
   display: block;
@@ -1990,11 +1927,11 @@ header.nav-floating {
   color: #555555;
   color: var(--text-secondary);
   font-style: italic;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
 }
 .journey-section .entry-content {
   position: relative;
-  width: 40%;
+  width: var(--timeline-container-width);
   background: rgba(var(--primary-rgb), 0.8);
   border: 1px solid rgba(209, 0, 0, 0.1);
   border: 1px solid rgba(var(--accent-rgb), 0.1);
@@ -2030,32 +1967,6 @@ header.nav-floating {
   border-radius: 12px;
   z-index: -1;
   opacity: 0.5;
-}
-.journey-section .entry-content .entry-marker {
-  position: absolute;
-  top: 20px;
-  width: 20px;
-  height: 20px;
-  background: #FFFFFF;
-  background: var(--primary);
-  border: 3px solid #D10000;
-  border: 3px solid var(--accent);
-  border-radius: 50%;
-  z-index: 2;
-  transition: all 0.3s ease;
-}
-.journey-section .entry-content .entry-marker::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: rgba(209, 0, 0, 0.3);
-  background: rgba(var(--accent-rgb), 0.3);
-  transform: translate(-50%, -50%);
-  animation: markerPulse 2s ease-out infinite;
 }
 .journey-section .entry-content .entry-title {
   font-family: "Playfair Display", serif;
@@ -2177,6 +2088,9 @@ header.nav-floating {
   animation: scrollWheel 1.5s ease-in-out infinite;
 }
 @media (max-width: 992px) {
+  .journey-section {
+    --timeline-container-gap: 60px;
+  }
   .journey-section .timeline-line {
     left: 30px;
   }
@@ -2192,18 +2106,15 @@ header.nav-floating {
     --path-offset: 0px;
   }
   .journey-section .timeline-entry:nth-child(odd) .entry-content, .journey-section .timeline-entry:nth-child(even) .entry-content {
+    margin-left: var(--timeline-container-gap);
     margin-right: auto;
     transform-origin: left center;
   }
   .journey-section .timeline-entry:nth-child(odd) .entry-content::before, .journey-section .timeline-entry:nth-child(even) .entry-content::before {
-    left: -30px;
+    left: calc(-1 * var(--timeline-container-gap) / 2);
     right: auto;
     background: linear-gradient(to left, transparent, #D10000);
     background: linear-gradient(to left, transparent, var(--accent));
-  }
-  .journey-section .timeline-entry:nth-child(odd) .entry-content .entry-marker, .journey-section .timeline-entry:nth-child(even) .entry-content .entry-marker {
-    left: -10rem;
-    right: auto;
   }
   .journey-section .timeline-entry:nth-child(odd) .entry-date, .journey-section .timeline-entry:nth-child(even) .entry-date {
     left: 0;

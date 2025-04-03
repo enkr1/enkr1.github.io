@@ -1,4 +1,11 @@
 .journey-section {
+  // Custom timeline variables for easy adjustments
+  --timeline-container-gap: -10%;
+  --timeline-container-width: 55%;
+  --timeline-line-width: 2px;
+  --timeline-transition-speed: 0.8s;
+  --timeline-dot-size: 10px;
+
   padding: 6rem 0;
   position: relative;
   overflow: hidden;
@@ -62,6 +69,9 @@
     }
   }
 
+
+
+
   .timeline-container {
     position: relative;
     max-width: 1200px;
@@ -76,36 +86,12 @@
     top: 0;
     left: 50%;
     height: 100%;
-    width: 1px;
+    width: var(--timeline-line-width);
     transform: translateX(-50%);
     overflow: visible;
-    // animation: slideInTimeline 1s ease-out forwards;
-    background-color: rgba(var(--accent-rgb), 0.5); // Direct background color for the line
+    background-color: rgba(var(--accent-rgb), 0.2);
 
-    // Create a winding path for the timeline
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(var(--accent-rgb), 0.2);
-    }
 
-    // Add decorative elements
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -4px;
-      width: 10px;
-      height: 100%;
-      background-image: radial-gradient(circle at center, rgba(var(--accent-rgb), 0.1) 0%, transparent 70%);
-      background-size: 10px 50px;
-      background-repeat: repeat-y;
-      animation: timelineGlow 3s ease-in-out infinite alternate;
-    }
 
     .timeline-progress {
       position: absolute;
@@ -114,62 +100,32 @@
       width: 100%;
       height: 0;
       background: var(--accent);
-      transition: height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1); // Smoother transition
       background-image: linear-gradient(to bottom,
           var(--accent),
-          rgba(var(--accent-rgb), 0.7),
+          rgba(var(--accent-rgb), 0.9),
           var(--accent));
       background-size: 100% 200%;
-      animation: gradientFlow 3s ease infinite;
+      animation: gradientFlow 4s ease infinite; // Slower animation
     }
 
     // Add timeline milestones
     .timeline-milestone {
       position: absolute;
-      left: 50%; // Center on the line
-      width: 8px;
-      height: 8px;
+      left: 50%;
+      width: 10px;
+      height: 10px;
       background: var(--primary);
       border: 2px solid var(--accent);
       border-radius: 50%;
       transform: translateX(-50%);
       z-index: 2;
-      transition: all 0.3s ease;
-
-      // Position milestones along the winding path
-      &:nth-child(1),
-      &:nth-child(2),
-      &:nth-child(3),
-      &:nth-child(4),
-      &:nth-child(5) {
-        left: 50%; // All centered on the line
-      }
+      transition: all 0.5s ease; // Slower transition
 
       &.active {
         transform: translateX(-50%) scale(1.5);
         box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.6);
-        animation: milestoneActivate 0.5s ease-out forwards;
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        background: transparent;
-        border: 1px solid rgba(var(--accent-rgb), 0.3);
-        border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        opacity: 0;
-        transition: all 0.3s ease;
-      }
-
-      &.active::after {
-        opacity: 1;
-        width: 24px;
-        height: 24px;
+        animation: milestoneActivate 0.8s ease-out forwards; // Slower animation
       }
 
       // Add year labels to milestones
@@ -195,44 +151,6 @@
         color: var(--accent);
         opacity: 1;
         animation: yearGlow 1s ease-in-out infinite alternate;
-      }
-    }
-
-    // Create a more interesting scroll dot
-    .timeline-scroll-dot {
-      position: absolute;
-      left: 50%; // Center on the line
-      width: 14px;
-      height: 14px;
-      background: var(--accent);
-      border-radius: 50%;
-      transform: translateX(-50%);
-      z-index: 5;
-      transition: top 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.5);
-
-      // Add a trail effect
-      &::before,
-      &::after {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 14px;
-        height: 14px;
-        background: var(--accent);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        opacity: 0.5;
-        z-index: -1;
-      }
-
-      &::before {
-        animation: dotTrail 1.5s ease-out infinite;
-      }
-
-      &::after {
-        animation: dotTrail 1.5s ease-out 0.5s infinite;
       }
     }
   }
@@ -306,7 +224,7 @@
     opacity: 0.4;
     filter: blur(2px);
     transform: scale(0.95) translateY(20px);
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); // Slower transition
     perspective: 1000px;
 
     &.active {
@@ -314,18 +232,13 @@
       filter: blur(0);
       transform: scale(1) translateY(0);
       z-index: 10;
-      animation: entryPulse 0.5s ease-out;
+      animation: entryPulse 0.8s ease-out; // Slower animation
 
       .entry-content {
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
         border-color: rgba(var(--accent-rgb), 0.3);
         transform: translateZ(30px) rotateX(2deg);
         backdrop-filter: blur(0);
-      }
-
-      .entry-marker {
-        transform: scale(1.5);
-        box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.8);
       }
 
       .entry-date .year {
@@ -366,132 +279,148 @@
     &:nth-child(odd) {
       .entry-content {
         margin-left: auto;
-        margin-right: 60px;
+        margin-right: var(--timeline-container-gap);
         transform-origin: right center;
 
-        // Adjust for the winding path
-        &:nth-child(1) {
-          margin-right: 70px;
-        }
-
-        &:nth-child(3) {
-          margin-right: 70px;
-        }
-
-        &:nth-child(5) {
-          margin-right: 70px;
-        }
-
-        // Add a connecting line to the timeline
         &::before {
           content: '';
           position: absolute;
           top: 20px;
-          right: -30px;
+          right: calc(-1 * var(--timeline-container-gap) / 2);
           width: 0;
           height: 2px;
           background: linear-gradient(to right, transparent, var(--accent));
-          transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
-        }
-
-        .entry-marker {
-          right: auto;
-          left: -10rem;
+          transition: width var(--timeline-transition-speed) cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
         }
       }
 
+      // Position the year on the timeline
       .entry-date {
         position: absolute;
-        // left: 0;
-        right: 0;
-        // text-align: left;
-        // top: 50%; // Center it vertically
-        transform: translateX(-100%); // Ensure perfect vertical centering
-        border: none; // Remove the debug border
+        left: 50%; // Center on the timeline
+        transform: translateX(-50%); // Center it perfectly
+        top: 20px; // Position at the top of the entry
+        text-align: center;
+        z-index: 10;
       }
 
       &.active .entry-content::before {
         width: 30px;
-        animation: connectingLine 0.5s ease-out forwards;
+        animation: connectingLine 0.8s ease-out forwards; // Slower animation
       }
     }
 
     &:nth-child(even) {
       .entry-content {
         margin-right: auto;
+        margin-left: var(--timeline-container-gap);
         transform-origin: left center;
 
-        // Adjust for the winding path
-        &:nth-child(2) {
-          margin-left: 70px;
-        }
-
-        &:nth-child(4) {
-          margin-left: 70px;
-        }
-
-        // Add a connecting line to the timeline
         &::before {
           content: '';
           position: absolute;
           top: 20px;
-          left: -30px;
+          left: calc(-1 * var(--timeline-container-gap) / 2);
           width: 0;
           height: 2px;
           background: linear-gradient(to left, transparent, var(--accent));
-          transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
-        }
-
-        .entry-marker {
-          left: auto;
-          right: -10rem;
+          transition: width var(--timeline-transition-speed) cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
         }
       }
 
+      // Position the year on the timeline
       .entry-date {
         position: absolute;
-        right: auto;
-        left: -120px; // Position it to the left of the timeline
-        text-align: right;
-        top: 50%; // Center it vertically
-        transform: translateY(-50%); // Ensure perfect vertical centering
+        left: 50%; // Center on the timeline
+        transform: translateX(-50%); // Center it perfectly
+        top: 20px; // Position at the top of the entry
+        text-align: center;
+        z-index: 10;
       }
 
       &.active .entry-content::before {
         width: 30px;
-        animation: connectingLine 0.5s ease-out forwards;
+        animation: connectingLine 0.8s ease-out forwards; // Slower animation
+      }
+    }
+  }
+
+  // Responsive adjustments
+  @media (max-width: 992px) {
+    .timeline-line {
+      left: 30px;
+    }
+
+    .timeline-entry {
+
+      &:nth-child(odd),
+      &:nth-child(even) {
+        .entry-content {
+          margin-left: 60px;
+          margin-right: auto;
+          transform-origin: left center;
+
+          &::before {
+            left: -30px;
+            right: auto;
+            background: linear-gradient(to left, transparent, var(--accent));
+          }
+        }
+
+        // Adjust year position for mobile
+        .entry-date {
+          left: 30px; // Align with the timeline
+          transform: translateX(-50%);
+          top: -40px; // Move above the content
+        }
       }
     }
   }
 
   .entry-date {
-    width: 100px;
-    transition: all 0.3s ease;
-    z-index: 3; // Ensure it's above other elements
+    transition: all 0.5s ease; // Slower transition
+    // background: var(--primary); // Add background to make it stand out
+    padding: 0 0.3rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1rem;
+      height: 5rem;
+      background: var(--primary);
+      transition: all 0.3s ease;
+      z-index: -1;
+    }
 
     .year {
       display: block;
       font-family: var(--font-primary);
-      font-size: 1.8rem; // Slightly smaller for better fit
+      font-size: 1.8rem;
       color: var(--text-secondary);
       font-weight: 600;
-      transition: all 0.3s ease;
-      margin-bottom: 0.2rem;
+      transition: all 0.5s ease; // Slower transition
+      margin: auto;
+      padding: 0;
+      border-radius: 4px;
+      width: fit-content;
     }
 
     .month {
       display: block;
       font-family: var(--font-primary);
-      font-size: 0.9rem; // Slightly smaller for better fit
+      font-size: 0.9rem;
       color: var(--text-secondary);
       font-style: italic;
-      transition: all 0.3s ease;
+      transition: all 0.5s ease; // Slower transition
     }
   }
 
   .entry-content {
     position: relative;
-    width: 40%;
+    width: var(--timeline-container-width);
     background: rgba(var(--primary-rgb), 0.8);
     border: 1px solid rgba(var(--accent-rgb), 0.1);
     border-radius: 12px;
@@ -500,6 +429,8 @@
     transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
     backdrop-filter: blur(5px);
     overflow: hidden;
+
+
 
     // Add a subtle glass effect
     &::before {
@@ -534,32 +465,6 @@
       border-radius: 12px;
       z-index: -1;
       opacity: 0.5;
-    }
-
-    .entry-marker {
-      position: absolute;
-      top: 20px;
-      width: 20px;
-      height: 20px;
-      background: var(--primary);
-      border: 3px solid var(--accent);
-      border-radius: 50%;
-      z-index: 2;
-      transition: all 0.3s ease;
-
-      // Add a pulsing effect
-      &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background: rgba(var(--accent-rgb), 0.3);
-        transform: translate(-50%, -50%);
-        animation: markerPulse 2s ease-out infinite;
-      }
     }
 
     .entry-title {
@@ -631,6 +536,9 @@
     }
   }
 
+
+
+
   // Add the snowing effect particles
   .timeline-particles {
     position: absolute;
@@ -695,6 +603,8 @@
 
   // Responsive adjustments
   @media (max-width: 992px) {
+    --timeline-container-gap: 60px;
+
     .timeline-line {
       left: 30px;
 
@@ -714,23 +624,20 @@
       }
     }
 
+
     .timeline-entry {
 
       &:nth-child(odd),
       &:nth-child(even) {
         .entry-content {
+          margin-left: var(--timeline-container-gap);
           margin-right: auto;
           transform-origin: left center;
 
           &::before {
-            left: -30px;
+            left: calc(-1 * var(--timeline-container-gap) / 2);
             right: auto;
             background: linear-gradient(to left, transparent, var(--accent));
-          }
-
-          .entry-marker {
-            left: -10rem;
-            right: auto;
           }
         }
 
