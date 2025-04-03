@@ -1916,14 +1916,14 @@ header.nav-floating {
   transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
 }
 .journey-section .timeline-entry:nth-child(odd) .entry-content .entry-marker {
-  right: -40px;
-  left: auto;
+  right: auto;
+  left: -10rem;
 }
 .journey-section .timeline-entry:nth-child(odd) .entry-date {
-  left: auto;
+  position: absolute;
   right: 0;
-  text-align: right;
-  top: 10px;
+  transform: translateX(-100%);
+  border: none;
 }
 .journey-section .timeline-entry:nth-child(odd).active .entry-content::before {
   width: 30px;
@@ -1931,7 +1931,6 @@ header.nav-floating {
 }
 .journey-section .timeline-entry:nth-child(even) .entry-content {
   margin-right: auto;
-  margin-left: 60px;
   transform-origin: left center;
 }
 .journey-section .timeline-entry:nth-child(even) .entry-content:nth-child(2) {
@@ -1952,40 +1951,42 @@ header.nav-floating {
   transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
 }
 .journey-section .timeline-entry:nth-child(even) .entry-content .entry-marker {
-  left: -40px;
-  right: auto;
+  left: auto;
+  right: -10rem;
 }
 .journey-section .timeline-entry:nth-child(even) .entry-date {
+  position: absolute;
   right: auto;
-  left: 0;
-  text-align: left;
-  top: 10px;
+  left: -120px;
+  text-align: right;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .journey-section .timeline-entry:nth-child(even).active .entry-content::before {
   width: 30px;
   animation: connectingLine 0.5s ease-out forwards;
 }
 .journey-section .entry-date {
-  position: absolute;
-  top: 0;
-  width: 120px;
+  width: 100px;
   transition: all 0.3s ease;
+  z-index: 3;
 }
 .journey-section .entry-date .year {
   display: block;
   font-family: "Playfair Display", serif;
   font-family: var(--font-primary);
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #555555;
   color: var(--text-secondary);
   font-weight: 600;
   transition: all 0.3s ease;
+  margin-bottom: 0.2rem;
 }
 .journey-section .entry-date .month {
   display: block;
   font-family: "Playfair Display", serif;
   font-family: var(--font-primary);
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #555555;
   color: var(--text-secondary);
   font-style: italic;
@@ -2191,7 +2192,6 @@ header.nav-floating {
     --path-offset: 0px;
   }
   .journey-section .timeline-entry:nth-child(odd) .entry-content, .journey-section .timeline-entry:nth-child(even) .entry-content {
-    margin-left: 60px;
     margin-right: auto;
     transform-origin: left center;
   }
@@ -2202,7 +2202,7 @@ header.nav-floating {
     background: linear-gradient(to left, transparent, var(--accent));
   }
   .journey-section .timeline-entry:nth-child(odd) .entry-content .entry-marker, .journey-section .timeline-entry:nth-child(even) .entry-content .entry-marker {
-    left: -40px;
+    left: -10rem;
     right: auto;
   }
   .journey-section .timeline-entry:nth-child(odd) .entry-date, .journey-section .timeline-entry:nth-child(even) .entry-date {

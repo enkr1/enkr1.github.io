@@ -395,16 +395,19 @@
         }
 
         .entry-marker {
-          right: -40px;
-          left: auto;
+          right: auto;
+          left: -10rem;
         }
       }
 
       .entry-date {
-        left: auto;
+        position: absolute;
+        // left: 0;
         right: 0;
-        text-align: right;
-        top: 10px;
+        // text-align: left;
+        // top: 50%; // Center it vertically
+        transform: translateX(-100%); // Ensure perfect vertical centering
+        border: none; // Remove the debug border
       }
 
       &.active .entry-content::before {
@@ -416,7 +419,6 @@
     &:nth-child(even) {
       .entry-content {
         margin-right: auto;
-        margin-left: 60px;
         transform-origin: left center;
 
         // Adjust for the winding path
@@ -441,16 +443,18 @@
         }
 
         .entry-marker {
-          left: -40px;
-          right: auto;
+          left: auto;
+          right: -10rem;
         }
       }
 
       .entry-date {
+        position: absolute;
         right: auto;
-        left: 0;
-        text-align: left;
-        top: 10px;
+        left: -120px; // Position it to the left of the timeline
+        text-align: right;
+        top: 50%; // Center it vertically
+        transform: translateY(-50%); // Ensure perfect vertical centering
       }
 
       &.active .entry-content::before {
@@ -461,24 +465,24 @@
   }
 
   .entry-date {
-    position: absolute;
-    top: 0;
-    width: 120px;
+    width: 100px;
     transition: all 0.3s ease;
+    z-index: 3; // Ensure it's above other elements
 
     .year {
       display: block;
       font-family: var(--font-primary);
-      font-size: 2rem;
+      font-size: 1.8rem; // Slightly smaller for better fit
       color: var(--text-secondary);
       font-weight: 600;
       transition: all 0.3s ease;
+      margin-bottom: 0.2rem;
     }
 
     .month {
       display: block;
       font-family: var(--font-primary);
-      font-size: 1rem;
+      font-size: 0.9rem; // Slightly smaller for better fit
       color: var(--text-secondary);
       font-style: italic;
       transition: all 0.3s ease;
@@ -715,7 +719,6 @@
       &:nth-child(odd),
       &:nth-child(even) {
         .entry-content {
-          margin-left: 60px;
           margin-right: auto;
           transform-origin: left center;
 
@@ -726,7 +729,7 @@
           }
 
           .entry-marker {
-            left: -40px;
+            left: -10rem;
             right: auto;
           }
         }
