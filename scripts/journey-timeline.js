@@ -4,35 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const timelineScrollDot = document.querySelector('.timeline-scroll-dot');
   const journeySection = document.querySelector('.journey-section');
 
-  // Create timeline milestones
-  const createMilestones = () => {
+  // Create the timeline line with start and end dots only
+  const createTimelineLine = () => {
     const timelineLine = document.querySelector('.timeline-line');
     if (!timelineLine) return;
-
-    // Create a milestone for each entry
-    timelineEntries.forEach((entry, index) => {
-      const percentage = (index / (timelineEntries.length - 1)) * 100;
-      const milestone = document.createElement('div');
-      milestone.className = 'timeline-milestone';
-      milestone.style.top = `${percentage}%`;
-      milestone.dataset.index = index;
-      timelineLine.appendChild(milestone);
-
-      // Add year label to milestone
-      const year = entry.getAttribute('data-year');
-      if (year) {
-        const yearLabel = document.createElement('div');
-        yearLabel.className = 'milestone-year';
-        yearLabel.textContent = year;
-        yearLabel.style.position = 'absolute';
-        yearLabel.style.left = index % 2 === 0 ? '-50px' : '20px';
-        yearLabel.style.top = '0';
-        yearLabel.style.fontSize = '0.8rem';
-        yearLabel.style.opacity = '0.6';
-        yearLabel.style.transition = 'all 0.3s ease';
-        milestone.appendChild(yearLabel);
-      }
-    });
 
     // Add the scroll dot
     if (!timelineScrollDot) {
@@ -88,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const windowHeight = window.innerHeight;
 
     // Calculate how far we've scrolled through the journey section
-    const scrollPosition = scrollTop - journeyTop + windowHeight/2;
+    const scrollPosition = scrollTop - journeyTop + windowHeight / 2;
     const scrollPercentage = Math.min(
       100,
       Math.max(
@@ -111,16 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Calculate which entry should be active based on scroll position
     const entryHeight = journeyHeight / timelineEntries.length;
     const activeIndex = Math.floor(scrollPosition / entryHeight);
-
-    // Update milestone states
-    document.querySelectorAll('.timeline-milestone').forEach((milestone) => {
-      const index = parseInt(milestone.dataset.index);
-      if (index <= activeIndex) {
-        milestone.classList.add('active');
-      } else {
-        milestone.classList.remove('active');
-      }
-    });
 
     // Update entry states for slideshow effect
     timelineEntries.forEach((entry, index) => {
@@ -232,8 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize the timeline
   const initTimeline = () => {
-    // Create milestones
-    createMilestones();
+    // Create timeline line with start/end dots only
+    createTimelineLine();
 
     // Create snowing effect
     createSnowingEffect();

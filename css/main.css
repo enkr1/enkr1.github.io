@@ -1661,47 +1661,11 @@ header.nav-floating {
   background-size: 100% 200%;
   animation: gradientFlow 4s ease infinite;
 }
-.journey-section .timeline-line .timeline-milestone {
-  position: absolute;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  background: #FFFFFF;
-  background: var(--primary);
-  border: 2px solid #D10000;
-  border: 2px solid var(--accent);
-  border-radius: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  transition: all 0.5s ease;
+.journey-section .timeline-line::before {
+  top: 0;
 }
-.journey-section .timeline-line .timeline-milestone.active {
-  transform: translateX(-50%) scale(1.5);
-  box-shadow: 0 0 15px rgba(209, 0, 0, 0.6);
-  box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.6);
-  animation: milestoneActivate 0.8s ease-out forwards;
-}
-.journey-section .timeline-line .timeline-milestone .milestone-year {
-  position: absolute;
-  font-size: 0.8rem;
-  color: #555555;
-  color: var(--text-secondary);
-  opacity: 0.6;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-.journey-section .timeline-line .timeline-milestone .milestone-year.left {
-  right: 20px;
-  transform: translateX(-100%);
-}
-.journey-section .timeline-line .timeline-milestone .milestone-year.right {
-  left: 20px;
-}
-.journey-section .timeline-line .timeline-milestone.active .milestone-year {
-  color: #D10000;
-  color: var(--accent);
-  opacity: 1;
-  animation: yearGlow 1s ease-in-out infinite alternate;
+.journey-section .timeline-line::after {
+  bottom: 0;
 }
 .journey-section .timeline-stars {
   position: absolute;
@@ -2097,9 +2061,6 @@ header.nav-floating {
   .journey-section .timeline-line::before, .journey-section .timeline-line::after,
   .journey-section .timeline-line .timeline-progress {
     clip-path: none;
-  }
-  .journey-section .timeline-line .timeline-milestone {
-    left: 50% !important;
   }
   .journey-section .timeline-line .timeline-scroll-dot {
     left: 50%;
