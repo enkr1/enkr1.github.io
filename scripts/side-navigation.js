@@ -87,12 +87,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const sectionTop = section.offsetTop - 100;
       const sectionId = section.getAttribute('id');
 
+      const link = document.querySelector(`.side-nav-links .nav-item a[href*="${sectionId}"]`);
+
+      if (!link) {
+        return;
+      }
+
       if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-        document.querySelector(`.side-nav-links .nav-item a[href*=${sectionId}]`)
-          ?.parentElement.classList.add('active');
+        link.parentElement?.classList.add('active');
       } else {
-        document.querySelector(`.side-nav-links .nav-item a[href*=${sectionId}]`)
-          ?.parentElement.classList.remove('active');
+        link.parentElement?.classList.remove('active');
       }
     });
   }
