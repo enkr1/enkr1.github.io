@@ -82,6 +82,7 @@
 
   // Create a more dynamic timeline line with a winding path
   .timeline-line {
+    z-index: 1; // Behind entries but above background
     position: absolute;
     top: 0;
     left: 50%;
@@ -98,13 +99,28 @@
       width: 100%;
       height: 0;
       background: var(--accent);
-      transition: height 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transition: height 0.3s cubic-bezier(0.25, 0.1, 0.25, 1); // Faster, smoother transition
       background-image: linear-gradient(to bottom,
           var(--accent),
           rgba(var(--accent-rgb), 0.9),
           var(--accent));
       background-size: 100% 200%;
       animation: gradientFlow 4s ease infinite;
+      z-index: 2; // Above timeline-line but behind entries
+    }
+
+    .timeline-scroll-dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3; // Above progress but behind entries
+      box-shadow: 0 2px 8px rgba(var(--accent-rgb), 0.3);
+      transition: top 0.3s cubic-bezier(0.25, 0.1, 0.25, 1); // Smooth movement
     }
 
     &::before {
@@ -181,25 +197,30 @@
   }
 
   .timeline-entry {
+    z-index: 20; // Above timeline line (z-index: 1-3)
     position: relative;
     margin-bottom: 8rem;
-    opacity: 0.4;
-    filter: blur(2px);
-    transform: scale(0.95) translateY(20px);
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); // Slower transition
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1) translateY(0);
+    // Separate transitions to prevent conflicts
+    transition: opacity 0.4s cubic-bezier(0.4, 0.0, 0.2, 1),
+                filter 0.4s cubic-bezier(0.4, 0.0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
     perspective: 1000px;
+    will-change: transform, opacity, filter;
+    transform-style: preserve-3d; // Prevent transform conflicts
 
     &.active {
       opacity: 1;
       filter: blur(0);
       transform: scale(1) translateY(0);
-      z-index: 10;
-      animation: entryPulse 0.8s ease-out; // Slower animation
+      z-index: 25; // Higher than other entries
 
       .entry-content {
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        border-color: rgba(var(--accent-rgb), 0.3);
-        transform: translateZ(30px) rotateX(2deg);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        border-color: rgba(var(--accent-rgb), 0.4);
+        transform: translateZ(5px); // Minimal 3D effect
         backdrop-filter: blur(0);
       }
 
@@ -225,16 +246,9 @@
       }
     }
 
-    &.past {
-      opacity: 0.7;
-      filter: blur(1px);
-      transform: scale(0.98) translateY(0);
-    }
-
+    &.past,
     &.future {
-      opacity: 0.3;
-      filter: blur(3px);
-      transform: scale(0.9) translateY(20px);
+      // Styles will be applied via JavaScript
     }
 
     // Create a more interesting layout for entries
@@ -310,10 +324,12 @@
   // Responsive adjustments
   @media (max-width: 992px) {
     .timeline-line {
+    z-index: 1;
       left: 30px;
     }
 
     .timeline-entry {
+    z-index: 2;
 
       &:nth-child(odd),
       &:nth-child(even) {
@@ -568,6 +584,7 @@
     --timeline-container-gap: 60px;
 
     .timeline-line {
+      z-index: 1;
       left: 30px;
 
       &::before,
@@ -582,8 +599,8 @@
       }
     }
 
-
     .timeline-entry {
+      z-index: 10; // Consistent with desktop
 
       &:nth-child(odd),
       &:nth-child(even) {
@@ -611,6 +628,7 @@
 
   @media (max-width: 576px) {
     .timeline-entry {
+      z-index: 10; // Consistent with other breakpoints
       margin-bottom: 5rem;
 
       .entry-content {
@@ -625,6 +643,58 @@
       .entry-description {
         font-size: 0.9rem;
       }
+    }
+  }
+}
+
+// Styles for expanded content and blurred background
+.journey-section.blurred-background {
+  > *:not(:has(.active)):not(.active) {
+    filter: blur(5px);
+    transition: filter 0.5s ease-out;
+  }
+  .timeline-entry:not(.active) {
+    filter: blur(5px);
+    opacity: 0.3;
+  }
+}
+
+.timeline-entry {
+  .entry-content.expanded-content {
+    position: fixed; // Use fixed positioning to overlay
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1) !important; // Override other transforms and ensure centering
+    width: 90vw;
+    max-width: 1200px; // Optional: set a max-width for very large screens
+    height: auto; // Adjust height automatically based on content
+    max-height: 90vh;
+    overflow-y: auto; // Allow scrolling within the expanded content if it's too tall
+    z-index: 1000; // Ensure it's on top of everything
+    background-color: rgba(var(--bg-secondary-rgb), 0.95); // Slightly transparent background
+    backdrop-filter: blur(10px); // Blur content behind the expanded view
+    border: 1px solid rgba(var(--accent-rgb), 0.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) !important; // Ensure smooth transition
+
+    // Adjust child elements for better readability in expanded view
+    .entry-title {
+      font-size: 2rem; // Larger title
+      color: var(--accent);
+    }
+    .entry-description {
+      font-size: 1.1rem; // Slightly larger description text
+      max-height: none; // Remove any height restrictions
+      color: var(--text-primary);
+    }
+    .entry-image {
+      max-width: 50%; // Adjust image size within expanded view
+      margin: 1rem auto;
+    }
+    // Hide the small connecting line when expanded
+    &::before {
+      display: none !important;
     }
   }
 }

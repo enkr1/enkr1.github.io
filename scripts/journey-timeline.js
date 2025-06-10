@@ -1,241 +1,381 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const timelineEntries = document.querySelectorAll('.timeline-entry');
-  const timelineProgress = document.querySelector('.timeline-progress');
-  const timelineScrollDot = document.querySelector('.timeline-scroll-dot');
-  const journeySection = document.querySelector('.journey-section');
+document.addEventListener("DOMContentLoaded", () => {
+  const timelineEntries = document.querySelectorAll(".timeline-entry");
+  const timelineProgress = document.querySelector(".timeline-progress");
+  const journeySection = document.querySelector(".journey-section");
+  const timelineLine = document.querySelector(".timeline-line");
 
-  // Create the timeline line with start and end dots only
-  const createTimelineLine = () => {
-    const timelineLine = document.querySelector('.timeline-line');
-    if (!timelineLine) return;
+  // ADJUSTABLE SETTINGS - Customize these values
+  const SETTINGS = {
+    fullscreenPadding: 10, // Percentage padding when expanded (adjustable: 5-25)
+    transitionDuration: 800, // Animation duration in ms (adjustable: 400-1200)
+    activationThreshold: 0.6, // How much of viewport entry needs to fill (adjustable: 0.4-0.8)
+    easing: "cubic-bezier(0.25, 0.1, 0.25, 1)", // CSS easing function
+    blurAmount: 8, // Background blur when entry is expanded (adjustable: 4-15)
+    scaleDownRatio: 0.85, // How much to scale down non-active entries (adjustable: 0.7-0.9)
+  };
 
-    // Add the scroll dot
-    if (!timelineScrollDot) {
-      const dot = document.createElement('div');
-      dot.className = 'timeline-scroll-dot';
-      timelineLine.appendChild(dot);
+  let currentActiveIndex = -1;
+  let isAnimating = false;
+  let entries = [];
+
+  // Initialize entry data
+  const initializeEntries = () => {
+    timelineEntries.forEach((entry, index) => {
+      const rect = entry.getBoundingClientRect();
+      const content = entry.querySelector(".entry-content");
+
+      entries[index] = {
+        element: entry,
+        content: content,
+        originalRect: {
+          top: entry.offsetTop,
+          left: rect.left,
+          width: rect.width,
+          height: rect.height,
+        },
+        isExpanded: false,
+        targetState: "normal", // 'normal', 'expanding', 'expanded', 'shrinking'
+      };
+
+      // Set initial styles
+      entry.style.transition = `all ${SETTINGS.transitionDuration}ms ${SETTINGS.easing}`;
+      entry.style.transformOrigin = "center center";
+      entry.style.position = "relative";
+      entry.style.zIndex = "10";
+
+      if (content) {
+        content.style.transition = `all ${SETTINGS.transitionDuration}ms ${SETTINGS.easing}`;
+      }
+    });
+  };
+
+  // Create overlay for expanded entries
+  const createOverlay = () => {
+    if (document.querySelector(".timeline-overlay")) return;
+
+    const overlay = document.createElement("div");
+    overlay.className = "timeline-overlay";
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(${SETTINGS.blurAmount}px);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: all ${SETTINGS.transitionDuration}ms ${SETTINGS.easing};
+    `;
+    document.body.appendChild(overlay);
+  };
+
+  // Expand entry to fullscreen
+  const expandEntry = (index) => {
+    if (isAnimating || entries[index].isExpanded) return;
+
+    isAnimating = true;
+    const entry = entries[index];
+    const overlay = document.querySelector(".timeline-overlay");
+
+    // Update states
+    entry.targetState = "expanding";
+    entry.isExpanded = true;
+
+    // Show overlay
+    if (overlay) {
+      overlay.style.opacity = "1";
+      overlay.style.pointerEvents = "auto";
     }
-  };
 
-  // Create the snowing effect particles (keep this as you like it)
-  const createSnowingEffect = () => {
-    const particlesContainer = document.createElement('div');
-    particlesContainer.className = 'timeline-particles';
-    journeySection.appendChild(particlesContainer);
+    // Calculate fullscreen dimensions with padding
+    const paddingVw = SETTINGS.fullscreenPadding;
+    const paddingVh = SETTINGS.fullscreenPadding;
 
-    // Create multiple particles
-    for (let i = 0; i < 30; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'timeline-particle';
+    // Set expanded styles
+    entry.element.style.position = "fixed";
+    entry.element.style.top = `${paddingVh}vh`;
+    entry.element.style.left = `${paddingVw}vw`;
+    entry.element.style.width = `${100 - paddingVw * 2}vw`;
+    entry.element.style.height = `${100 - paddingVh * 2}vh`;
+    entry.element.style.zIndex = "1000";
+    entry.element.style.transform = "scale(1)";
 
-      // Random position, size and animation delay
-      const size = Math.random() * 4 + 1;
-      const left = Math.random() * 100;
-      const animDelay = Math.random() * 5;
-      const animDuration = Math.random() * 10 + 10;
+    // Style the content for fullscreen view
+    if (entry.content) {
+      entry.content.style.width = "100%";
+      entry.content.style.height = "100%";
+      entry.content.style.padding = "3rem";
+      entry.content.style.overflow = "auto";
+      entry.content.style.display = "flex";
+      entry.content.style.flexDirection = "column";
+      entry.content.style.justifyContent = "flex-start";
 
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-      particle.style.left = `${left}%`;
-      particle.style.animationDelay = `${animDelay}s`;
-      particle.style.animationDuration = `${animDuration}s`;
+      // Enhance text for fullscreen reading
+      const title = entry.content.querySelector(".entry-title");
+      const description = entry.content.querySelector(".entry-description");
+      const image = entry.content.querySelector(".entry-image");
 
-      particlesContainer.appendChild(particle);
+      if (title) {
+        title.style.fontSize = "2.5rem";
+        title.style.marginBottom = "2rem";
+        title.style.textAlign = "center";
+      }
+
+      if (description) {
+        description.style.fontSize = "1.2rem";
+        description.style.lineHeight = "1.8";
+        description.style.marginBottom = "2rem";
+        description.style.textAlign = "justify";
+      }
+
+      if (image) {
+        image.style.maxWidth = "60%";
+        image.style.margin = "2rem auto";
+        image.style.boxShadow = "0 10px 30px rgba(0,0,0,0.3)";
+      }
     }
+
+    // Scale down other entries
+    entries.forEach((otherEntry, otherIndex) => {
+      if (otherIndex !== index && !otherEntry.isExpanded) {
+        otherEntry.element.style.transform = `scale(${SETTINGS.scaleDownRatio})`;
+        otherEntry.element.style.opacity = "0.4";
+        otherEntry.element.style.filter = `blur(3px)`;
+      }
+    });
+
+    setTimeout(() => {
+      entry.targetState = "expanded";
+      isAnimating = false;
+    }, SETTINGS.transitionDuration);
   };
 
-  // Function to check if an element is in viewport
-  const isInViewport = (element, offset = 0.8) => {
-    const rect = element.getBoundingClientRect();
-    return (
-      rect.top <= (window.innerHeight || document.documentElement.clientHeight) * offset &&
-      rect.bottom >= 0
-    );
+  // Shrink entry back to normal
+  const shrinkEntry = (index) => {
+    if (isAnimating || !entries[index].isExpanded) return;
+
+    isAnimating = true;
+    const entry = entries[index];
+    const overlay = document.querySelector(".timeline-overlay");
+
+    // Update states
+    entry.targetState = "shrinking";
+    entry.isExpanded = false;
+
+    // Hide overlay
+    if (overlay) {
+      overlay.style.opacity = "0";
+      overlay.style.pointerEvents = "none";
+    }
+
+    // Reset to original position and size
+    entry.element.style.position = "relative";
+    entry.element.style.top = "auto";
+    entry.element.style.left = "auto";
+    entry.element.style.width = "auto";
+    entry.element.style.height = "auto";
+    entry.element.style.zIndex = "10";
+    entry.element.style.transform = "scale(1)";
+
+    // Reset content styles
+    if (entry.content) {
+      entry.content.style.width = "";
+      entry.content.style.height = "";
+      entry.content.style.padding = "2rem";
+      entry.content.style.overflow = "";
+      entry.content.style.display = "";
+      entry.content.style.flexDirection = "";
+      entry.content.style.justifyContent = "";
+
+      // Reset text styles
+      const title = entry.content.querySelector(".entry-title");
+      const description = entry.content.querySelector(".entry-description");
+      const image = entry.content.querySelector(".entry-image");
+
+      if (title) {
+        title.style.fontSize = "";
+        title.style.marginBottom = "";
+        title.style.textAlign = "";
+      }
+
+      if (description) {
+        description.style.fontSize = "";
+        description.style.lineHeight = "";
+        description.style.marginBottom = "";
+        description.style.textAlign = "";
+      }
+
+      if (image) {
+        image.style.maxWidth = "";
+        image.style.margin = "";
+        image.style.boxShadow = "";
+      }
+    }
+
+    // Reset other entries
+    entries.forEach((otherEntry, otherIndex) => {
+      if (otherIndex !== index) {
+        otherEntry.element.style.transform = "scale(1)";
+        otherEntry.element.style.opacity = "1";
+        otherEntry.element.style.filter = "none";
+      }
+    });
+
+    setTimeout(() => {
+      entry.targetState = "normal";
+      isAnimating = false;
+    }, SETTINGS.transitionDuration);
   };
 
-  // Function to update timeline progress based on scroll position
+  // Calculate which entry should be active based on scroll
+  const calculateActiveEntry = () => {
+    const scrollTop = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const triggerPoint = windowHeight * SETTINGS.activationThreshold;
+
+    let newActiveIndex = -1;
+    let closestDistance = Infinity;
+
+    entries.forEach((entry, index) => {
+      const rect = entry.element.getBoundingClientRect();
+      const entryCenter = rect.top + rect.height / 2;
+      const distanceFromTrigger = Math.abs(entryCenter - triggerPoint);
+
+      // Check if entry is in the activation zone
+      if (rect.top <= triggerPoint && rect.bottom >= triggerPoint) {
+        if (distanceFromTrigger < closestDistance) {
+          closestDistance = distanceFromTrigger;
+          newActiveIndex = index;
+        }
+      }
+    });
+
+    return newActiveIndex;
+  };
+
+  // Main scroll handler
+  const handleScroll = () => {
+    if (isAnimating) return;
+
+    const newActiveIndex = calculateActiveEntry();
+
+    if (newActiveIndex !== currentActiveIndex) {
+      // Shrink previously active entry
+      if (currentActiveIndex >= 0 && entries[currentActiveIndex].isExpanded) {
+        shrinkEntry(currentActiveIndex);
+      }
+
+      // Expand new active entry
+      if (newActiveIndex >= 0) {
+        setTimeout(
+          () => {
+            expandEntry(newActiveIndex);
+          },
+          currentActiveIndex >= 0 ? SETTINGS.transitionDuration / 2 : 0
+        );
+      }
+
+      currentActiveIndex = newActiveIndex;
+    }
+
+    // Update timeline progress
+    updateTimelineProgress();
+  };
+
+  // Update timeline progress line
   const updateTimelineProgress = () => {
-    if (!journeySection) return;
+    if (!timelineProgress || !journeySection) return;
 
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollTop = window.pageYOffset;
     const journeyTop = journeySection.offsetTop;
     const journeyHeight = journeySection.offsetHeight;
     const windowHeight = window.innerHeight;
 
-    // Calculate how far we've scrolled through the journey section
-    const scrollPosition = scrollTop - journeyTop + windowHeight / 2;
-    const scrollPercentage = Math.min(
-      100,
-      Math.max(
-        0,
-        (scrollPosition / journeyHeight) * 100
-      )
+    const sectionStart = journeyTop - windowHeight * 0.5;
+    const sectionEnd = journeyTop + journeyHeight - windowHeight * 0.5;
+    const scrollProgress = Math.max(
+      0,
+      Math.min(1, (scrollTop - sectionStart) / (sectionEnd - sectionStart))
     );
 
-    // Update progress line height
-    if (timelineProgress) {
-      timelineProgress.style.height = `${scrollPercentage}%`;
+    timelineProgress.style.transform = `scaleY(${scrollProgress})`;
 
-      // Position the scroll dot along the timeline
-      const dot = document.querySelector('.timeline-scroll-dot');
-      if (dot) {
-        dot.style.top = `${scrollPercentage}%`;
-      }
-    }
-
-    // Calculate which entry should be active based on scroll position
-    const entryHeight = journeyHeight / timelineEntries.length;
-    const activeIndex = Math.floor(scrollPosition / entryHeight);
-
-    // Update entry states for slideshow effect
-    timelineEntries.forEach((entry, index) => {
-      // Remove all states first
-      entry.classList.remove('active', 'past', 'future');
-
-      if (index === activeIndex) {
-        // Current entry
-        entry.classList.add('active');
-
-        // Animate the connecting line
-        const line = entry.querySelector('.entry-content::before');
-        if (line) {
-          line.style.width = '30px';
-        }
-
-        // Trigger a subtle animation
-        entry.style.animation = 'none';
-        void entry.offsetWidth; // Trigger reflow
-        entry.style.animation = 'entryPulse 0.5s ease-out';
-      } else if (index < activeIndex) {
-        // Past entries
-        entry.classList.add('past');
-      } else {
-        // Future entries
-        entry.classList.add('future');
-      }
-    });
-
-    // Add a parallax effect to the active entry
-    const activeEntry = document.querySelector('.timeline-entry.active');
-    if (activeEntry) {
-      const entryRect = activeEntry.getBoundingClientRect();
-      const entryCenter = entryRect.top + entryRect.height / 2;
-      const screenCenter = windowHeight / 2;
-      const offset = (entryCenter - screenCenter) * 0.05;
-
-      activeEntry.style.transform = `translateY(${-offset}px) scale(1)`;
+    // Update scroll dot
+    const scrollDot = document.querySelector(".timeline-scroll-dot");
+    if (scrollDot) {
+      scrollDot.style.top = `${scrollProgress * 100}%`;
     }
   };
 
-  // Add scroll snap functionality for a more slideshow-like experience
-  const addScrollSnap = () => {
-    // Calculate snap points
-    const snapPoints = [];
-    timelineEntries.forEach((entry, index) => {
-      const journeyTop = journeySection.offsetTop;
-      const journeyHeight = journeySection.offsetHeight;
-      const entryHeight = journeyHeight / timelineEntries.length;
-      const snapPoint = journeyTop + (index * entryHeight);
-      snapPoints.push(snapPoint);
-    });
+  // Create scroll dot
+  const createScrollDot = () => {
+    if (!timelineLine || document.querySelector(".timeline-scroll-dot")) return;
 
-    // Add smooth scrolling to next/prev entry
-    let isScrolling = false;
-    let scrollTimeout;
-
-    window.addEventListener('wheel', (e) => {
-      // Only handle wheel events when in the journey section
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const journeyTop = journeySection.offsetTop;
-      const journeyBottom = journeyTop + journeySection.offsetHeight;
-
-      if (scrollTop >= journeyTop - 100 && scrollTop <= journeyBottom + 100) {
-        if (!isScrolling) {
-          clearTimeout(scrollTimeout);
-
-          // Find closest snap point
-          const currentPosition = scrollTop;
-          let closestPoint = snapPoints[0];
-          let minDistance = Math.abs(currentPosition - closestPoint);
-
-          snapPoints.forEach((point) => {
-            const distance = Math.abs(currentPosition - point);
-            if (distance < minDistance) {
-              minDistance = distance;
-              closestPoint = point;
-            }
-          });
-
-          // Determine direction and target
-          const direction = e.deltaY > 0 ? 1 : -1;
-          const currentIndex = snapPoints.indexOf(closestPoint);
-          const targetIndex = Math.max(0, Math.min(snapPoints.length - 1, currentIndex + direction));
-          const targetPoint = snapPoints[targetIndex];
-
-          // Only scroll if we're changing points
-          if (targetPoint !== closestPoint) {
-            isScrolling = true;
-
-            window.scrollTo({
-              top: targetPoint,
-              behavior: 'smooth'
-            });
-
-            // Reset scrolling flag after animation completes
-            scrollTimeout = setTimeout(() => {
-              isScrolling = false;
-            }, 800);
-
-            e.preventDefault();
-          }
-        } else {
-          e.preventDefault();
-        }
-      }
-    }, { passive: false });
+    const dot = document.createElement("div");
+    dot.className = "timeline-scroll-dot";
+    timelineLine.appendChild(dot);
   };
 
-  // Initialize the timeline
-  const initTimeline = () => {
-    // Create timeline line with start/end dots only
-    createTimelineLine();
+  // Add keyboard navigation
+  const addKeyboardNavigation = () => {
+    document.addEventListener("keydown", (e) => {
+      if (currentActiveIndex < 0) return;
 
-    // Create snowing effect
-    createSnowingEffect();
-
-    // Initial check
-    updateTimelineProgress();
-
-    // Add scroll snap
-    addScrollSnap();
-
-    // Listen for scroll events
-    window.addEventListener('scroll', updateTimelineProgress);
-
-    // Add mouse interaction for 3D effect
-    journeySection.addEventListener('mousemove', (e) => {
-      const { left, top, width, height } = journeySection.getBoundingClientRect();
-      const x = (e.clientX - left) / width - 0.5;
-      const y = (e.clientY - top) / height - 0.5;
-
-      // Apply 3D effect to active entry
-      const activeEntry = document.querySelector('.timeline-entry.active .entry-content');
-      if (activeEntry) {
-        activeEntry.style.transform = `translateZ(30px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg)`;
-      }
-    });
-
-    journeySection.addEventListener('mouseleave', () => {
-      // Reset 3D effect
-      const activeEntry = document.querySelector('.timeline-entry.active .entry-content');
-      if (activeEntry) {
-        activeEntry.style.transform = 'translateZ(30px)';
+      if (e.key === "Escape" && entries[currentActiveIndex].isExpanded) {
+        shrinkEntry(currentActiveIndex);
+        currentActiveIndex = -1;
       }
     });
   };
 
   // Initialize everything
-  if (journeySection) {
-    initTimeline();
-  }
+  const init = () => {
+    if (!journeySection || timelineEntries.length === 0) return;
+
+    initializeEntries();
+    createOverlay();
+    createScrollDot();
+    addKeyboardNavigation();
+
+    // Throttled scroll listener
+    let ticking = false;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            handleScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+
+    // Handle resize
+    window.addEventListener(
+      "resize",
+      () => {
+        setTimeout(() => {
+          initializeEntries();
+          handleScroll();
+        }, 100);
+      },
+      { passive: true }
+    );
+
+    // Initial check
+    setTimeout(handleScroll, 100);
+  };
+
+  // Start the system
+  init();
+
+  // Expose settings for easy customization
+  window.TimelineSettings = SETTINGS;
+  console.log("Timeline Settings:", SETTINGS);
+  console.log("Customize with: window.TimelineSettings.fullscreenPadding = 15");
 });
