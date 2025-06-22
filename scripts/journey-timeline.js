@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   // DOM elements
-  const journeyStories = document.querySelectorAll(".journey-story");
-  const trackProgress = document.querySelector(".track-progress");
+  const timelineEntries = document.querySelectorAll(".timeline-entry");
+  const timelineProgress = document.querySelector(".timeline-progress");
   const journeySection = document.querySelector(".journey-section");
-  const yearBadges = document.querySelectorAll(".year-badge");
-  const journeyTrack = document.querySelector(".journey-track");
 
-  // Settings
+  // Settings with optimized values
   const SETTINGS = {
     activationZone: window.innerHeight * 0.6,
     blurAmount: 4,
@@ -17,68 +15,35 @@ document.addEventListener("DOMContentLoaded", () => {
     transitionDuration: 400,
     pixelSensitivity: 10,
     cardWidth: "60vw",
-    progressEasing: 0.1,
-    yearGlowIntensity: 0.3,
-    parallaxFactor: 0.05,
+    progressEasing: 0.1, // Smooth progress animation
   };
 
   // State variables
-  let currentActiveStory = null;
-  let currentActiveYear = null;
+  let currentActiveIndex = -1;
   let lastScrollY = window.pageYOffset;
   let animationFrame = null;
   let currentProgress = 0;
   let targetProgress = 0;
 
-  // Initialize stories with proper z-index management
-  const initializeStories = () => {
-    journeyStories.forEach((story, index) => {
-      const storyContent = story.querySelector(".story-content");
-      if (storyContent) {
-        storyContent.style.width = SETTINGS.cardWidth;
-        storyContent.style.maxWidth = "800px";
-        // Set proper z-index hierarchy
-        storyContent.style.zIndex = "5";
-      }
-
-      // Set initial styles with proper z-index
-      story.style.transition = `all ${SETTINGS.transitionDuration}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
-      story.style.zIndex = "5";
-
-      // Set story marker z-index
-      const storyMarker = story.querySelector(".story-marker");
-      if (storyMarker) {
-        storyMarker.style.zIndex = "6";
+  // Initialize timeline entries
+  const initializeEntries = () => {
+    timelineEntries.forEach((entry) => {
+      const entryContent = entry.querySelector(".entry-content");
+      if (entryContent) {
+        entryContent.style.width = SETTINGS.cardWidth;
+        entryContent.style.maxWidth = "800px";
       }
     });
   };
 
-  // Initialize years with proper z-index
-  const initializeYears = () => {
-    yearBadges.forEach((badge) => {
-      badge.style.transition = `all ${SETTINGS.transitionDuration}ms ease`;
-      badge.style.zIndex = "10"; // Higher than stories but lower than active states
-    });
-  };
-
-  // Calculate animation values (unchanged)
-  const calculateAnimationValues = (element) => {
-    const rect = element.getBoundingClientRect();
+  // Calculate animation values
+  const calculateAnimationValues = (entry) => {
+    const rect = entry.getBoundingClientRect();
     const viewportCenter = window.innerHeight / 2;
-    const elementCenter = rect.top + rect.height / 2;
-    const distance = Math.abs(elementCenter - viewportCenter);
+    const entryCenter = rect.top + rect.height / 2;
+    const distance = Math.abs(entryCenter - viewportCenter);
     const progress = 1 - Math.min(1, distance / SETTINGS.activationZone);
-
-    // Enhanced smoothstep easing
-    const easedProgress =
-      progress *
-      progress *
-      progress *
-      (10 - 15 * progress + 6 * progress * progress);
-
-    // Parallax effect
-    const parallaxOffset =
-      (elementCenter - viewportCenter) * SETTINGS.parallaxFactor;
+    const easedProgress = progress * progress * (3 - 2 * progress); // smoothstep
 
     return {
       blur: SETTINGS.blurAmount * (1 - easedProgress),
@@ -89,85 +54,39 @@ document.addEventListener("DOMContentLoaded", () => {
         SETTINGS.scaleMin +
         (SETTINGS.scaleMax - SETTINGS.scaleMin) * easedProgress,
       progress: easedProgress,
-      parallax: parallaxOffset,
     };
   };
 
-  // Update story state with proper z-index management
-  const updateStoryState = (story, values) => {
-    const storyContent = story.querySelector(".story-content");
-
-    story.style.filter = `blur(${values.blur}px)`;
-    story.style.opacity = values.opacity;
-    story.style.transform = `scale(${values.scale}) translateY(${values.parallax}px)`;
-
-    const isActive = values.progress > 0.7;
-    story.classList.toggle("active", isActive);
-
-    // Manage z-index for active states
-    if (isActive && storyContent) {
-      storyContent.style.zIndex = "15"; // Bring active story to front
-    } else if (storyContent) {
-      storyContent.style.zIndex = "5"; // Reset non-active stories
-    }
-
-    return { isActive, progress: values.progress };
-  };
-
-  // Update year state with proper z-index
-  const updateYearState = (year, values) => {
-    const glowSize = values.progress * 20;
-    const glowOpacity = values.progress * SETTINGS.yearGlowIntensity;
-
-    year.style.boxShadow = `0 0 ${glowSize}px rgba(var(--accent-rgb), ${glowOpacity})`;
-    year.style.transform = `scale(${1 + values.progress * 0.1})`;
-
-    // Manage z-index for active year badges
-    const isActive = values.progress > 0.5;
-    if (isActive) {
-      year.style.zIndex = "20"; // Bring active year to front
-    } else {
-      year.style.zIndex = "10"; // Reset non-active years
-    }
-
+  // Update entry state
+  const updateEntryState = (entry, values) => {
+    entry.style.filter = `blur(${values.blur}px)`;
+    entry.style.opacity = values.opacity;
+    entry.style.transform = `scale(${values.scale})`;
+    entry.classList.toggle("active", values.progress > 0.7);
     return values.progress;
   };
 
-  // Find active elements
-  const findActiveElements = () => {
-    let maxStoryProgress = 0;
-    let activeStory = null;
-    let maxYearProgress = 0;
-    let activeYear = null;
+  // Find most active entry
+  const findMostActiveEntry = () => {
+    let maxProgress = 0;
+    let activeIndex = -1;
 
-    // Process stories
-    journeyStories.forEach((story) => {
-      const values = calculateAnimationValues(story);
-      const { isActive, progress } = updateStoryState(story, values);
+    timelineEntries.forEach((entry, index) => {
+      const values = calculateAnimationValues(entry);
+      const progress = updateEntryState(entry, values);
 
-      if (progress > maxStoryProgress) {
-        maxStoryProgress = progress;
-        activeStory = story;
+      if (progress > maxProgress) {
+        maxProgress = progress;
+        activeIndex = index;
       }
     });
 
-    // Process year badges
-    yearBadges.forEach((year) => {
-      const values = calculateAnimationValues(year);
-      const progress = updateYearState(year, values);
-
-      if (progress > maxYearProgress) {
-        maxYearProgress = progress;
-        activeYear = year;
-      }
-    });
-
-    return { activeStory, activeYear };
+    return activeIndex;
   };
 
-  // Update timeline progress (unchanged)
+  // Update timeline progress (smooth animation)
   const updateTimelineProgress = () => {
-    if (!trackProgress || !journeySection) return;
+    if (!timelineProgress || !journeySection) return;
 
     const scrollTop = window.pageYOffset;
     const { offsetTop: sectionTop, offsetHeight: sectionHeight } =
@@ -188,53 +107,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Smooth progress animation
     currentProgress +=
       (targetProgress - currentProgress) * SETTINGS.progressEasing;
-    trackProgress.style.height = `${currentProgress * 100}%`;
+    timelineProgress.style.transform = `scaleY(${currentProgress})`;
   };
 
   // Main animation loop
   const animate = () => {
-    const { activeStory, activeYear } = findActiveElements();
-
-    // Update active elements with proper highlighting
-    if (activeStory !== currentActiveStory) {
-      // Remove highlight from previous
-      if (currentActiveStory) {
-        currentActiveStory.classList.remove("highlight");
-        const prevContent = currentActiveStory.querySelector(".story-content");
-        if (prevContent) prevContent.style.zIndex = "5";
-      }
-
-      // Add highlight to current
-      if (activeStory) {
-        activeStory.classList.add("highlight");
-        const currentContent = activeStory.querySelector(".story-content");
-        if (currentContent) currentContent.style.zIndex = "15";
-      }
-
-      currentActiveStory = activeStory;
-    }
-
-    if (activeYear !== currentActiveYear) {
-      // Remove highlight from previous
-      if (currentActiveYear) {
-        currentActiveYear.classList.remove("highlight");
-        currentActiveYear.style.zIndex = "10";
-      }
-
-      // Add highlight to current
-      if (activeYear) {
-        activeYear.classList.add("highlight");
-        activeYear.style.zIndex = "20";
-      }
-
-      currentActiveYear = activeYear;
-    }
-
+    currentActiveIndex = findMostActiveEntry();
     updateTimelineProgress();
     animationFrame = requestAnimationFrame(animate);
   };
 
-  // Handle scroll (unchanged)
+  // Handle scroll with throttling
   const handleScroll = () => {
     const currentScrollY = window.pageYOffset;
     const scrollDelta = Math.abs(currentScrollY - lastScrollY);
@@ -244,22 +127,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Initialize timeline with proper z-index setup
+  // Initialize timeline
   const initTimeline = () => {
-    if (!journeySection || journeyStories.length === 0) return;
+    if (!journeySection || timelineEntries.length === 0) return;
 
-    // Set timeline track to lowest z-index
-    if (journeyTrack) {
-      journeyTrack.style.zIndex = "1";
-    }
-
-    // Set track progress z-index
-    if (trackProgress) {
-      trackProgress.style.zIndex = "2";
-    }
-
-    initializeStories();
-    initializeYears();
+    initializeEntries();
 
     // Start animation loop
     animate();

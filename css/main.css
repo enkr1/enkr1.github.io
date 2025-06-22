@@ -1569,8 +1569,6 @@ header.nav-floating {
   --timeline-line-width: 2px;
   --timeline-transition-speed: 0.6s;
   --timeline-dot-size: 12px;
-  --year-badge-size: 70px;
-  --story-marker-size: 20px;
   padding: 6rem 0;
   position: relative;
   overflow: hidden;
@@ -1631,7 +1629,7 @@ header.nav-floating {
   opacity: 0;
   animation: fadeIn 1s ease forwards 1.2s;
 }
-.journey-section .journey-map {
+.journey-section .timeline-container {
   position: relative;
   max-width: 1200px;
   margin: 0 auto;
@@ -1639,27 +1637,19 @@ header.nav-floating {
   perspective: 1000px;
   isolation: isolate;
 }
-.journey-section .journey-track {
+.journey-section .timeline-line {
   position: absolute;
+  z-index: 1;
   top: 0;
   left: 50%;
   height: 100%;
   width: var(--timeline-line-width);
   transform: translateX(-50%);
   overflow: visible;
-  z-index: 1 !important;
+  background-color: rgba(209, 0, 0, 1);
+  background-color: rgba(var(--accent-rgb), 1);
 }
-.journey-section .journey-track .track-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(209, 0, 0, 0.3);
-  background-color: rgba(var(--accent-rgb), 0.3);
-  z-index: 1;
-}
-.journey-section .journey-track .track-progress {
+.journey-section .timeline-line .timeline-progress {
   position: absolute;
   top: 0;
   left: 0;
@@ -1674,97 +1664,236 @@ header.nav-floating {
   animation: gradientFlow 4s ease infinite;
   z-index: 2;
 }
-.journey-section .journey-year {
-  margin-bottom: 5rem;
-  position: relative;
-  z-index: 3;
-  transform: translateZ(0);
+.journey-section .timeline-line::before {
+  top: 0;
 }
-.journey-section .journey-year:last-child {
-  margin-bottom: 0;
+.journey-section .timeline-line::after {
+  bottom: 0;
 }
-.journey-section .year-marker {
+.journey-section .timeline-stars {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
 }
-.journey-section .year-marker .year-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--year-badge-size);
-  height: var(--year-badge-size);
-  background: #FFFFFF;
-  background: var(--primary);
-  border: 3px solid #D10000;
-  border: 3px solid var(--accent);
-  border-radius: 50%;
-  font-family: "Playfair Display", serif;
-  font-family: var(--font-primary);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1A1A1A;
-  color: var(--text-primary);
-  box-shadow: 0 0 15px rgba(209, 0, 0, 0.3);
-  box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.3);
-  transition: all var(--timeline-transition-speed) ease;
-  z-index: 10;
-  position: relative;
-}
-.journey-section .year-marker .year-badge:hover {
-  transform: scale(1.1);
-  background: rgba(209, 0, 0, 0.1);
-  background: rgba(var(--accent-rgb), 0.1);
-}
-.journey-section .year-marker .year-badge.highlight {
-  z-index: 20 !important;
-  box-shadow: 0 0 25px rgba(209, 0, 0, 0.6);
-  box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.6);
-  border-color: #D10000;
-  border-color: var(--accent);
-}
-.journey-section .year-marker .year-connector {
+.journey-section .timeline-stars .star {
   position: absolute;
-  top: 100%;
-  left: 50%;
-  width: 2px;
-  height: 40px;
+  width: 3px;
+  height: 3px;
   background: #D10000;
   background: var(--accent);
-  transform: translateX(-50%);
-  z-index: 5;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: starTwinkle 3s ease-in-out infinite;
 }
-.journey-section .year-stories {
+.journey-section .timeline-stars .star:nth-child(1) {
+  top: 10%;
+  left: 45%;
+  animation-delay: 0s;
+}
+.journey-section .timeline-stars .star:nth-child(2) {
+  top: 25%;
+  left: 52%;
+  animation-delay: 0.5s;
+}
+.journey-section .timeline-stars .star:nth-child(3) {
+  top: 40%;
+  left: 48%;
+  animation-delay: 1s;
+}
+.journey-section .timeline-stars .star:nth-child(4) {
+  top: 55%;
+  left: 53%;
+  animation-delay: 1.5s;
+}
+.journey-section .timeline-stars .star:nth-child(5) {
+  top: 70%;
+  left: 47%;
+  animation-delay: 2s;
+}
+.journey-section .timeline-stars .star:nth-child(6) {
+  top: 85%;
+  left: 51%;
+  animation-delay: 2.5s;
+}
+.journey-section .timeline-entries {
+  width: 100%;
   position: relative;
-  padding-top: calc(var(--year-badge-size) + 40px);
-  z-index: 5;
+  z-index: 2;
 }
-.journey-section .journey-story {
-  margin-bottom: 4rem;
+.journey-section .timeline-entry {
   position: relative;
-  z-index: 5;
+  margin-bottom: 8rem;
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1) translateY(0);
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  perspective: 1000px;
+  will-change: transform, opacity, filter;
+  transform-style: preserve-3d;
+  z-index: 10;
 }
-.journey-section .journey-story:last-child {
-  margin-bottom: 0;
+.journey-section .timeline-entry.active {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1) translateY(0);
+  z-index: 15;
 }
-.journey-section .journey-story .story-marker {
+.journey-section .timeline-entry.active .entry-content {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  border-color: rgba(209, 0, 0, 0.4);
+  border-color: rgba(var(--accent-rgb), 0.4);
+  transform: translateZ(5px);
+  -webkit-backdrop-filter: blur(0);
+          backdrop-filter: blur(0);
+}
+.journey-section .timeline-entry.active .entry-date .year {
+  color: #D10000;
+  color: var(--accent);
+  text-shadow: 0 0 15px rgba(209, 0, 0, 0.4);
+  text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.4);
+  animation: yearGlow 1.5s ease-in-out infinite alternate;
+  transform: scale(1.1);
+}
+.journey-section .timeline-entry.active .entry-title {
+  color: #D10000;
+  color: var(--accent);
+}
+.journey-section .timeline-entry.active .entry-title::after {
+  width: 50px;
+  opacity: 1;
+  animation: connectingLine 0.5s ease-out forwards;
+}
+.journey-section .timeline-entry.active .entry-image img {
+  transform: scale(1.05);
+}
+.journey-section .timeline-entry:nth-child(odd) .entry-content {
+  margin-left: auto;
+  margin-right: var(--timeline-container-gap);
+  transform-origin: right center;
+}
+.journey-section .timeline-entry:nth-child(odd) .entry-content::before {
+  content: "";
   position: absolute;
-  top: 25px;
+  top: 20px;
+  right: calc(-1 * var(--timeline-container-gap) / 2);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #D10000);
+  background: linear-gradient(to right, transparent, var(--accent));
+  transition: width var(--timeline-transition-speed) cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
+}
+.journey-section .timeline-entry:nth-child(odd) .entry-date {
+  position: absolute;
   left: 50%;
-  width: var(--story-marker-size);
-  height: var(--story-marker-size);
+  transform: translateX(-50%);
+  top: 20px;
+  text-align: center;
+  z-index: 20;
+}
+.journey-section .timeline-entry:nth-child(odd).active .entry-content::before {
+  width: 30px;
+  animation: connectingLine 0.8s ease-out forwards;
+}
+.journey-section .timeline-entry:nth-child(even) .entry-content {
+  margin-right: auto;
+  margin-left: var(--timeline-container-gap);
+  transform-origin: left center;
+}
+.journey-section .timeline-entry:nth-child(even) .entry-content::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: calc(-1 * var(--timeline-container-gap) / 2);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to left, transparent, #D10000);
+  background: linear-gradient(to left, transparent, var(--accent));
+  transition: width var(--timeline-transition-speed) cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
+}
+.journey-section .timeline-entry:nth-child(even) .entry-date {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+  text-align: center;
+  z-index: 20;
+}
+.journey-section .timeline-entry:nth-child(even).active .entry-content::before {
+  width: 30px;
+  animation: connectingLine 0.8s ease-out forwards;
+}
+@media (max-width: 992px) {
+  .journey-section .timeline-line {
+    z-index: 1;
+    left: 30px;
+  }
+  .journey-section .timeline-entry {
+    z-index: 2;
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-content, .journey-section .timeline-entry:nth-child(even) .entry-content {
+    margin-left: 60px;
+    margin-right: auto;
+    transform-origin: left center;
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-content::before, .journey-section .timeline-entry:nth-child(even) .entry-content::before {
+    left: -30px;
+    right: auto;
+    background: linear-gradient(to left, transparent, #D10000);
+    background: linear-gradient(to left, transparent, var(--accent));
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-date, .journey-section .timeline-entry:nth-child(even) .entry-date {
+    left: 30px;
+    transform: translateX(-50%);
+    top: -40px;
+  }
+}
+.journey-section .entry-date {
+  transition: all 0.5s ease;
+  padding: 0 0.3rem;
+}
+.journey-section .entry-date::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1rem;
+  height: 5rem;
   background: #FFFFFF;
   background: var(--primary);
-  border: 2px solid #D10000;
-  border: 2px solid var(--accent);
-  border-radius: 50%;
-  transform: translateX(-50%);
-  z-index: 6;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: -1;
 }
-.journey-section .journey-story .story-content {
+.journey-section .entry-date .year {
+  display: block;
+  font-family: "Playfair Display", serif;
+  font-family: var(--font-primary);
+  font-size: 1.8rem;
+  color: #555555;
+  color: var(--text-secondary);
+  font-weight: 600;
+  transition: all 0.5s ease;
+  margin: auto;
+  padding: 0;
+  border-radius: 4px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.journey-section .entry-date .month {
+  display: block;
+  font-family: "Playfair Display", serif;
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  color: #555555;
+  color: var(--text-secondary);
+  font-style: italic;
+  transition: all 0.5s ease;
+}
+.journey-section .entry-content {
   position: relative;
   width: var(--timeline-container-width);
   max-width: 800px;
@@ -1778,15 +1907,12 @@ header.nav-floating {
   -webkit-backdrop-filter: blur(8px);
           backdrop-filter: blur(8px);
   overflow: hidden;
-  z-index: 5;
-  margin-top: 20px;
 }
-.journey-section .journey-story .story-content:hover {
-  transform: translateY(-5px);
+.journey-section .entry-content:hover {
+  transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-  z-index: 8;
 }
-.journey-section .journey-story .story-content::before {
+.journey-section .entry-content::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1796,7 +1922,7 @@ header.nav-floating {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
   z-index: -1;
 }
-.journey-section .journey-story .story-content::after {
+.journey-section .entry-content::after {
   content: "";
   position: absolute;
   top: 0;
@@ -1811,27 +1937,7 @@ header.nav-floating {
   z-index: -1;
   opacity: 0.5;
 }
-.journey-section .journey-story:nth-child(odd) .story-content {
-  margin-left: auto;
-  margin-right: var(--timeline-container-gap);
-  transform-origin: right center;
-}
-.journey-section .journey-story:nth-child(even) .story-content {
-  margin-right: auto;
-  margin-left: var(--timeline-container-gap);
-  transform-origin: left center;
-}
-.journey-section .journey-story .story-date {
-  display: block;
-  font-family: "Playfair Display", serif;
-  font-family: var(--font-primary);
-  font-size: 0.9rem;
-  color: #555555;
-  color: var(--text-secondary);
-  margin-bottom: 0.5rem;
-  font-style: italic;
-}
-.journey-section .journey-story .story-title {
+.journey-section .entry-content .entry-title {
   font-family: "Playfair Display", serif;
   font-family: var(--font-primary);
   font-size: 1.5rem;
@@ -1841,7 +1947,7 @@ header.nav-floating {
   position: relative;
   transition: all 0.3s ease;
 }
-.journey-section .journey-story .story-title::after {
+.journey-section .entry-content .entry-title::after {
   content: "";
   position: absolute;
   bottom: -5px;
@@ -1853,7 +1959,7 @@ header.nav-floating {
   opacity: 0.5;
   transition: all 0.3s ease;
 }
-.journey-section .journey-story .story-description {
+.journey-section .entry-content .entry-description {
   font-family: "Montserrat", sans-serif;
   font-family: var(--font-tertiary);
   font-size: 1rem;
@@ -1862,14 +1968,14 @@ header.nav-floating {
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
-.journey-section .journey-story .story-image {
+.journey-section .entry-content .entry-image {
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-.journey-section .journey-story .story-image::before {
+.journey-section .entry-content .entry-image::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1882,160 +1988,117 @@ header.nav-floating {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-.journey-section .journey-story .story-image img {
+.journey-section .entry-content .entry-image img {
   width: 100%;
   height: auto;
   transition: transform 0.5s ease;
 }
-.journey-section .journey-story .story-image:hover::before {
+.journey-section .entry-content .entry-image:hover::before {
   opacity: 1;
 }
-.journey-section .journey-story .story-image:hover img {
+.journey-section .entry-content .entry-image:hover img {
   transform: scale(1.05);
 }
-.journey-section .journey-story.active {
-  z-index: 15 !important;
+.journey-section .timeline-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
 }
-.journey-section .journey-story.active .story-content {
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-  border-color: rgba(209, 0, 0, 0.4);
-  border-color: rgba(var(--accent-rgb), 0.4);
-  -webkit-backdrop-filter: blur(0);
-          backdrop-filter: blur(0);
-  z-index: 15 !important;
-}
-.journey-section .journey-story.active .story-marker {
-  z-index: 16 !important;
+.journey-section .timeline-particles .timeline-particle {
+  position: absolute;
   background: #D10000;
   background: var(--accent);
-  box-shadow: 0 0 15px rgba(209, 0, 0, 0.5);
-  box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.5);
-}
-.journey-section .journey-story.active .story-title {
-  color: #D10000;
-  color: var(--accent);
-}
-.journey-section .journey-story.active .story-title::after {
-  width: 50px;
-  opacity: 1;
-}
-.journey-section .journey-story.active .story-image img {
-  transform: scale(1.05);
-}
-.journey-section .journey-story.highlight {
-  z-index: 12 !important;
-}
-.journey-section .journey-story.highlight .story-content {
-  z-index: 12 !important;
-  border-color: rgba(209, 0, 0, 0.3);
-  border-color: rgba(var(--accent-rgb), 0.3);
-}
-.journey-section .journey-story.highlight .story-marker {
-  background: rgba(209, 0, 0, 0.8);
-  background: rgba(var(--accent-rgb), 0.8);
-  z-index: 13 !important;
+  border-radius: 50%;
+  opacity: 0.3;
+  top: -10px;
+  animation: floatParticle 15s linear infinite;
 }
 @media (max-width: 992px) {
   .journey-section {
     --timeline-container-gap: 60px;
   }
-  .journey-section .journey-track {
+  .journey-section .timeline-line {
+    z-index: 1;
     left: 30px;
-    transform: translateX(0);
   }
-  .journey-section .year-marker {
-    left: 30px;
-    transform: translateX(0);
+  .journey-section .timeline-line::before, .journey-section .timeline-line::after,
+  .journey-section .timeline-line .timeline-progress {
+    clip-path: none;
   }
-  .journey-section .journey-story .story-content {
-    margin-left: 60px !important;
-    margin-right: auto !important;
+  .journey-section .timeline-entry {
+    z-index: 10;
   }
-  .journey-section .journey-story .story-marker {
-    left: 30px;
-    transform: translateX(0);
+  .journey-section .timeline-entry:nth-child(odd) .entry-content, .journey-section .timeline-entry:nth-child(even) .entry-content {
+    margin-left: var(--timeline-container-gap);
+    margin-right: auto;
+    transform-origin: left center;
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-content::before, .journey-section .timeline-entry:nth-child(even) .entry-content::before {
+    left: calc(-1 * var(--timeline-container-gap) / 2);
+    right: auto;
+    background: linear-gradient(to left, transparent, #D10000);
+    background: linear-gradient(to left, transparent, var(--accent));
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-date, .journey-section .timeline-entry:nth-child(even) .entry-date {
+    left: 0;
+    right: auto;
+    text-align: left;
+    top: -30px;
   }
 }
-@media (max-width: 768px) {
-  .journey-section {
-    --year-badge-size: 50px;
-    --timeline-container-gap: 40px;
+@media (max-width: 576px) {
+  .journey-section .timeline-entry {
+    z-index: 10;
+    margin-bottom: 5rem;
   }
-  .journey-section .journey-year {
-    margin-bottom: 3rem;
-  }
-  .journey-section .year-stories {
-    padding-top: calc(var(--year-badge-size) + 30px);
-  }
-  .journey-section .journey-track {
-    left: 20px;
-  }
-  .journey-section .year-marker {
-    left: 20px;
-  }
-  .journey-section .journey-story .story-content {
-    width: calc(100% - 40px);
+  .journey-section .timeline-entry .entry-content {
+    width: calc(100% - 60px);
     padding: 1.5rem;
-    margin-left: 40px !important;
   }
-  .journey-section .journey-story .story-marker {
-    left: 20px;
-  }
-  .journey-section .journey-story .story-title {
+  .journey-section .timeline-entry .entry-title {
     font-size: 1.2rem;
   }
-  .journey-section .journey-story .story-description {
+  .journey-section .timeline-entry .entry-description {
     font-size: 0.9rem;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.timeline-container {
+  position: relative;
+  z-index: 1;
 }
-@keyframes gradientFlow {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 0% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
+
+.timeline-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
 }
-@keyframes starTwinkle {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.2);
-  }
+
+.timeline-progress {
+  position: absolute;
+  z-index: 1;
 }
-@keyframes floatParticle {
-  from {
-    transform: translateY(-10px) rotate(0deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.3;
-  }
-  90% {
-    opacity: 0.3;
-  }
-  to {
-    transform: translateY(calc(100vh + 10px)) rotate(360deg);
-    opacity: 0;
-  }
+
+.timeline-entries {
+  position: relative;
+  z-index: 5;
 }
+
+.timeline-entry {
+  position: relative;
+}
+
+.entry-content {
+  position: relative;
+  z-index: 1;
+}
+
 .landing-section {
   position: relative;
   min-height: 100vh;
