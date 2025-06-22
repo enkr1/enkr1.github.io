@@ -1,248 +1,153 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+  // DOM elements
   const timelineEntries = document.querySelectorAll(".timeline-entry");
   const timelineProgress = document.querySelector(".timeline-progress");
   const journeySection = document.querySelector(".journey-section");
-  const timelineLine = document.querySelector(".timeline-line");
 
-  // ADJUSTABLE SETTINGS - Customize these values
+  // Settings with optimized values
   const SETTINGS = {
-    transitionDuration: 300, // Faster transitions for pixel-responsive animation
-    activationZone: window.innerHeight * 0.8, // Larger zone for gradual transitions
-    blurAmount: 6, // Maximum blur amount
-    opacityMin: 0.3, // Minimum opacity for distant entries
-    opacityMax: 1.0, // Maximum opacity for active entry
-    scaleMin: 0.92, // Minimum scale for distant entries
-    scaleMax: 1.05, // Maximum scale for active entry
-    cardWidth: '60vw', // Make cards 60% of viewport width
-    pixelSensitivity: 2, // How many pixels of scroll affect the animation
+    activationZone: window.innerHeight * 0.6,
+    blurAmount: 4,
+    opacityMin: 0.6,
+    opacityMax: 1.0,
+    scaleMin: 0.95,
+    scaleMax: 1.0,
+    transitionDuration: 400,
+    pixelSensitivity: 10,
+    cardWidth: "60vw",
+    progressEasing: 0.1, // Smooth progress animation
   };
 
+  // State variables
   let currentActiveIndex = -1;
+  let lastScrollY = window.pageYOffset;
+  let animationFrame = null;
+  let currentProgress = 0;
+  let targetProgress = 0;
 
   // Initialize timeline entries
   const initializeEntries = () => {
-    timelineEntries.forEach((entry, index) => {
-      // Set initial styles with smooth transitions
-      entry.style.transition = `all ${SETTINGS.transitionDuration}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
-      entry.style.transformOrigin = "center center";
-      entry.style.position = "relative";
-      entry.style.zIndex = "20";
-
-      // Make cards larger (60% of viewport width)
-      const entryContent = entry.querySelector('.entry-content');
+    timelineEntries.forEach((entry) => {
+      const entryContent = entry.querySelector(".entry-content");
       if (entryContent) {
         entryContent.style.width = SETTINGS.cardWidth;
-        entryContent.style.maxWidth = '800px'; // Reasonable max width
-        entryContent.style.transition = `all ${SETTINGS.transitionDuration}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
+        entryContent.style.maxWidth = "800px";
       }
-
-      // Initialize as inactive
-      entry.style.filter = `blur(${SETTINGS.blurAmount}px)`;
-      entry.style.opacity = SETTINGS.opacityInactive;
-      entry.style.transform = `scale(${SETTINGS.scaleInactive})`;
     });
   };
 
-  // Calculate pixel-responsive animation values based on distance from viewport center
+  // Calculate animation values
   const calculateAnimationValues = (entry) => {
     const rect = entry.getBoundingClientRect();
     const viewportCenter = window.innerHeight / 2;
     const entryCenter = rect.top + rect.height / 2;
-    const distanceFromCenter = Math.abs(entryCenter - viewportCenter);
-
-    // Calculate activation progress (0 = far away, 1 = at center)
-    const maxDistance = SETTINGS.activationZone;
-    const progress = Math.max(0, Math.min(1, 1 - (distanceFromCenter / maxDistance)));
-
-    // Smooth easing function for more natural animation
+    const distance = Math.abs(entryCenter - viewportCenter);
+    const progress = 1 - Math.min(1, distance / SETTINGS.activationZone);
     const easedProgress = progress * progress * (3 - 2 * progress); // smoothstep
 
-    // Calculate values based on progress
-    const blur = SETTINGS.blurAmount * (1 - easedProgress);
-    const opacity = SETTINGS.opacityMin + (SETTINGS.opacityMax - SETTINGS.opacityMin) * easedProgress;
-    const scale = SETTINGS.scaleMin + (SETTINGS.scaleMax - SETTINGS.scaleMin) * easedProgress;
-
-    return { blur, opacity, scale, progress: easedProgress };
+    return {
+      blur: SETTINGS.blurAmount * (1 - easedProgress),
+      opacity:
+        SETTINGS.opacityMin +
+        (SETTINGS.opacityMax - SETTINGS.opacityMin) * easedProgress,
+      scale:
+        SETTINGS.scaleMin +
+        (SETTINGS.scaleMax - SETTINGS.scaleMin) * easedProgress,
+      progress: easedProgress,
+    };
   };
 
-  // Update entry visual state with pixel-responsive values
-  const updateEntryState = (entry, index) => {
-    const { blur, opacity, scale, progress } = calculateAnimationValues(entry);
-
-    // Apply smooth transitions
-    entry.style.filter = `blur(${blur.toFixed(2)}px)`;
-    entry.style.opacity = opacity.toFixed(3);
-    entry.style.transform = `scale(${scale.toFixed(4)})`;
-
-    // Z-index based on activation level
-    const zIndex = 20 + Math.floor(progress * 5);
-    entry.style.zIndex = zIndex.toString();
-
-    // Add/remove active class based on threshold
-    if (progress > 0.7) {
-      entry.classList.add("active");
-    } else {
-      entry.classList.remove("active");
-    }
-
-    return progress;
+  // Update entry state
+  const updateEntryState = (entry, values) => {
+    entry.style.filter = `blur(${values.blur}px)`;
+    entry.style.opacity = values.opacity;
+    entry.style.transform = `scale(${values.scale})`;
+    entry.classList.toggle("active", values.progress > 0.7);
+    return values.progress;
   };
 
-  // Calculate which entry is most active based on scroll position
-  const calculateMostActiveEntry = () => {
-    let mostActiveIndex = -1;
-    let highestProgress = 0;
+  // Find most active entry
+  const findMostActiveEntry = () => {
+    let maxProgress = 0;
+    let activeIndex = -1;
 
     timelineEntries.forEach((entry, index) => {
-      const { progress } = calculateAnimationValues(entry);
+      const values = calculateAnimationValues(entry);
+      const progress = updateEntryState(entry, values);
 
-      if (progress > highestProgress) {
-        highestProgress = progress;
-        mostActiveIndex = index;
+      if (progress > maxProgress) {
+        maxProgress = progress;
+        activeIndex = index;
       }
     });
 
-    return { index: mostActiveIndex, progress: highestProgress };
+    return activeIndex;
   };
 
-  // Main scroll handler with pixel-responsive animation
-  const handleScroll = () => {
-    const { index: mostActiveIndex, progress: highestProgress } = calculateMostActiveEntry();
-
-    // Update all entries with pixel-responsive values
-    const entryProgresses = [];
-    timelineEntries.forEach((entry, index) => {
-      const progress = updateEntryState(entry, index);
-      entryProgresses.push(progress);
-    });
-
-    // Update current active index only if there's a significant change
-    if (highestProgress > 0.5) {
-      currentActiveIndex = mostActiveIndex;
-    }
-
-    // Update timeline progress
-    updateTimelineProgress(entryProgresses);
-  };
-
-  // Update timeline progress line and dot position with pixel precision
-  const updateTimelineProgress = (entryProgresses = []) => {
+  // Update timeline progress (smooth animation)
+  const updateTimelineProgress = () => {
     if (!timelineProgress || !journeySection) return;
 
     const scrollTop = window.pageYOffset;
-    const journeyTop = journeySection.offsetTop;
-    const journeyHeight = journeySection.offsetHeight;
+    const { offsetTop: sectionTop, offsetHeight: sectionHeight } =
+      journeySection;
     const windowHeight = window.innerHeight;
 
-    const sectionStart = journeyTop - windowHeight * 0.5;
-    const sectionEnd = journeyTop + journeyHeight - windowHeight * 0.5;
-    const scrollProgress = Math.max(
-      0,
-      Math.min(1, (scrollTop - sectionStart) / (sectionEnd - sectionStart))
-    );
+    const start = sectionTop - windowHeight * 0.5;
+    const end = sectionTop + sectionHeight - windowHeight * 0.5;
+    const scrollRange = end - start;
 
-    timelineProgress.style.transform = `scaleY(${scrollProgress})`;
+    if (scrollRange > 0) {
+      targetProgress = Math.max(
+        0,
+        Math.min(1, (scrollTop - start) / scrollRange)
+      );
+    }
 
-    // Update scroll dot with pixel-precise positioning
-    const scrollDot = document.querySelector(".timeline-scroll-dot");
-    if (scrollDot) {
-      if (currentActiveIndex >= 0 && timelineEntries[currentActiveIndex]) {
-        const activeEntry = timelineEntries[currentActiveIndex];
-        const entryRect = activeEntry.getBoundingClientRect();
-        const journeyRect = journeySection.getBoundingClientRect();
+    // Smooth progress animation
+    currentProgress +=
+      (targetProgress - currentProgress) * SETTINGS.progressEasing;
+    timelineProgress.style.transform = `scaleY(${currentProgress})`;
+  };
 
-        // Calculate precise position based on entry's current position
-        const entryCenter = entryRect.top + entryRect.height / 2;
-        const journeyCenterRelative = entryCenter - journeyRect.top;
-        const dotPosition = (journeyCenterRelative / journeyRect.height) * 100;
+  // Main animation loop
+  const animate = () => {
+    currentActiveIndex = findMostActiveEntry();
+    updateTimelineProgress();
+    animationFrame = requestAnimationFrame(animate);
+  };
 
-        // Smooth interpolation for dot movement
-        const clampedPosition = Math.max(0, Math.min(100, dotPosition));
-        scrollDot.style.top = `${clampedPosition}%`;
+  // Handle scroll with throttling
+  const handleScroll = () => {
+    const currentScrollY = window.pageYOffset;
+    const scrollDelta = Math.abs(currentScrollY - lastScrollY);
 
-        // Faster transition for more responsive feel
-        scrollDot.style.transition = `top ${SETTINGS.transitionDuration * 0.6}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
-      } else {
-        // Fallback to scroll progress with smooth interpolation
-        scrollDot.style.top = `${scrollProgress * 100}%`;
-      }
+    if (scrollDelta >= SETTINGS.pixelSensitivity) {
+      lastScrollY = currentScrollY;
     }
   };
 
-  // Create scroll dot
-  const createScrollDot = () => {
-    if (!timelineLine || document.querySelector(".timeline-scroll-dot")) return;
-
-    const dot = document.createElement("div");
-    dot.className = "timeline-scroll-dot";
-    timelineLine.appendChild(dot);
-  };
-
-  // Initialize everything
-  const init = () => {
+  // Initialize timeline
+  const initTimeline = () => {
     if (!journeySection || timelineEntries.length === 0) return;
 
     initializeEntries();
-    createScrollDot();
 
-    // High-frequency scroll listener for pixel-responsive animation
-    let ticking = false;
-    let lastScrollY = window.pageYOffset;
+    // Start animation loop
+    animate();
 
-    window.addEventListener(
-      "scroll",
-      () => {
-        const currentScrollY = window.pageYOffset;
-        const scrollDelta = Math.abs(currentScrollY - lastScrollY);
+    // Event listeners
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-        // Only update if scroll delta is significant enough or if not already ticking
-        if (!ticking || scrollDelta >= SETTINGS.pixelSensitivity) {
-          if (ticking) {
-            // Cancel previous frame if new scroll is significant
-            cancelAnimationFrame(ticking);
-          }
-
-          ticking = requestAnimationFrame(() => {
-            handleScroll();
-            lastScrollY = currentScrollY;
-            ticking = false;
-          });
-        }
-      },
-      { passive: true }
-    );
-
-    // Handle resize with immediate response
-    let resizeTimeout;
     window.addEventListener(
       "resize",
       () => {
-        // Clear previous timeout
-        if (resizeTimeout) {
-          clearTimeout(resizeTimeout);
-        }
-
-        // Immediate update for responsive feel
-        handleScroll();
-
-        // Delayed re-initialization for performance
-        resizeTimeout = setTimeout(() => {
-          initializeEntries();
-          handleScroll();
-        }, 150);
+        SETTINGS.activationZone = window.innerHeight * 0.6;
       },
       { passive: true }
     );
-
-    // Initial check
-    setTimeout(handleScroll, 100);
   };
 
-  // Start the system
-  init();
-
-  // Expose settings for easy customization
-  window.TimelineSettings = SETTINGS;
-  console.log("Timeline Settings:", SETTINGS);
-  console.log("Customize blur with: window.TimelineSettings.blurAmount = 5");
+  // Initialize
+  initTimeline();
 });

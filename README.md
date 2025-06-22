@@ -1,4 +1,12 @@
+```
+gulp watch
+```
+
+
+
 ## My Personal Website & Portfolio
+
+
 
 This is my personal website and portfolio, designed and developed entirely by me, with a focus on minimal libraries and modern JavaScript techniques. Explore my work, projects, and passions, including full-stack development, UI/UX, and beatboxing.
 
