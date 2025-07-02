@@ -14,25 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
     scaleMax: 1.0,
     transitionDuration: 400,
     pixelSensitivity: 10,
-    cardWidth: "30vw",
     progressEasing: 0.1, // Smooth progress animation
   };
 
-  // Ensure each entry card adopts the configured width
-  const initializeEntries = () => {
-    timelineEntries.forEach((entry) => {
-      const content = entry.querySelector(".entry-content");
-      if (content) {
-        content.style.width = SETTINGS.cardWidth;
-        content.style.maxWidth = "800px";
-      }
-    });
-  };
-
   // State variables
-  let currentActiveIndex = -1;
   let lastScrollY = window.pageYOffset;
-  let animationFrame = null;
   let currentProgress = 0;
   let targetProgress = 0;
 
@@ -130,8 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize timeline
   const initTimeline = () => {
     if (!journeySection || timelineEntries.length === 0) return;
-
-    initializeEntries();
 
     // Start animation loop
     animate();
