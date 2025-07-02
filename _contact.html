@@ -1,0 +1,50 @@
+<section id="contact" class="contact contact-section">
+  <div class="container">
+    <!-- <div class="container" id="contact"> -->
+    <div class="section-heading">
+      <h1>Contact</h1>
+      <h6>Let's be friends</h6>
+    </div>
+
+    <!-- <div class="info-anim">
+                  <div class="info-anim-inner">
+                      <h1>Web Design Service</h1>
+                      <p>I do provide web design services!</p>
+                  </div>
+              </div> -->
+
+    <!-- TODO: TO IMPROVE THE TYPING AREA DESIGN, ETC -->
+    <!--
+        <div class="typing-area">
+          <p class="typing"></p>
+        </div> -->
+
+    <form class="contact-form" action="https://formspree.io/f/mqkykldl" method="POST" name="form">
+      <div class="name-section">
+        <input type="text" id="contact-input-name" name="contact-input-name" pattern=".*\S.*"
+          onkeyup="this.setAttribute('value', this.value);" required />
+        <label class="label-name" for="contact-input-name">
+          <span class="content-name">how do i addres you?</span>
+        </label>
+      </div>
+
+      <div class="email-section">
+        <input type="email" id="contact-input-email" name="contact-input-email"
+          onkeyup="this.setAttribute('value', this.value);" required />
+        <label class="label-email" for="contact-input-email">
+          <span class="content-email">email please</span>
+        </label>
+      </div>
+
+      <div class="message-section">
+        <textarea name="contact-input-message" id="contact-input-message" rows="1" pattern="^\s?(?=\S).*"
+          onkeyup="this.setAttribute('value', this.value);" required></textarea>
+        <label class="label-message" for="contact-input-message">
+          <span class="content-message">what do you wanna talk about?</span>
+        </label>
+      </div>
+
+      <input class="contact-submit-btn bg-slide-to-top" type="submit" value="Submit" />
+    </form>
+  </div>
+</section>

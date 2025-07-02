@@ -25,7 +25,6 @@ header {
       opacity: 0;
       transition: opacity 0.3s ease, transform 4s linear;
       transform: rotate(0deg);
-      pointer-events: none;
     }
 
     &:hover::after {
@@ -35,6 +34,7 @@ header {
 
     .trigger-icon {
       position: relative;
+      cursor: pointer;
       width: 3rem;
       height: 3rem;
       border-radius: 50%;
