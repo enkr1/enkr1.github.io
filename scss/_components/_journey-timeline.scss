@@ -1,8 +1,14 @@
+// Re‑usable transition & GPU hint
+%timeline-base-transition {
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out, filter 0.3s ease-out;
+  will-change: transform, opacity;
+}
+
 .journey-section {
   // Custom timeline variables for easy adjustments
   --timeline-container-gap: -15%;
   --timeline-container-width: 60vw; // Larger cards for better slider feel
-  --timeline-line-width: 2px;
+  --timeline-line-width: 1px;
   --timeline-transition-speed: 0.6s; // Smoother transitions
   --timeline-dot-size: 12px; // Slightly larger dot
 
@@ -71,7 +77,6 @@
 
 
 
-
   .timeline-container {
     position: relative;
     max-width: 1200px;
@@ -81,17 +86,19 @@
     isolation: isolate;
   }
 
+
+
   // Create a more dynamic timeline line with a winding path
   .timeline-line {
     position: absolute;
-    z-index: 1; // Clearly lower than timeline-entry
+    z-index: 1;
     top: 0;
     left: 50%;
     height: 100%;
     width: var(--timeline-line-width);
     transform: translateX(-50%);
     overflow: visible;
-    background-color: rgba(var(--accent-rgb), 1);
+    background-color: rgba(var(--accent-rgb), .3);
 
     .timeline-progress {
       position: absolute;
@@ -185,16 +192,14 @@
   }
 
   .timeline-entry {
+    @extend %timeline-base-transition;
     position: relative;
     margin-bottom: 8rem;
     opacity: 1;
     filter: blur(0);
     transform: scale(1) translateY(0);
-    transition: opacity 0.4s cubic-bezier(0.4, 0.0, 0.2, 1),
-      filter 0.4s cubic-bezier(0.4, 0.0, 0.2, 1),
-      transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
     perspective: 1000px;
-    will-change: transform, opacity, filter;
+    // transition and will-change handled by %timeline-base-transition
     transform-style: preserve-3d;
     z-index: 10;
 
@@ -244,17 +249,6 @@
         margin-left: auto;
         margin-right: var(--timeline-container-gap);
         transform-origin: right center;
-
-        &::before {
-          content: '';
-          position: absolute;
-          top: 20px;
-          right: calc(-1 * var(--timeline-container-gap) / 2);
-          width: 0;
-          height: 2px;
-          background: linear-gradient(to right, transparent, var(--accent));
-          transition: width var(--timeline-transition-speed) cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
-        }
       }
 
       // Position the year on the timeline
@@ -265,11 +259,6 @@
         top: 20px; // Position at the top of the entry
         text-align: center;
         z-index: 20; // Above timeline line
-      }
-
-      &.active .entry-content::before {
-        width: 30px;
-        animation: connectingLine 0.8s ease-out forwards; // Slower animation
       }
     }
 
@@ -278,17 +267,6 @@
         margin-right: auto;
         margin-left: var(--timeline-container-gap);
         transform-origin: left center;
-
-        &::before {
-          content: '';
-          position: absolute;
-          top: 20px;
-          left: calc(-1 * var(--timeline-container-gap) / 2);
-          width: 0;
-          height: 2px;
-          background: linear-gradient(to left, transparent, var(--accent));
-          transition: width var(--timeline-transition-speed) cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
-        }
       }
 
       // Position the year on the timeline
@@ -299,11 +277,6 @@
         top: 20px; // Position at the top of the entry
         text-align: center;
         z-index: 20; // Above timeline line
-      }
-
-      &.active .entry-content::before {
-        width: 30px;
-        animation: connectingLine 0.8s ease-out forwards; // Slower animation
       }
     }
   }
@@ -324,12 +297,6 @@
           margin-left: 60px;
           margin-right: auto;
           transform-origin: left center;
-
-          &::before {
-            left: -30px;
-            right: auto;
-            background: linear-gradient(to left, transparent, var(--accent));
-          }
         }
 
         // Adjust year position for mobile
@@ -347,18 +314,18 @@
     // background: var(--primary); // Add background to make it stand out
     padding: 0 0.3rem;
 
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 1rem;
-      height: 5rem;
-      background: var(--primary);
-      transition: all 0.3s ease;
-      z-index: -1;
-    }
+    // &::after {
+    //   content: '';
+    //   position: absolute;
+    //   top: 0;
+    //   left: 50%;
+    //   transform: translateX(-50%);
+    //   width: 1rem;
+    //   height: 5rem;
+    //   background: var(--primary);
+    //   transition: all 0.3s ease;
+    //   z-index: -1;
+    // }
 
     .year {
       display: block;
@@ -384,9 +351,10 @@
   }
 
   .entry-content {
+    @extend %timeline-base-transition;
     position: relative;
     width: var(--timeline-container-width);
-    max-width: 800px; // Reasonable max width for very large screens
+    max-width: 30vw; // Reasonable max width for very large screens
     background: rgba(var(--primary-rgb), 0.9); // Slightly more opaque for better readability
     border: 1px solid rgba(var(--accent-rgb), 0.15);
     border-radius: 16px; // Slightly more rounded for modern look
@@ -398,11 +366,8 @@
 
     // Enhanced glass effect for larger cards
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 12px 2rem rgba(0, 0, 0, 0.15);
     }
-
-
 
     // Add a subtle glass effect
     &::before {
@@ -555,12 +520,6 @@
           margin-left: var(--timeline-container-gap);
           margin-right: auto;
           transform-origin: left center;
-
-          &::before {
-            left: calc(-1 * var(--timeline-container-gap) / 2);
-            right: auto;
-            background: linear-gradient(to left, transparent, var(--accent));
-          }
         }
 
         .entry-date {
@@ -594,35 +553,12 @@
   }
 }
 
-.timeline-container {
-  position: relative;
-  z-index: 1; // Baseline stacking context
-}
+// Respect users who prefer reduced motion
+@media (prefers-reduced-motion: reduce) {
 
-.timeline-line {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1; // lower than entries
-}
-
-.timeline-progress {
-  position: absolute;
-  z-index: 1; // within timeline-line, keep minimal stacking
-}
-
-.timeline-entries {
-  position: relative;
-  z-index: 5; // Explicit higher stacking context above timeline-line
-}
-
-.timeline-entry {
-  position: relative;
-  // Do NOT set z-index explicitly here; let JS handle dynamically
-}
-
-.entry-content {
-  position: relative;
-  z-index: 1; // Ensures clarity within entries themselves
+  .timeline-entry,
+  .entry-content {
+    transition: none !important;
+    filter: none !important;
+  }
 }

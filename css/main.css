@@ -1563,10 +1563,15 @@ header.nav-floating {
   font-size: 1.8rem;
 }
 
+.journey-section .entry-content, .journey-section .timeline-entry {
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out, filter 0.3s ease-out;
+  will-change: transform, opacity;
+}
+
 .journey-section {
   --timeline-container-gap: -15%;
   --timeline-container-width: 60vw;
-  --timeline-line-width: 2px;
+  --timeline-line-width: 1px;
   --timeline-transition-speed: 0.6s;
   --timeline-dot-size: 12px;
   padding: 6rem 0;
@@ -1646,8 +1651,8 @@ header.nav-floating {
   width: var(--timeline-line-width);
   transform: translateX(-50%);
   overflow: visible;
-  background-color: rgba(209, 0, 0, 1);
-  background-color: rgba(var(--accent-rgb), 1);
+  background-color: rgba(209, 0, 0, 0.3);
+  background-color: rgba(var(--accent-rgb), 0.3);
 }
 .journey-section .timeline-line .timeline-progress {
   position: absolute;
@@ -1730,9 +1735,7 @@ header.nav-floating {
   opacity: 1;
   filter: blur(0);
   transform: scale(1) translateY(0);
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   perspective: 1000px;
-  will-change: transform, opacity, filter;
   transform-style: preserve-3d;
   z-index: 10;
 }
@@ -1775,17 +1778,6 @@ header.nav-floating {
   margin-right: var(--timeline-container-gap);
   transform-origin: right center;
 }
-.journey-section .timeline-entry:nth-child(odd) .entry-content::before {
-  content: "";
-  position: absolute;
-  top: 20px;
-  right: calc(-1 * var(--timeline-container-gap) / 2);
-  width: 0;
-  height: 2px;
-  background: linear-gradient(to right, transparent, #D10000);
-  background: linear-gradient(to right, transparent, var(--accent));
-  transition: width var(--timeline-transition-speed) cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
-}
 .journey-section .timeline-entry:nth-child(odd) .entry-date {
   position: absolute;
   left: 50%;
@@ -1794,25 +1786,10 @@ header.nav-floating {
   text-align: center;
   z-index: 20;
 }
-.journey-section .timeline-entry:nth-child(odd).active .entry-content::before {
-  width: 30px;
-  animation: connectingLine 0.8s ease-out forwards;
-}
 .journey-section .timeline-entry:nth-child(even) .entry-content {
   margin-right: auto;
   margin-left: var(--timeline-container-gap);
   transform-origin: left center;
-}
-.journey-section .timeline-entry:nth-child(even) .entry-content::before {
-  content: "";
-  position: absolute;
-  top: 20px;
-  left: calc(-1 * var(--timeline-container-gap) / 2);
-  width: 0;
-  height: 2px;
-  background: linear-gradient(to left, transparent, #D10000);
-  background: linear-gradient(to left, transparent, var(--accent));
-  transition: width var(--timeline-transition-speed) cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
 }
 .journey-section .timeline-entry:nth-child(even) .entry-date {
   position: absolute;
@@ -1821,10 +1798,6 @@ header.nav-floating {
   top: 20px;
   text-align: center;
   z-index: 20;
-}
-.journey-section .timeline-entry:nth-child(even).active .entry-content::before {
-  width: 30px;
-  animation: connectingLine 0.8s ease-out forwards;
 }
 @media (max-width: 992px) {
   .journey-section .timeline-line {
@@ -1839,12 +1812,6 @@ header.nav-floating {
     margin-right: auto;
     transform-origin: left center;
   }
-  .journey-section .timeline-entry:nth-child(odd) .entry-content::before, .journey-section .timeline-entry:nth-child(even) .entry-content::before {
-    left: -30px;
-    right: auto;
-    background: linear-gradient(to left, transparent, #D10000);
-    background: linear-gradient(to left, transparent, var(--accent));
-  }
   .journey-section .timeline-entry:nth-child(odd) .entry-date, .journey-section .timeline-entry:nth-child(even) .entry-date {
     left: 30px;
     transform: translateX(-50%);
@@ -1854,19 +1821,6 @@ header.nav-floating {
 .journey-section .entry-date {
   transition: all 0.5s ease;
   padding: 0 0.3rem;
-}
-.journey-section .entry-date::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1rem;
-  height: 5rem;
-  background: #FFFFFF;
-  background: var(--primary);
-  transition: all 0.3s ease;
-  z-index: -1;
 }
 .journey-section .entry-date .year {
   display: block;
@@ -1896,7 +1850,7 @@ header.nav-floating {
 .journey-section .entry-content {
   position: relative;
   width: var(--timeline-container-width);
-  max-width: 800px;
+  max-width: 30vw;
   background: rgba(var(--primary-rgb), 0.9);
   border: 1px solid rgba(209, 0, 0, 0.15);
   border: 1px solid rgba(var(--accent-rgb), 0.15);
@@ -1909,8 +1863,7 @@ header.nav-floating {
   overflow: hidden;
 }
 .journey-section .entry-content:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 2rem rgba(0, 0, 0, 0.15);
 }
 .journey-section .entry-content::before {
   content: "";
@@ -2037,12 +1990,6 @@ header.nav-floating {
     margin-right: auto;
     transform-origin: left center;
   }
-  .journey-section .timeline-entry:nth-child(odd) .entry-content::before, .journey-section .timeline-entry:nth-child(even) .entry-content::before {
-    left: calc(-1 * var(--timeline-container-gap) / 2);
-    right: auto;
-    background: linear-gradient(to left, transparent, #D10000);
-    background: linear-gradient(to left, transparent, var(--accent));
-  }
   .journey-section .timeline-entry:nth-child(odd) .entry-date, .journey-section .timeline-entry:nth-child(even) .entry-date {
     left: 0;
     right: auto;
@@ -2067,38 +2014,13 @@ header.nav-floating {
   }
 }
 
-.timeline-container {
-  position: relative;
-  z-index: 1;
+@media (prefers-reduced-motion: reduce) {
+  .timeline-entry,
+  .entry-content {
+    transition: none !important;
+    filter: none !important;
+  }
 }
-
-.timeline-line {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-
-.timeline-progress {
-  position: absolute;
-  z-index: 1;
-}
-
-.timeline-entries {
-  position: relative;
-  z-index: 5;
-}
-
-.timeline-entry {
-  position: relative;
-}
-
-.entry-content {
-  position: relative;
-  z-index: 1;
-}
-
 .landing-section {
   position: relative;
   min-height: 100vh;
