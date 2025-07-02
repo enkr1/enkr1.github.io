@@ -1778,6 +1778,11 @@ header.nav-floating {
   left: calc(45% - var(--timeline-content-gap));
   transform: translateX(-100%);
   transform-origin: left center;
+  text-align: right;
+}
+.journey-section .timeline-entry:nth-child(odd) .entry-content .entry-title::after {
+  left: auto;
+  right: 0;
 }
 .journey-section .timeline-entry:nth-child(odd) .entry-date {
   position: absolute;
@@ -1813,6 +1818,11 @@ header.nav-floating {
     margin-left: 60px;
     margin-right: auto;
     transform-origin: left center;
+    text-align: left;
+  }
+  .journey-section .timeline-entry:nth-child(odd) .entry-content .entry-title::after, .journey-section .timeline-entry:nth-child(even) .entry-content .entry-title::after {
+    left: 0;
+    right: auto;
   }
   .journey-section .timeline-entry:nth-child(odd) .entry-date, .journey-section .timeline-entry:nth-child(even) .entry-date {
     left: 30px;

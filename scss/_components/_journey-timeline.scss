@@ -250,6 +250,12 @@
         left: calc(45% - var(--timeline-content-gap));
         transform: translateX(-100%);
         transform-origin: left center;
+        text-align: right;
+
+        .entry-title::after {
+          left: auto;
+          right: 0;
+        }
       }
 
       // Position the year on the timeline
@@ -299,6 +305,12 @@
           margin-left: 60px;
           margin-right: auto;
           transform-origin: left center;
+          text-align: left;
+
+          .entry-title::after {
+            left: 0;
+            right: auto;
+          }
         }
 
         // Adjust year position for mobile
