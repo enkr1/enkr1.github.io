@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Settings with optimized values
   const SETTINGS = {
     activationZone: window.innerHeight * 0.6,
-    blurAmount: 30,
+    blurAmount: 3,
     opacityMin: 0.3,
     opacityMax: 1.0,
     scaleMin: 0.8,
