@@ -195,7 +195,7 @@
     position: relative;
     margin-bottom: 8rem;
     opacity: 1;
-    filter: blur(0);
+    filter: blur(.1rem);
     transform: scale(1) translateY(0);
     perspective: 1000px;
     // transition and will-change handled by %timeline-base-transition

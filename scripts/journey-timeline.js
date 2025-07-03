@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Settings with optimized values
   const SETTINGS = {
     activationZone: window.innerHeight * 0.6,
-    blurAmount: 4,
-    opacityMin: 0.6,
+    blurAmount: 30,
+    opacityMin: 0.3,
     opacityMax: 1.0,
-    scaleMin: 0.95,
+    scaleMin: 0.8,
     scaleMax: 1.0,
     transitionDuration: 400,
     pixelSensitivity: 10,
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener(
       "resize",
       () => {
-        SETTINGS.activationZone = window.innerHeight * 0.6;
+        SETTINGS.activationZone = window.innerHeight * 0.5;
       },
       { passive: true }
     );
