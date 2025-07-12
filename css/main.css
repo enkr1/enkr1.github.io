@@ -2108,7 +2108,7 @@ header.nav-floating {
   display: inline-block;
   opacity: 0;
   transform: translateY(20px);
-  animation: fadeUpIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.3s;
+  animation: fadeUpIn 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards 1.3s;
   font-size: max(2rem, min(5vw, 4rem));
 }
 .landing-section .hero-text-container h1 .name-divider {
