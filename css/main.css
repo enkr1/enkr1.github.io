@@ -857,8 +857,7 @@ header .side-navigation .side-nav-header .nav-profile .profile-image {
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 1rem;
-  border: 2px solid #D10000;
-  border: 2px solid var(--accent);
+  border: 1px solid #999;
 }
 header .side-navigation .side-nav-header .nav-profile .profile-image img {
   width: 100%;
