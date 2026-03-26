@@ -31,6 +31,11 @@ $theme-mobile-bar-bg: linear-gradient(90deg, var(--primary), var(--accent));
   --accent: #{$bazi-metal};
   --accent-dark: #{$bazi-metal-dark};
 
+  // Water element — structural color (headings, depth, nav)
+  --water: #{$bazi-water};
+  --water-rgb: 30, 75, 140;
+  --water-light: #{$bazi-water-light};
+
   // Text colors
   --text-primary: #1A1A1A;
   --text-secondary: #555555;
