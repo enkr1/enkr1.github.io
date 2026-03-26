@@ -5,6 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const sceneArray = Array.from(scenes);
   const journeySection = document.querySelector(".journey-section");
 
+  // Immediately activate hero scene (above the fold on load)
+  const heroScene = document.querySelector(".scene--hero");
+  if (heroScene) {
+    heroScene.classList.add("scene-active");
+  }
+
   // ---- Dot Nav (built before reduced-motion check so it always renders) ----
 
   const nav = document.createElement("nav");
