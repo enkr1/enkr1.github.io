@@ -2,14 +2,14 @@
 // SCENE ZERO — Hero landing as cinematic opening scene
 // ============================================================
 
-$scene-easing: cubic-bezier(0.19, 1, 0.22, 1);
+@use '../variables' as *;
 
 @mixin hero-reveal($delay: 0ms, $duration: 700ms, $distance: 30px) {
   opacity: 0;
   transform: translateY($distance);
   transition:
-    opacity $duration $scene-easing,
-    transform $duration $scene-easing;
+    opacity $duration $ease-out-expo,
+    transform $duration $ease-out-expo;
   transition-delay: $delay;
 }
 
@@ -44,8 +44,8 @@ $scene-easing: cubic-bezier(0.19, 1, 0.22, 1);
     margin-bottom: 1.5rem;
     transform: translateY(20px);
     transition:
-      opacity 700ms $scene-easing,
-      transform 700ms $scene-easing;
+      opacity 700ms $ease-out-expo,
+      transform 700ms $ease-out-expo;
     transition-delay: 1200ms;
   }
 
@@ -65,8 +65,8 @@ $scene-easing: cubic-bezier(0.19, 1, 0.22, 1);
     opacity: 0;
     transform: translateY(20px);
     transition:
-      opacity 600ms $scene-easing,
-      transform 600ms $scene-easing,
+      opacity 600ms $ease-out-expo,
+      transform 600ms $ease-out-expo,
       border-color 300ms ease,
       color 300ms ease;
     transition-delay: 1600ms;
