@@ -50,6 +50,9 @@
   --nav-logo-y: 0; // Adjust this value as needed
 }
 
+// Shared easing
+$ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+
 $default_global_font_size: 1.2rem;
 $sm_global_font_size: 1.15rem;
 $xs_global_font_size: 1.1rem;

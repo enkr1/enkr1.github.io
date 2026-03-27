@@ -1,503 +1,182 @@
-header {
-  z-index: 9999999;
-
-  // Side Navigation Styles
-  .side-nav-trigger {
-    position: fixed;
-    top: 2rem;
-    left: 2rem;
-    z-index: 1500;
-    cursor: pointer;
-    width: 3rem;
-    height: 3rem;
-
-    // Remove the always-visible debug outline
-    &::after {
-      content: '';
-      position: absolute;
-      top: -5px;
-      left: -5px;
-      right: -5px;
-      bottom: -5px;
-      border: 1px dashed var(--accent);
-      border-radius: 50%;
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.3s ease, transform 4s linear;
-      transform: rotate(0deg);
-    }
-
-    &:hover::after {
-      opacity: 0.7;
-      animation: rotateDashedBorder 4s linear infinite;
-    }
-
-    .trigger-icon {
-      position: relative;
-      cursor: pointer;
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      background: var(--primary);
-      border: 2px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-
-      .trigger-letter {
-        font-family: var(--font-primary);
-        font-size: 1.5rem;
-        color: var(--accent);
-        font-weight: 500;
-        transition: all 0.3s ease;
-      }
-
-      .pulse-ring {
-        position: absolute;
-        top: -8px;
-        left: -8px;
-        right: -8px;
-        bottom: -8px;
-        border: 2px solid var(--accent);
-        border-radius: 50%;
-        opacity: 0;
-      }
-
-      &:hover {
-        transform: scale(1.1);
-
-        .trigger-letter {
-          transform: rotate(360deg);
-        }
-      }
-    }
-  }
-
-  .side-navigation {
-    position: fixed;
-    top: 0;
-    left: -50vw; // Start off-screen
-    width: 30rem;
-    max-width: 80vw;
-    height: 100vh;
-    background: var(--primary);
-    z-index: 1500; // Increase to match trigger
-    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2);
-    // Add subtle pattern to the background
-    background-image:
-      linear-gradient(to right, rgba(var(--accent-rgb), 0.02) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(var(--accent-rgb), 0.02) 1px, transparent 1px);
-    background-size: 20px 20px;
-    display: flex;
-    flex-direction: column;
-    // transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transition: transform 0s;
-    // transform: translateX(0);
-    // transform: translateX(-100%);
-
-    &.active {
-      animation: navSlideIn 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-
-
-      // Animate the accent line when active
-      &::after {
-        transform: scaleY(1);
-        opacity: 0.3;
-        animation: accentLineReveal 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        animation-delay: 0.3s;
-      }
-
-      .side-nav-header {
-        .nav-profile {
-          .profile-image {
-            // animation: profileReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            animation-delay: 0.4s;
-          }
-
-          .profile-name {
-            animation: fadeUpIn 0.6s ease forwards;
-            animation-delay: 0.6s;
-            opacity: 0;
-          }
-
-          .profile-title {
-            animation: fadeUpIn 0.6s ease forwards;
-            animation-delay: 0.7s;
-            opacity: 0;
-          }
-        }
-
-        .nav-close {
-          animation: fadeIn 0.5s ease-in-out forwards;
-          opacity: 0;
-
-          &:hover {
-            animation:
-              fadeIn 0.5s ease-in-out forwards,
-              pulseGlow 2s infinite cubic-bezier(0.66, 0, 0, 1);
-          }
-        }
-      }
-
-    }
-
-    &:not(.active) {
-      // BUG: ...
-      animation: navSlideOut 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
-    }
-
-    // Add a subtle accent border on the right with animation
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 2px;
-      height: 100%;
-      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
-      opacity: 0;
-      transform: scaleY(0.3);
-      transform-origin: center;
-      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.5s ease;
-    }
-
-    .side-nav-header {
-      padding: 2rem;
-      border-bottom: 1px solid rgba(var(--accent-rgb), 0.1);
-      position: relative;
-
-      .nav-close {
-        position: absolute;
-        top: 1.5rem;
-        right: 1.5rem;
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: 50%;
-        background: rgba(var(--accent-rgb), 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-
-        .close-icon {
-          font-size: 1.5rem;
-          color: var(--accent);
-        }
-
-        &:hover {
-          background: var(--accent);
-
-          .close-icon {
-            color: var(--primary);
-          }
-        }
-      }
-
-      .nav-profile {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .profile-image {
-          width: 6rem;
-          height: 6rem;
-          border-radius: 50%;
-          overflow: hidden;
-          margin-bottom: 1rem;
-          border: 1px solid #999;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-
-        .profile-name {
-          font-family: var(--font-secondary);
-          font-size: 1.5rem;
-          color: var(--text-primary);
-          margin-bottom: 0.5rem;
-        }
-
-        .profile-title {
-          font-size: 0.9rem;
-          color: var(--text-secondary);
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-        }
-      }
-    }
-
-    .side-nav-links {
-      flex: 1;
-      padding: 2rem 0;
-      overflow-y: auto;
-      overflow-x: hidden; // Fix when element expand, scrollbar appears
-
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-
-        .nav-item {
-          margin-bottom: 0.5rem;
-          opacity: 0;
-
-          &.active {
-            opacity: 1;
-          }
-
-          .side-navigation.active & {
-            animation: itemReveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            animation-delay: calc(var(--item-index, 0) * 0.08s + 0.5s);
-          }
-
-          a {
-            display: flex;
-            align-items: center;
-            padding: 1rem 2rem;
-            color: var(--text-secondary);
-            transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-            position: relative;
-
-            &::before {
-              content: '';
-              position: absolute;
-              left: 0;
-              top: 0;
-              height: 100%;
-              width: 0;
-              background: var(--accent);
-              opacity: 0.1;
-              transition: width 0.3s ease;
-            }
-
-            .nav-icon {
-              margin-right: 1rem;
-              font-size: 1.2rem;
-              width: 1.5rem;
-              text-align: center;
-              color: var(--accent);
-              transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-            }
-
-            .nav-text {
-              font-size: 1.1rem;
-              letter-spacing: 0.05em;
-              flex: 1;
-            }
-
-            .dropdown-icon {
-              margin-left: 0.5rem;
-              font-size: 0.8rem;
-              color: var(--text-secondary);
-              transition: all 0.3s ease;
-            }
-
-            &:hover,
-            &:focus {
-              color: var(--text-primary);
-              transform: translateX(5px); // Slight movement on hover
-              // Smooth transitions for all properties
-              transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-
-
-              &::before {
-                width: 4px;
-                box-shadow: 0 0 10px var(--accent);
-              }
-
-              .nav-icon {
-                transform: scale(1.2);
-                transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-              }
-
-              .dropdown-icon {
-                color: var(--accent);
-              }
-            }
-          }
-
-          &.active a {
-            color: var(--text-primary);
-
-            &::before {
-              width: 4px;
-            }
-          }
-
-          // Dropdown styles
-          &.dropdown {
-            position: relative;
-
-            .dropdown-toggle {
-              cursor: pointer;
-            }
-
-            .dropdown-menu {
-              max-height: 0;
-              overflow: hidden;
-              padding-left: 3.5rem;
-              transition: max-height 0.3s ease, opacity 0.3s ease;
-              opacity: 0;
-
-              li {
-                margin: 0.5rem 0;
-
-                a {
-                  padding: 0.5rem 1rem;
-                  font-size: 0.95rem;
-                  color: var(--text-secondary);
-
-                  &:hover {
-                    color: var(--accent);
-                    transform: translateX(5px);
-                  }
-                }
-              }
-            }
-
-            &.open {
-              .dropdown-toggle .dropdown-icon {
-                transform: rotate(180deg);
-                color: var(--accent);
-              }
-
-              .dropdown-menu {
-                max-height: 500px;
-                opacity: 1;
-              }
-            }
-          }
-        }
-      }
-
-      .nav-footer-text {
-        padding: 2rem;
-        text-align: center;
-        font-size: 0.8rem;
-        color: var(--text-secondary);
-        font-style: italic;
-        opacity: 0;
-
-        .side-navigation.active & {
-          animation: fadeUpIn 0.6s ease forwards;
-          animation-delay: 1s;
-        }
-
-      }
-    }
-
-    .side-nav-footer {
-      padding: 1.5rem 2rem;
-      border-top: 1px solid rgba(var(--accent-rgb), 0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      opacity: 0;
-
-      .side-navigation.active & {
-        animation: fadeUpIn 0.6s ease forwards;
-        animation-delay: 0.9s;
-      }
-
-      .social-links {
-        display: flex;
-        gap: 1rem;
-
-        a {
-          width: 2.2rem;
-          height: 2.2rem;
-          border-radius: 50%;
-          background: rgba(var(--accent-rgb), 0.1);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--text-secondary);
-          transition: all 0.3s ease;
-
-          &:hover {
-            background: var(--accent);
-            color: var(--primary);
-            transform: translateY(-3px);
-          }
-        }
-      }
-
-      .theme-toggle button {
-        width: 2.2rem;
-        height: 2.2rem;
-        border-radius: 50%;
-        background: rgba(var(--accent-rgb), 0.1);
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-secondary);
-        cursor: pointer;
-        transition: all 0.3s ease;
-
-        &:hover {
-          background: var(--accent);
-          color: var(--primary);
-        }
-      }
-    }
-  }
-
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
+// ============================================================
+// FULLSCREEN NAV — Cinematic dark overlay with staggered gold links
+// ============================================================
+
+@use '../variables' as *;
+
+// Hamburger trigger — bare lines, no container
+.side-nav-trigger {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  z-index: 2000;
+  cursor: pointer;
+  width: 1.8rem;
+  height: 1.8rem;
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+
+  .hamburger-line {
+    display: block;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7); // Darker overlay for better focus
-    backdrop-filter: blur(8px); // Increased blur for more emphasis
-    z-index: 1499;
-    opacity: 0;
-    visibility: hidden;
-    // transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); // Smoother transition
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+    height: 1px;
+    background: var(--accent);
+    transition: all 0.4s $ease-out-expo;
+    transform-origin: center;
 
-    &.active {
-      opacity: 1;
-      visibility: visible;
-      animation: blurIn 0.7s ease forwards;
+    &:nth-child(2) {
+      width: 60%;
     }
   }
 
-  // Media queries for responsive design
-  @media (max-width: 768px) {
-    .side-nav-trigger {
-      top: 1.5rem;
-      left: 1.5rem;
-
-      .trigger-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-
-        .trigger-letter {
-          font-size: 1.2rem;
-        }
-      }
+  &:hover .hamburger-line {
+    &:nth-child(2) {
+      width: 100%;
     }
   }
 
+  &.active .hamburger-line {
+    &:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    &:nth-child(2) {
+      opacity: 0;
+      width: 0;
+    }
+    &:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
 }
 
-// Add a new reveal animation for nav items
-.side-nav-links ul .nav-item {
+// Fullscreen overlay
+.fullscreen-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
-  transform: translateX(-20px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  transition-delay: calc(var(--item-index, 0) * 0.05s);
+  visibility: hidden;
+  transition:
+    opacity 0.5s $ease-out-expo,
+    visibility 0s 0.5s;
 
-  // When nav is active, animate items in sequence
-  .side-navigation.active & {
+  &.active {
     opacity: 1;
-    transform: translateX(0);
+    visibility: visible;
+    transition:
+      opacity 0.5s $ease-out-expo,
+      visibility 0s 0s;
+  }
+}
+
+.fullscreen-nav-content {
+  text-align: center;
+}
+
+.fullscreen-nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    overflow: hidden;
+
+    a {
+      display: inline-block;
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.4em 0;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+      transform: translateY(100%);
+      opacity: 0;
+
+      &:hover {
+        color: var(--accent);
+        letter-spacing: 0.1em;
+      }
+    }
+  }
+}
+
+// Staggered entrance — scoped to .fullscreen-nav.active
+.fullscreen-nav.active .fullscreen-nav-links li a {
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    transform 0.6s $ease-out-expo,
+    opacity 0.6s ease,
+    color 0.3s ease,
+    letter-spacing 0.3s ease;
+}
+
+@for $i from 1 through 5 {
+  .fullscreen-nav.active .fullscreen-nav-links li:nth-child(#{$i}) a {
+    transition-delay: #{0.05 + ($i * 0.05)}s;
+  }
+}
+
+.fullscreen-nav-footer {
+  margin-top: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s $ease-out-expo;
+
+  .social-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+
+    a {
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: var(--accent);
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
+
+.fullscreen-nav.active .fullscreen-nav-footer {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side-nav-trigger .hamburger-line,
+  .fullscreen-nav,
+  .fullscreen-nav-links li a,
+  .fullscreen-nav-footer {
+    transition: none !important;
+  }
+
+  .fullscreen-nav-links li a {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .fullscreen-nav-footer {
+    transform: none !important;
+    opacity: 1 !important;
   }
 }

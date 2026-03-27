@@ -1,137 +1,240 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // DOM elements
-  const timelineEntries = document.querySelectorAll(".timeline-entry");
-  const timelineProgress = document.querySelector(".timeline-progress");
+  const scenes = document.querySelectorAll(".scene");
+  if (!scenes.length) return;
+
+  const sceneArray = Array.from(scenes);
   const journeySection = document.querySelector(".journey-section");
 
-  // Settings with optimized values
-  const SETTINGS = {
-    activationZone: window.innerHeight * 0.6,
-    blurAmount: 3,
-    opacityMin: 0.3,
-    opacityMax: 1.0,
-    scaleMin: 0.8,
-    scaleMax: 1.0,
-    transitionDuration: 400,
-    pixelSensitivity: 10,
-    progressEasing: 0.1, // Smooth progress animation
-  };
+  // Immediately activate hero scene (above the fold on load)
+  const heroScene = document.querySelector(".scene--hero");
+  if (heroScene) {
+    heroScene.classList.add("scene-active");
+  }
 
-  // State variables
-  let lastScrollY = window.pageYOffset;
-  let currentProgress = 0;
-  let targetProgress = 0;
+  // ---- Dot Nav (built before reduced-motion check so it always renders) ----
 
-  // Calculate animation values
-  const calculateAnimationValues = (entry) => {
-    const rect = entry.getBoundingClientRect();
-    const viewportCenter = window.innerHeight / 2;
-    const entryCenter = rect.top + rect.height / 2;
-    const distance = Math.abs(entryCenter - viewportCenter);
-    const progress = 1 - Math.min(1, distance / SETTINGS.activationZone);
-    const easedProgress = progress * progress * (3 - 2 * progress); // smoothstep
+  const nav = document.createElement("nav");
+  nav.className = "scene-nav";
+  nav.setAttribute("role", "navigation");
+  nav.setAttribute("aria-label", "Timeline navigation");
 
-    return {
-      blur: SETTINGS.blurAmount * (1 - easedProgress),
-      opacity:
-        SETTINGS.opacityMin +
-        (SETTINGS.opacityMax - SETTINGS.opacityMin) * easedProgress,
-      scale:
-        SETTINGS.scaleMin +
-        (SETTINGS.scaleMax - SETTINGS.scaleMin) * easedProgress,
-      progress: easedProgress,
-    };
-  };
+  const tooltip = document.createElement("div");
+  tooltip.className = "scene-nav-tooltip";
+  tooltip.innerHTML =
+    '<span class="scene-nav-tooltip-year"></span>' +
+    '<span class="scene-nav-tooltip-title"></span>';
+  nav.appendChild(tooltip);
 
-  // Update entry state
-  const updateEntryState = (entry, values) => {
-    entry.style.filter = `blur(${values.blur}px)`;
-    entry.style.opacity = values.opacity;
-    entry.style.transform = `scale(${values.scale})`;
-    entry.classList.toggle("active", values.progress > 0.7);
-    return values.progress;
-  };
+  const tooltipYear = tooltip.querySelector(".scene-nav-tooltip-year");
+  const tooltipTitle = tooltip.querySelector(".scene-nav-tooltip-title");
 
-  // Find most active entry
-  const findMostActiveEntry = () => {
-    let maxProgress = 0;
-    let activeIndex = -1;
+  const dots = sceneArray.map((scene, i) => {
+    const dot = document.createElement("button");
+    dot.className = "scene-nav-dot";
 
-    timelineEntries.forEach((entry, index) => {
-      const values = calculateAnimationValues(entry);
-      const progress = updateEntryState(entry, values);
+    const year = scene.dataset.year || "";
+    const title = scene.querySelector(".scene-title")?.textContent || "";
+    const label = year ? "Jump to " + year + ": " + title : "Jump to: " + title;
+    dot.setAttribute("aria-label", label);
 
-      if (progress > maxProgress) {
-        maxProgress = progress;
-        activeIndex = index;
-      }
+    dot.addEventListener("click", () => {
+      sceneArray[i].scrollIntoView({ behavior: "smooth" });
     });
 
-    return activeIndex;
-  };
+    dot.addEventListener("mouseenter", () => {
+      tooltipYear.textContent = year;
+      tooltipYear.style.display = year ? "" : "none";
+      tooltipTitle.textContent = title;
 
-  // Update timeline progress (smooth animation)
-  const updateTimelineProgress = () => {
-    if (!timelineProgress || !journeySection) return;
+      const dotRect = dot.getBoundingClientRect();
+      const navRect = nav.getBoundingClientRect();
+      let tooltipTop = dotRect.top - navRect.top + dotRect.height / 2;
 
-    const scrollTop = window.pageYOffset;
-    const { offsetTop: sectionTop, offsetHeight: sectionHeight } =
-      journeySection;
-    const windowHeight = window.innerHeight;
+      // Clamp to keep tooltip within 8px of viewport edges
+      const tooltipHeight = 50;
+      const minTop = 8 - navRect.top + tooltipHeight / 2;
+      const maxTop = window.innerHeight - 8 - navRect.top - tooltipHeight / 2;
+      tooltipTop = Math.max(minTop, Math.min(maxTop, tooltipTop));
 
-    const start = sectionTop - windowHeight * 0.5;
-    const end = sectionTop + sectionHeight - windowHeight * 0.5;
-    const scrollRange = end - start;
+      tooltip.style.top = tooltipTop + "px";
+      tooltip.style.transform = "translateY(-50%)";
+      tooltip.classList.add("scene-nav-tooltip--visible");
+    });
 
-    if (scrollRange > 0) {
-      targetProgress = Math.max(
-        0,
-        Math.min(1, (scrollTop - start) / scrollRange)
-      );
-    }
+    dot.addEventListener("mouseleave", () => {
+      tooltip.classList.remove("scene-nav-tooltip--visible");
+    });
 
-    // Smooth progress animation
-    currentProgress +=
-      (targetProgress - currentProgress) * SETTINGS.progressEasing;
-    timelineProgress.style.transform = `scaleY(${currentProgress})`;
-  };
+    nav.appendChild(dot);
+    return dot;
+  });
 
-  // Main animation loop
-  const animate = () => {
-    currentActiveIndex = findMostActiveEntry();
-    updateTimelineProgress();
-    animationFrame = requestAnimationFrame(animate);
-  };
+  if (journeySection) {
+    journeySection.appendChild(nav);
+  }
 
-  // Handle scroll with throttling
-  const handleScroll = () => {
-    const currentScrollY = window.pageYOffset;
-    const scrollDelta = Math.abs(currentScrollY - lastScrollY);
-
-    if (scrollDelta >= SETTINGS.pixelSensitivity) {
-      lastScrollY = currentScrollY;
-    }
-  };
-
-  // Initialize timeline
-  const initTimeline = () => {
-    if (!journeySection || timelineEntries.length === 0) return;
-
-    // Start animation loop
-    animate();
-
-    // Event listeners
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    window.addEventListener(
-      "resize",
-      () => {
-        SETTINGS.activationZone = window.innerHeight * 0.5;
+  // Dot nav visibility — show only when journey section is in viewport
+  if (journeySection) {
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        nav.classList.toggle("scene-nav--visible", entry.isIntersecting);
       },
-      { passive: true }
+      { threshold: 0 }
     );
+    visibilityObserver.observe(journeySection);
+  }
+
+  // Sync active dot with active scene
+  const updateActiveDot = (activeIndex) => {
+    dots.forEach((dot, i) => {
+      const isActive = i === activeIndex;
+      dot.classList.toggle("scene-nav-dot--active", isActive);
+      if (isActive) {
+        dot.setAttribute("aria-current", "step");
+      } else {
+        dot.removeAttribute("aria-current");
+      }
+    });
   };
 
-  // Initialize
-  initTimeline();
+  // ---- Reduced motion: show all scenes, skip animation observer ----
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (prefersReducedMotion) {
+    scenes.forEach((scene) => scene.classList.add("scene-active"));
+    updateActiveDot(0);
+    return;
+  }
+
+  // ---- Animation system (skipped for reduced motion) ----
+
+  const willChangeTimers = new WeakMap();
+
+  const addWillChange = (scene) => {
+    if (scene.style.willChange !== "transform, opacity") {
+      scene.style.willChange = "transform, opacity";
+    }
+    const timer = willChangeTimers.get(scene);
+    if (timer) {
+      clearTimeout(timer);
+      willChangeTimers.delete(scene);
+    }
+  };
+
+  const removeWillChange = (scene, delay) => {
+    const timer = setTimeout(() => {
+      scene.style.willChange = "auto";
+      willChangeTimers.delete(scene);
+    }, delay);
+    willChangeTimers.set(scene, timer);
+  };
+
+  const activateMedia = (scene) => {
+    const video = scene.querySelector("video");
+    if (video) {
+      video.play().catch(() => {});
+    }
+  };
+
+  const deactivateMedia = (scene) => {
+    const video = scene.querySelector("video");
+    if (video) video.pause();
+    const audio = scene.querySelector("audio");
+    if (audio) audio.pause();
+  };
+
+  const getExpectedYear = (scene) => {
+    const idx = sceneArray.indexOf(scene);
+    if (idx <= 0) return null;
+    return sceneArray[idx - 1].dataset.year || null;
+  };
+
+  const setActive = (scene) => {
+    if (scene.classList.contains("scene-active")) return;
+
+    scene.classList.remove("scene-partial");
+    scene.classList.add("scene-active");
+    addWillChange(scene);
+
+    const year = scene.dataset.year;
+    const prevYear = getExpectedYear(scene);
+    if (year && year !== prevYear) {
+      scene.classList.add("scene-year-changed");
+    } else {
+      scene.classList.remove("scene-year-changed");
+    }
+
+    activateMedia(scene);
+    removeWillChange(scene, 2100);
+    updateActiveDot(sceneArray.indexOf(scene));
+  };
+
+  const setPartial = (scene) => {
+    const wasActive = scene.classList.contains("scene-active");
+    scene.classList.remove("scene-active", "scene-year-changed");
+    scene.classList.add("scene-partial");
+    addWillChange(scene);
+
+    if (wasActive) {
+      deactivateMedia(scene);
+    }
+    removeWillChange(scene, 300);
+  };
+
+  const setInactive = (scene) => {
+    const wasVisible =
+      scene.classList.contains("scene-active") ||
+      scene.classList.contains("scene-partial");
+    scene.classList.remove("scene-active", "scene-partial", "scene-year-changed");
+
+    if (wasVisible) {
+      deactivateMedia(scene);
+      removeWillChange(scene, 300);
+    }
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const ratio = entry.intersectionRatio;
+        const scene = entry.target;
+
+        if (ratio >= 0.3) {
+          setActive(scene);
+        } else if (ratio >= 0.15) {
+          setPartial(scene);
+        } else {
+          setInactive(scene);
+        }
+      });
+    },
+    { threshold: [0, 0.15, 0.3] }
+  );
+
+  scenes.forEach((scene) => observer.observe(scene));
+
+  // Keyboard navigation — only when timeline is in viewport
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    if (!journeySection) return;
+
+    const rect = journeySection.getBoundingClientRect();
+    if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
+
+    const activeScene = document.querySelector(".scene-active");
+    if (!activeScene) return;
+
+    const currentIndex = sceneArray.indexOf(activeScene);
+    const targetIndex = e.key === "ArrowDown"
+      ? Math.min(currentIndex + 1, sceneArray.length - 1)
+      : Math.max(currentIndex - 1, 0);
+
+    if (targetIndex !== currentIndex) {
+      e.preventDefault();
+      sceneArray[targetIndex].scrollIntoView({ behavior: "smooth" });
+    }
+  });
 });

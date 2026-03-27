@@ -1,0 +1,148 @@
+// ============================================================
+// SCENE ZERO — Hero landing as cinematic opening scene
+// ============================================================
+
+@use '../variables' as *;
+
+@mixin hero-reveal($delay: 0ms, $duration: 700ms, $distance: 30px) {
+  opacity: 0;
+  transform: translateY($distance);
+  transition:
+    opacity $duration $ease-out-expo,
+    transform $duration $ease-out-expo;
+  transition-delay: $delay;
+}
+
+.scene--hero {
+  .scene-year {
+    font-size: clamp(20vw, 28rem, 50vw);
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+
+  .scene-title {
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    font-weight: 100;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .scene-date {
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    @include hero-reveal($delay: 800ms, $duration: 600ms, $distance: 15px);
+  }
+
+  .chinese-name {
+    display: block;
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--text-secondary);
+    opacity: 0;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    transform: translateY(20px);
+    transition:
+      opacity 700ms $ease-out-expo,
+      transform 700ms $ease-out-expo;
+    transition-delay: 1200ms;
+  }
+
+  .scene-description {
+    @include hero-reveal($delay: 1400ms, $duration: 800ms);
+  }
+
+  .scene-link {
+    display: inline-block;
+    font-family: var(--font-tertiary);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.3);
+    padding-bottom: 2px;
+    margin-top: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 600ms $ease-out-expo,
+      transform 600ms $ease-out-expo,
+      border-color 300ms ease,
+      color 300ms ease;
+    transition-delay: 1600ms;
+
+    &:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  }
+
+  // Active state — staggered reveal
+  &.scene-active {
+    .chinese-name {
+      opacity: 0.3;
+      transform: translateY(0);
+    }
+
+    .scene-link {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // Scroll indicator
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 600ms ease;
+    transition-delay: 2000ms;
+  }
+
+  &.scene-active .scroll-indicator {
+    opacity: 1;
+  }
+
+  .scroll-mouse {
+    width: 20px;
+    height: 32px;
+    border: 1.5px solid rgba(var(--accent-rgb), 0.25);
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .scroll-wheel {
+    width: 2px;
+    height: 6px;
+    background: rgba(var(--accent-rgb), 0.4);
+    border-radius: 1px;
+    position: absolute;
+    top: 6px;
+    animation: scrollWheel 2s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene--hero {
+    .chinese-name,
+    .scene-link,
+    .scroll-indicator {
+      transition: none !important;
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .chinese-name {
+      opacity: 0.3 !important;
+    }
+
+    .scroll-wheel {
+      animation: none !important;
+    }
+  }
+}
