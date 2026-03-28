@@ -97,6 +97,18 @@
   }
 }
 
+// Hero watermark breathing
+@keyframes watermarkBreathe {
+  0%, 100% { opacity: 0.12; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.05; transform: translate(-50%, -50%) scale(1.02); }
+}
+
+// Hero watermark letter float
+@keyframes letterFloat {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(-12px); opacity: 0.6; }
+}
+
 // Cinematic timeline — Ken Burns slow zoom for background media
 @keyframes kenBurns {
   0% {

@@ -20,6 +20,12 @@
     letter-spacing: 0.05em;
   }
 
+  &.scene-active .scene-year {
+    animation: watermarkBreathe 6s ease-in-out 1.2s infinite;
+  }
+
+
+
   .scene-title {
     font-size: clamp(2.5rem, 6vw, 5.5rem);
     font-weight: 100;

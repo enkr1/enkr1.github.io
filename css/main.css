@@ -139,6 +139,26 @@ body {
     transform: rotate(360deg);
   }
 }
+@keyframes watermarkBreathe {
+  0%, 100% {
+    opacity: 0.12;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.05;
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+}
+@keyframes letterFloat {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-12px);
+    opacity: 0.6;
+  }
+}
 @keyframes kenBurns {
   0% {
     transform: scale(1);
@@ -1060,7 +1080,7 @@ header.nav-floating {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.6);
+  transform: translate(-50%, -50%) scale(0.85);
   font-family: "Playfair Display", serif;
   font-family: var(--font-primary);
   font-size: max(15vw, min(20rem, 40vw));
@@ -1068,6 +1088,7 @@ header.nav-floating {
   color: #C9A882;
   color: var(--accent);
   opacity: 0;
+  filter: blur(20px);
   mix-blend-mode: multiply;
   pointer-events: none;
   -webkit-user-select: none;
@@ -1075,7 +1096,7 @@ header.nav-floating {
           user-select: none;
   line-height: 1;
   z-index: 0;
-  transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.6s cubic-bezier(0.19, 1, 0.22, 1), filter 1.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 .scene .scene-media {
   position: absolute;
@@ -1174,6 +1195,7 @@ header.nav-floating {
 .scene.scene-active .scene-year {
   opacity: 0.1;
   transform: translate(-50%, -50%) scale(1);
+  filter: blur(0);
 }
 .scene.scene-active.scene-year-changed .scene-year {
   opacity: 0.15;
@@ -1256,6 +1278,7 @@ header.nav-floating {
     animation: none !important;
     opacity: 0.1 !important;
     transform: translate(-50%, -50%) scale(1) !important;
+    filter: none !important;
   }
   .scene .scene-media img {
     animation: none !important;
@@ -1381,6 +1404,9 @@ header.nav-floating {
   font-size: max(20vw, min(28rem, 50vw));
   font-weight: 800;
   letter-spacing: 0.05em;
+}
+.scene--hero.scene-active .scene-year {
+  animation: watermarkBreathe 6s ease-in-out 1.2s infinite;
 }
 .scene--hero .scene-title {
   font-size: max(2.5rem, min(6vw, 5.5rem));
