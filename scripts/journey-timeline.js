@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const heroScene = document.querySelector(".scene--hero");
   if (heroScene) {
     heroScene.classList.add("scene-active");
+
   }
 
   // ---- Dot Nav (built before reduced-motion check so it always renders) ----
